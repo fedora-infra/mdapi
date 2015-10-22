@@ -168,10 +168,10 @@ def init(loop):
     )
     return srv
 
-
-loop = asyncio.get_event_loop()
-loop.run_until_complete(init(loop))
-try:
-    loop.run_forever()
-except KeyboardInterrupt:
-    pass
+if __name__ == '__main__':
+    loop = asyncio.get_event_loop()
+    loop.run_until_complete(init(loop))
+    try:
+        loop.run_forever()
+    except KeyboardInterrupt:
+        pass
