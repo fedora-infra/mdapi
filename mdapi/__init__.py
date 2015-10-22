@@ -38,9 +38,15 @@ for key in dir(obj):
     if key.isupper():
         CONFIG[key] = getattr(obj, key)
 
+
 if 'MDAPI_CONFIG' in os.environ and os.path.exists(os.environ['MDAPI_CONFIG']):
     with open(os.environ['MDAPI_CONFIG']) as config_file:
         exec(compile(config_file.read(), os.environ['MDAPI_CONFIG'], 'exec'), CONFIG)
+
+indexfile = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+INDEX = ''
+with open(indexfile) as stream:
+    INDEX = stream.read()
 
 
 def _get_pkg(branch, name):
@@ -135,8 +141,7 @@ def list_branches(request):
 
 @asyncio.coroutine
 def index(request):
-    text = "Front page"
-    return web.Response(body=text.encode('utf-8'))
+    return web.Response(body=INDEX.encode('utf-8'))
 
 
 @asyncio.coroutine
