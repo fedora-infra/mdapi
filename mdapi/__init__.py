@@ -43,34 +43,60 @@ if 'MDAPI_CONFIG' in os.environ and os.path.exists(os.environ['MDAPI_CONFIG']):
         exec(compile(config_file.read(), os.environ['MDAPI_CONFIG'], 'exec'), CONFIG)
 
 
-@asyncio.coroutine
-def get_pkg(request):
-    name = request.match_info.get('name', None)
-    session = mdapilib.create_session('sqlite:////var/tmp/20151022-rawhide-primary.sqlite')
+def _get_pkg(branch, name):
+    ''' Return the pkg information for the given package in the specified
+    branch or raise an aiohttp exception.
+    '''
+    dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    if not os.path.exists(dbfile):
+        raise web.HTTPBadRequest()
+
+    session = mdapilib.create_session('sqlite:///%s' % dbfile)
     pkg = mdapilib.get_package(session, name)
     session.close()
+
     if not pkg:
         raise web.HTTPNotFound()
+
+    return pkg
+
+
+@asyncio.coroutine
+def get_pkg(request):
+    branch = request.match_info.get('branch')
+    name = request.match_info.get('name')
+
+    dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    if not os.path.exists(dbfile):
+        raise web.HTTPBadRequest()
+
+    session = mdapilib.create_session('sqlite:///%s' % dbfile)
+    pkg = mdapilib.get_package(session, name)
+
+    if not pkg:
+        session.close()
+        raise web.HTTPNotFound()
+
     output = pkg.to_json()
     output['co-packages'] = [
         cpkg.name
         for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
     ]
+    session.close()
     return web.Response(body=json.dumps(output).encode('utf-8'))
 
 
 @asyncio.coroutine
 def get_pkg_files(request):
-    name = request.match_info.get('name', None)
-    session = mdapilib.create_session(
-        'sqlite:////var/tmp/20151022-rawhide-primary.sqlite')
-    pkg = mdapilib.get_package(session, name)
-    session.close()
-    if not pkg:
-        raise web.HTTPNotFound()
+    branch = request.match_info.get('branch')
+    name = request.match_info.get('name')
+    pkg = _get_pkg(branch, name)
 
-    session2 = mdapilib.create_session(
-        'sqlite:////var/tmp/20151022-rawhide-filelists.sqlite')
+    dbfile = '%s/mdapi-%s-filelists.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    if not os.path.exists(dbfile):
+        raise web.HTTPBadRequest()
+
+    session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
     filelist = mdapilib.get_files(session2, pkg.pkgId)
     session2.close()
     return web.Response(body=json.dumps(
@@ -79,16 +105,15 @@ def get_pkg_files(request):
 
 @asyncio.coroutine
 def get_pkg_changelog(request):
-    name = request.match_info.get('name', None)
-    session = mdapilib.create_session(
-        'sqlite:////var/tmp/20151022-rawhide-primary.sqlite')
-    pkg = mdapilib.get_package(session, name)
-    session.close()
-    if not pkg:
-        raise web.HTTPNotFound()
+    branch = request.match_info.get('branch')
+    name = request.match_info.get('name')
+    pkg = _get_pkg(branch, name)
 
-    session2 = mdapilib.create_session(
-        'sqlite:////var/tmp/20151022-rawhide-other.sqlite')
+    dbfile = '%s/mdapi-%s-other.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    if not os.path.exists(dbfile):
+        raise web.HTTPBadRequest()
+
+    session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
     changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
     session2.close()
     return web.Response(body=json.dumps(
@@ -105,9 +130,9 @@ def index(request):
 def init(loop):
     app = web.Application(loop=loop)
     app.router.add_route('GET', '/', index)
-    app.router.add_route('GET', '/pkg/{name}', get_pkg)
-    app.router.add_route('GET', '/files/{name}', get_pkg_files)
-    app.router.add_route('GET', '/changelog/{name}', get_pkg_changelog)
+    app.router.add_route('GET', '/{branch}/pkg/{name}', get_pkg)
+    app.router.add_route('GET', '/{branch}/files/{name}', get_pkg_files)
+    app.router.add_route('GET', '/{branch}/changelog/{name}', get_pkg_changelog)
 
     srv = yield from loop.create_server(
         app.make_handler(), '127.0.0.1', 8080)
