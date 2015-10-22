@@ -24,7 +24,10 @@ Top level of the mdapi Flask application.
 '''
 import os
 
-import json
+try:
+    import simplejson as json
+except ImportError:
+    import json
 
 import asyncio
 from aiohttp import web

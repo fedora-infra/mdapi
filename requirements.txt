@@ -1,2 +1,3 @@
 aiohttp
+simplejson
 sqlalchemy
