@@ -91,10 +91,10 @@ def get_pkg(request):
     output = pkg.to_json()
 
     if pkg.rpm_sourcerpm:
-        output['co-packages'] = [
+        output['co-packages'] = list(set([
             cpkg.name
             for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
-        ]
+        ]))
     else:
         output['co-packages'] = []
     session.close()
