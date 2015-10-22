@@ -150,11 +150,11 @@ def init(loop):
 
     srv = yield from loop.create_server(
         app.make_handler(),
-        CONFIG.get('host', '127.0.0.1'),
+        CONFIG.get('HOST', '127.0.0.1'),
         CONFIG.get('PORT', 8080))
     print(
         "Server started at http://%s:%s" % (
-            CONFIG.get('host', '127.0.0.1'),
+            CONFIG.get('HOST', '127.0.0.1'),
             CONFIG.get('PORT', 8080))
     )
     return srv
