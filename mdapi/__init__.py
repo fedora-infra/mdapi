@@ -84,10 +84,11 @@ def get_pkg(request):
         raise web.HTTPNotFound()
 
     output = pkg.to_json()
-    output['co-packages'] = [
-        cpkg.name
-        for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
-    ]
+    if pkg.rpm_sourcerpm:
+        output['co-packages'] = [
+            cpkg.name
+            for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
+        ]
     session.close()
     return web.Response(body=json.dumps(output).encode('utf-8'))
 
