@@ -133,7 +133,7 @@ def list_branches(request):
     '''
     output = list(set([
         #Remove the front part `mdapi-` and the end part -<type>.sqlite
-        filename.replace('mdapi-', '').rsplit('-')[0]
+        filename.replace('mdapi-', '').rsplit('-', 1)[0]
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ]))
