@@ -20,7 +20,7 @@
 #
 
 '''
-Top level of the mdapi Flask application.
+Top level of the mdapi aiohttp application.
 '''
 import os
 
