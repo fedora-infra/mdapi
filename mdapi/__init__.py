@@ -149,8 +149,14 @@ def init(loop):
     app.router.add_route('GET', '/{branch}/changelog/{name}', get_pkg_changelog)
 
     srv = yield from loop.create_server(
-        app.make_handler(), '127.0.0.1', 8080)
-    print("Server started at http://127.0.0.1:8080")
+        app.make_handler(),
+        CONFIG.get('host', '127.0.0.1'),
+        CONFIG.get('PORT', 8080))
+    print(
+        "Server started at http://%s:%s" % (
+            CONFIG.get('host', '127.0.0.1'),
+            CONFIG.get('PORT', 8080))
+    )
     return srv
 
 
