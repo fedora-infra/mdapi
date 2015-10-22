@@ -121,6 +121,19 @@ def get_pkg_changelog(request):
 
 
 @asyncio.coroutine
+def list_branches(request):
+    ''' Return the list of all branches currently supported by mdapi
+    '''
+    output = list(set([
+        #Remove the front part `mdapi-` and the end part -<type>.sqlite
+        filename.replace('mdapi-', '').rsplit('-')[0]
+        for filename in os.listdir(CONFIG['DB_FOLDER'])
+        if filename.startswith('mdapi') and filename.endswith('.sqlite')
+    ]))
+    return web.Response(body=json.dumps(output).encode('utf-8'))
+
+
+@asyncio.coroutine
 def index(request):
     text = "Front page"
     return web.Response(body=text.encode('utf-8'))
@@ -130,6 +143,7 @@ def index(request):
 def init(loop):
     app = web.Application(loop=loop)
     app.router.add_route('GET', '/', index)
+    app.router.add_route('GET', '/branches', list_branches)
     app.router.add_route('GET', '/{branch}/pkg/{name}', get_pkg)
     app.router.add_route('GET', '/{branch}/files/{name}', get_pkg_files)
     app.router.add_route('GET', '/{branch}/changelog/{name}', get_pkg_changelog)
