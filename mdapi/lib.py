@@ -58,7 +58,7 @@ def get_package(session, pkg_name):
     pkg = session.query(
         primary.Package
     ).filter(
-        primary.Package.name==pkg_name
+        primary.Package.name == pkg_name
     )
     return pkg.first()
 
@@ -70,7 +70,7 @@ def get_co_packages(session, srcpkg_name):
     pkg = session.query(
         primary.Package
     ).filter(
-        primary.Package.rpm_sourcerpm==srcpkg_name
+        primary.Package.rpm_sourcerpm == srcpkg_name
     )
     return pkg.all()
 
@@ -81,8 +81,8 @@ def get_files(session, pkg_id):
     pkg = session.query(
         filelist.Filelist
     ).filter(
-        filelist.Package.pkgId==pkg_id,
-        filelist.Filelist.pkgKey==filelist.Package.pkgKey
+        filelist.Package.pkgId == pkg_id,
+        filelist.Filelist.pkgKey == filelist.Package.pkgKey
     ).order_by(
         filelist.Filelist.filenames
     )
@@ -95,8 +95,8 @@ def get_changelog(session, pkg_id):
     pkg = session.query(
         changelog.Changelog
     ).filter(
-        changelog.Package.pkgId==pkg_id,
-        changelog.Changelog.pkgKey==changelog.Package.pkgKey
+        changelog.Package.pkgId == pkg_id,
+        changelog.Changelog.pkgKey == changelog.Package.pkgKey
     ).order_by(
         changelog.Changelog.date.desc()
     )

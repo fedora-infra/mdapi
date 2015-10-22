@@ -41,9 +41,11 @@ for key in dir(obj):
 
 if 'MDAPI_CONFIG' in os.environ and os.path.exists(os.environ['MDAPI_CONFIG']):
     with open(os.environ['MDAPI_CONFIG']) as config_file:
-        exec(compile(config_file.read(), os.environ['MDAPI_CONFIG'], 'exec'), CONFIG)
+        exec(compile(
+            config_file.read(), os.environ['MDAPI_CONFIG'], 'exec'), CONFIG)
 
-indexfile = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'index.html')
+indexfile = os.path.join(
+    os.path.dirname(os.path.abspath(__file__)), 'index.html')
 INDEX = ''
 with open(indexfile) as stream:
     INDEX = stream.read()
@@ -135,7 +137,7 @@ def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
     output = list(set([
-        #Remove the front part `mdapi-` and the end part -<type>.sqlite
+        # Remove the front part `mdapi-` and the end part -<type>.sqlite
         filename.replace('mdapi-', '').rsplit('-', 1)[0]
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
@@ -155,7 +157,8 @@ def init(loop):
     app.router.add_route('GET', '/branches', list_branches)
     app.router.add_route('GET', '/{branch}/pkg/{name}', get_pkg)
     app.router.add_route('GET', '/{branch}/files/{name}', get_pkg_files)
-    app.router.add_route('GET', '/{branch}/changelog/{name}', get_pkg_changelog)
+    app.router.add_route(
+        'GET', '/{branch}/changelog/{name}', get_pkg_changelog)
 
     srv = yield from loop.create_server(
         app.make_handler(),
@@ -167,6 +170,7 @@ def init(loop):
             CONFIG.get('PORT', 8080))
     )
     return srv
+
 
 if __name__ == '__main__':
     loop = asyncio.get_event_loop()

@@ -31,6 +31,7 @@ import filelist
 
 BASE = declarative_base()
 
+
 class Package(BASE):
     ''' Maps the packages table in the primary.sqlite database from
     repodata to a python object.
