@@ -63,6 +63,18 @@ def get_package(session, pkg_name):
     return pkg.first()
 
 
+def get_co_packages(session, srcpkg_name):
+    ''' Return the name of all the packages coming from the same
+    source-package.
+    '''
+    pkg = session.query(
+        primary.Package
+    ).filter(
+        primary.Package.rpm_sourcerpm==srcpkg_name
+    )
+    return pkg.all()
+
+
 def get_files(session, pkg_id):
     ''' Return the list of all the files in a package given its key.
     '''

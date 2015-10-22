@@ -33,12 +33,17 @@ import lib as mdapilib
 @asyncio.coroutine
 def get_pkg(request):
     name = request.match_info.get('name', None)
-    session = mdapilib.create_session('sqlite:////var/tmp/rawhide-primary.sqlite')
+    session = mdapilib.create_session('sqlite:////var/tmp/20151022-rawhide-primary.sqlite')
     pkg = mdapilib.get_package(session, name)
     session.close()
     if not pkg:
         raise web.HTTPNotFound()
-    return web.Response(body=json.dumps(pkg.to_json()).encode('utf-8'))
+    output = pkg.to_json()
+    output['co-packages'] = [
+        cpkg.name
+        for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
+    ]
+    return web.Response(body=json.dumps(output).encode('utf-8'))
 
 
 @asyncio.coroutine
