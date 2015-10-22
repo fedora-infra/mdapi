@@ -53,6 +53,6 @@ class Changelog(BASE):
         filelist = {
             'author': self.author,
             'changelog': self.changelog,
-            'data': self.date,
+            'date': self.date,
         }
         return filelist
