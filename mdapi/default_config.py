@@ -24,8 +24,4 @@ mdapi default configuration.
 '''
 
 # url to the database server:
-PKG_DB_URL = 'sqlite:////var/tmp/rawhide-primary.sqlite'
-PKGFILE_DB_URL = 'sqlite:////var/tmp/rawhide-filelists.sqlite'
-
-# the number of items to display on the search pages
-ITEMS_PER_PAGE = 50
+DB_FOLDER = '/var/tmp'

@@ -22,6 +22,7 @@
 '''
 Top level of the mdapi Flask application.
 '''
+import os
 
 import json
 
@@ -29,6 +30,18 @@ import asyncio
 from aiohttp import web
 
 import lib as mdapilib
+
+
+CONFIG = dict()
+obj = __import__('default_config')
+for key in dir(obj):
+    if key.isupper():
+        CONFIG[key] = getattr(obj, key)
+
+if 'MDAPI_CONFIG' in os.environ and os.path.exists(os.environ['MDAPI_CONFIG']):
+    with open(os.environ['MDAPI_CONFIG']) as config_file:
+        exec(compile(config_file.read(), os.environ['MDAPI_CONFIG'], 'exec'), CONFIG)
+
 
 @asyncio.coroutine
 def get_pkg(request):
