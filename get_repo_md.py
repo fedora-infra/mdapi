@@ -35,6 +35,7 @@ sqlite database are retrieved from the master Fedora mirror:
 '''
 
 import contextlib
+import multiprocessing
 import os
 import shutil
 import tempfile
@@ -79,10 +80,11 @@ def decompress_primary_db(archive, location):
                 out.write(inp.read())
 
 
-def process_repo(url, name):
+def process_repo(tupl):
     ''' Retrieve the repo metadata at the given url and store them using
     the provided name.
     '''
+    url, name = tupl
     repomd_url = url + '/repomd.xml'
     req = requests.get(repomd_url)
     files = []
@@ -112,9 +114,11 @@ def process_repo(url, name):
 
 def main():
     ''' Get the repo metadata. '''
+    repositories = []
     # Get the koji repo
-    process_repo(
-        KOJI_REPO + 'rawhide/latest/x86_64/repodata', 'koji')
+    repositories.append(
+        (KOJI_REPO + 'rawhide/latest/x86_64/repodata', 'koji')
+    )
     # Get the development repos (rawhide + eventually Fn+1 branched)
     dev_releases = list_branches(status='Under Development')
     for release in dev_releases:
@@ -125,7 +129,9 @@ def main():
             version = 'rawhide'
         url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
             'development/%s/x86_64/os/repodata' % version
-        process_repo(url, release['koji_name'])
+        repositories.append(
+            (url, release['koji_name'])
+        )
 
     stable_releases = list_branches(status='Active')
     for release in stable_releases:
@@ -134,16 +140,18 @@ def main():
         version = release['version']
         url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
             'releases/%s/x86_64/repodata' % version
-        process_repo(url, release['koji_name'])
+        repositories.append((url, release['koji_name']))
 
         url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
             'updates/%s/x86_64/repodata' % version
-        process_repo(url, release['koji_name'] + '-updates')
+        repositories.append((url, release['koji_name'] + '-updates'))
 
         url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
             'updates/testing/%s/x86_64/repodata' % version
-        process_repo(url, release['koji_name'] + '-updates-testing')
+        repositories.append((url, release['koji_name'] + '-updates-testing'))
 
+    p = multiprocessing.Pool(10)
+    p.map(process_repo, repositories)
 
 if __name__ == '__main__':
     main()
