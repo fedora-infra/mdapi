@@ -131,7 +131,7 @@ def main():
         exec(compile(
             config_file.read(), configfile, 'exec'), CONFIG)
 
-    if not os.path.exists(CONFIG['DB_FOLDER']):
+    if not os.path.exists(CONFIG.get('DB_FOLDER', '/var/tmp')):
         print('Could not find the configuration file')
         return 1
 
@@ -172,7 +172,10 @@ def main():
         repositories.append((url, release['koji_name'] + '-updates-testing'))
 
     p = multiprocessing.Pool(10)
-    p.map(process_repo, itertools.product([CONFIG['DB_FOLDER']], repositories))
+    p.map(process_repo, itertools.product(
+        [CONFIG.get('DB_FOLDER', '/var/tmp')],
+        repositories)
+    )
 
     return 0
 
