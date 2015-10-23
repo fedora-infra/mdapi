@@ -20,6 +20,10 @@ body {
     font-family: monospace;
     display: block;
 }
+
+a:hover, a:link, a:visited, a:active {
+    color: #5f5f5f;
+}
 </style>
 </head>
 <body>
@@ -58,7 +62,7 @@ by querying:
 
 So for example, for the kernel in rawhide:
 
-    /rawhide/pkg/kernel
+    <a href="/rawhide/pkg/kernel">/rawhide/pkg/kernel</a>
 
 
 Retrieve the list of files in a package
@@ -71,7 +75,7 @@ specific branch by querying:
 
 So for example, for the kernel in rawhide:
 
-    /rawhide/filelist/kernel
+    <a href="/rawhide/filelist/kernel">/rawhide/filelist/kernel</a>
 
 
 Retrieve the changelog of a package
@@ -80,11 +84,11 @@ Retrieve the changelog of a package
 You can retrieve the changelog of a specific package on a specific branch
 by querying:
 
-    /{branch}/changelog/{package name}
+    /{branch}//{package name}
 
 So for example, for the kernel in rawhide:
 
-    /rawhide/changelog/kernel
+    <a href="/rawhide/changelog/kernel">/rawhide/changelog/kernel</a>
 
 
 
@@ -97,6 +101,6 @@ So for example, for the kernel in rawhide:
                                              ‾  ‾‾ ‾ ‾ ‾‾ | |‾‾   ‾‾‾ ‾‾ ‾
                                             (‾)           | |
                                              ‾             ‾
-© 2015 - Red Hat, Inc. - GPLv2+ - Sources: https://pagure.io/mdapi
+© 2015 - Red Hat, Inc. - GPLv2+ - Sources: <a href="https://pagure.io/mdapi">https://pagure.io/mdapi</a>
 </body>
 </html>
