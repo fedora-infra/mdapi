@@ -58,38 +58,46 @@ def _get_pkg(branch, name):
     ''' Return the pkg information for the given package in the specified
     branch or raise an aiohttp exception.
     '''
-    dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
-    if not os.path.exists(dbfile):
-        raise web.HTTPBadRequest()
+    pkg = None
+    wrongdb = False
+    for repotype in ['updates-testing', 'updates', None]:
+        if repotype:
+            dbfile = '%s/mdapi-%s-%s-primary.sqlite' % (
+                CONFIG['DB_FOLDER'], branch, repotype)
+        else:
+            dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
+        if not os.path.exists(dbfile):
+            wrongdb = True
+            continue
 
-    session = mdapilib.create_session('sqlite:///%s' % dbfile)
-    pkg = mdapilib.get_package(session, name)
-    session.close()
+        wrongdb = False
+
+        session = mdapilib.create_session('sqlite:///%s' % dbfile)
+        pkg = mdapilib.get_package(session, name)
+        session.close()
+        if pkg:
+            break
+
+    if wrongdb:
+        raise web.HTTPBadRequest()
 
     if not pkg:
         raise web.HTTPNotFound()
 
-    return pkg
+    return (pkg, repotype)
 
 
 @asyncio.coroutine
 def get_pkg(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
-
-    dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
-    if not os.path.exists(dbfile):
-        raise web.HTTPBadRequest()
-
-    session = mdapilib.create_session('sqlite:///%s' % dbfile)
-    pkg = mdapilib.get_package(session, name)
-
-    if not pkg:
-        session.close()
-        raise web.HTTPNotFound()
+    pkg, repotype = _get_pkg(branch, name)
 
     output = pkg.to_json()
 
+    dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
+        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
+    session = mdapilib.create_session('sqlite:///%s' % dbfile)
     if pkg.rpm_sourcerpm:
         output['co-packages'] = list(set([
             cpkg.name
@@ -97,6 +105,7 @@ def get_pkg(request):
         ]))
     else:
         output['co-packages'] = []
+    output['repo'] = repotype if repotype else 'release'
     session.close()
     return web.Response(body=json.dumps(output).encode('utf-8'))
 
@@ -105,34 +114,40 @@ def get_pkg(request):
 def get_pkg_files(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
-    pkg = _get_pkg(branch, name)
+    pkg, repotype = _get_pkg(branch, name)
 
-    dbfile = '%s/mdapi-%s-filelists.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    dbfile = '%s/mdapi-%s%s-filelists.sqlite' % (
+        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
     session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
     filelist = mdapilib.get_files(session2, pkg.pkgId)
     session2.close()
-    return web.Response(body=json.dumps(
-        [fileinfo.to_json() for fileinfo in filelist]).encode('utf-8'))
+    return web.Response(body=json.dumps({
+        'files': [fileinfo.to_json() for fileinfo in filelist],
+        'repo': repotype if repotype else 'release',
+    }).encode('utf-8'))
 
 
 @asyncio.coroutine
 def get_pkg_changelog(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
-    pkg = _get_pkg(branch, name)
+    pkg, repotype = _get_pkg(branch, name)
 
-    dbfile = '%s/mdapi-%s-other.sqlite' % (CONFIG['DB_FOLDER'], branch)
+    dbfile = '%s/mdapi-%s%s-other.sqlite' % (
+        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
     session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
     changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
     session2.close()
-    return web.Response(body=json.dumps(
-        [changelog.to_json() for changelog in changelogs]).encode('utf-8'))
+    return web.Response(body=json.dumps({
+        'files': [changelog.to_json() for changelog in changelogs],
+        'repo': repotype if repotype else 'release',
+    }).encode('utf-8'))
 
 
 @asyncio.coroutine
@@ -141,7 +156,7 @@ def list_branches(request):
     '''
     output = list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
-        filename.replace('mdapi-', '').rsplit('-', 1)[0]
+        filename.replace('mdapi-', '').rsplit('-', 2)[0].replace('-updates', '')
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ]))
