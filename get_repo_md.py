@@ -34,7 +34,9 @@ sqlite database are retrieved from the master Fedora mirror:
 
 '''
 
+import argparse
 import contextlib
+import itertools
 import multiprocessing
 import os
 import shutil
@@ -70,12 +72,12 @@ def decompress_primary_db(archive, location):
             tar.extractall(path=location)
     elif archive.endswith('.bz2'):
         import bz2
-        with open(location, 'w') as out:
+        with open(location, 'wb') as out:
             bzar = bz2.BZ2File(archive)
             out.write(bzar.read())
             bzar.close()
     elif archive.endswith('.sqlite'):
-        with open(location, 'w') as out:
+        with open(location, 'wb') as out:
             with open(archive) as inp:
                 out.write(inp.read())
 
@@ -84,7 +86,8 @@ def process_repo(tupl):
     ''' Retrieve the repo metadata at the given url and store them using
     the provided name.
     '''
-    url, name = tupl
+    destfolder, repo = tupl
+    url, name = repo
     repomd_url = url + '/repomd.xml'
     req = requests.get(repomd_url)
     files = []
@@ -107,13 +110,31 @@ def process_repo(tupl):
             db = 'mdapi-%s-filelists.sqlite' % name
         elif 'other.sqlite' in filename:
             db = 'mdapi-%s-other.sqlite' % name
-        decompress_primary_db(archive, db)
+
+        destfile = os.path.join(destfolder, db)
+        decompress_primary_db(archive, destfile)
 
     shutil.rmtree(working_dir)
 
 
 def main():
     ''' Get the repo metadata. '''
+    parser = argparse.ArgumentParser(prog="get_repo_md")
+    # General connection options
+    parser.add_argument('config', help="Configuration file to use")
+    args = parser.parse_args()
+
+    # Load the configuration file
+    CONFIG = {}
+    configfile = args.config
+    with open(configfile) as config_file:
+        exec(compile(
+            config_file.read(), configfile, 'exec'), CONFIG)
+
+    if not os.path.exists(CONFIG['DB_FOLDER']):
+        print('Could not find the configuration file')
+        return 1
+
     repositories = []
     # Get the koji repo
     repositories.append(
@@ -151,7 +172,10 @@ def main():
         repositories.append((url, release['koji_name'] + '-updates-testing'))
 
     p = multiprocessing.Pool(10)
-    p.map(process_repo, repositories)
+    p.map(process_repo, itertools.product([CONFIG['DB_FOLDER']], repositories))
+
+    return 0
+
 
 if __name__ == '__main__':
     main()
