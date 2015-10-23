@@ -41,6 +41,22 @@ a:hover, a:link, a:visited, a:active {
 mdapi is a small API exposing the metadata contained in the different RPM
 repository.
 
+mdapi has access to the metadata of the different Fedora repository and will
+serve you the most recent information available, from updates-testing, if
+there is nothing in updates-testing, it will look for information from the
+updates repository and if there is still nothing, it will look for information
+in the releases repository.
+
+If you query for a non-existing branch (for example: f14), it will return
+a 400 error.
+
+If you query for a non-existing package (for example: foo), it will return
+a 404 error.
+
+For any other error, it should return a 500 error. If you see those and it
+is not transient, please inform an admin.
+
+
 USAGE
 =====
 
