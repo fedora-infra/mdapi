@@ -60,7 +60,8 @@ def _get_pkg(branch, name):
     '''
     pkg = None
     wrongdb = False
-    for repotype in ['updates-testing', 'updates', None]:
+    for repotype in ['updates-testing', 'updates', 'testing', None]:
+
         if repotype:
             dbfile = '%s/mdapi-%s-%s-primary.sqlite' % (
                 CONFIG['DB_FOLDER'], branch, repotype)
