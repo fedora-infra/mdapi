@@ -23,6 +23,8 @@
 MDAPI internal API to interact with the database.
 '''
 
+import time
+
 import sqlalchemy as sa
 
 from sqlalchemy.orm import sessionmaker
@@ -32,6 +34,8 @@ from sqlalchemy.exc import SQLAlchemyError
 import mdapi.changelog as changelog
 import mdapi.filelist as filelist
 import mdapi.primary as primary
+
+RETRY_ATTEMPT = 3
 
 
 def create_session(db_url, debug=False, pool_recycle=3600):
@@ -55,49 +59,93 @@ def create_session(db_url, debug=False, pool_recycle=3600):
 def get_package(session, pkg_name):
     ''' Return information about a package, if we can find it.
     '''
-    pkg = session.query(
-        primary.Package
-    ).filter(
-        primary.Package.name == pkg_name
-    )
-    return pkg.first()
+    cnt = 0
+    try:
+        pkg = session.query(
+            primary.Package
+        ).filter(
+            primary.Package.name == pkg_name
+        )
+        output = pkg.first()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            get_package(session, pkg_name)
+
+    return output
 
 
 def get_co_packages(session, srcpkg_name):
     ''' Return the name of all the packages coming from the same
     source-package.
     '''
-    pkg = session.query(
-        primary.Package
-    ).filter(
-        primary.Package.rpm_sourcerpm == srcpkg_name
-    )
-    return pkg.all()
+    cnt = 0
+    try:
+        pkg = session.query(
+            primary.Package
+        ).filter(
+            primary.Package.rpm_sourcerpm == srcpkg_name
+        )
+        output = pkg.all()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            get_co_packages(session, pkg_name)
+
+    return output
 
 
 def get_files(session, pkg_id):
     ''' Return the list of all the files in a package given its key.
     '''
-    pkg = session.query(
-        filelist.Filelist
-    ).filter(
-        filelist.Package.pkgId == pkg_id,
-        filelist.Filelist.pkgKey == filelist.Package.pkgKey
-    ).order_by(
-        filelist.Filelist.filenames
-    )
-    return pkg.all()
+    cnt = 0
+    try:
+        pkg = session.query(
+            filelist.Filelist
+        ).filter(
+            filelist.Package.pkgId == pkg_id,
+            filelist.Filelist.pkgKey == filelist.Package.pkgKey
+        ).order_by(
+            filelist.Filelist.filenames
+        )
+        output = pkg.all()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            get_files(session, pkg_name)
+
+    return output
 
 
 def get_changelog(session, pkg_id):
     ''' Return the list of all the changelog in a package given its key.
     '''
-    pkg = session.query(
-        changelog.Changelog
-    ).filter(
-        changelog.Package.pkgId == pkg_id,
-        changelog.Changelog.pkgKey == changelog.Package.pkgKey
-    ).order_by(
-        changelog.Changelog.date.desc()
-    )
-    return pkg.all()
+    cnt = 0
+    try:
+        pkg = session.query(
+            changelog.Changelog
+        ).filter(
+            changelog.Package.pkgId == pkg_id,
+            changelog.Changelog.pkgKey == changelog.Package.pkgKey
+        ).order_by(
+            changelog.Changelog.date.desc()
+        )
+        output = pkg.all()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            get_changelog(session, pkg_name)
+
+    return output
