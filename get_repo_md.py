@@ -140,6 +140,7 @@ def main():
     repositories.append(
         (KOJI_REPO + 'rawhide/latest/x86_64/repodata', 'koji')
     )
+
     # Get the development repos (rawhide + eventually Fn+1 branched)
     dev_releases = list_branches(status='Under Development')
     for release in dev_releases:
@@ -154,22 +155,38 @@ def main():
             (url, release['koji_name'])
         )
 
+    urls = {
+        'Fedora':
+            [
+                'http://dl.fedoraproject.org/pub/fedora/linux/'
+                'releases/%s/Everything/x86_64/os/repodata',
+                'http://dl.fedoraproject.org/pub/fedora/linux/'
+                'updates/%s/x86_64/repodata',
+                'http://dl.fedoraproject.org/pub/fedora/linux/'
+                'updates/testing/%s/x86_64/repodata',
+            ],
+        'Fedora EPEL':
+            [
+                'http://dl.fedoraproject.org/pub/epel/%s/x86_64/repodata/',
+                'http://dl.fedoraproject.org/pub/epel/testing/%s/x86_64/repodata',
+            ]
+    }
+    fedora_repos = ['%s', '%s-updates', '%s-updates-testing']
+    epel_repos = ['%s', '%s-testing']
+
+    # Get the stable repos
     stable_releases = list_branches(status='Active')
     for release in stable_releases:
         if release['status'] != 'Active':
             continue
         version = release['version']
-        url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
-            'releases/%s/x86_64/repodata' % version
-        repositories.append((url, release['koji_name']))
-
-        url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
-            'updates/%s/x86_64/repodata' % version
-        repositories.append((url, release['koji_name'] + '-updates'))
-
-        url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
-            'updates/testing/%s/x86_64/repodata' % version
-        repositories.append((url, release['koji_name'] + '-updates-testing'))
+        for idx, url in enumerate(urls[release['name']]):
+            if release['name'] == 'Fedora':
+                name = fedora_repos[idx] % release['koji_name']
+            else:
+                name = epel_repos[idx] % release['koji_name']
+            rurl =  url % version
+            repositories.append((rurl, name))
 
     p = multiprocessing.Pool(10)
     p.map(process_repo, itertools.product(
