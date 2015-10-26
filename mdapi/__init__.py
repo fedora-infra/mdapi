@@ -37,7 +37,7 @@ import mdapi.file_lock as file_lock
 
 
 CONFIG = dict()
-obj = __import__('default_config')
+obj = __import__('mdapi.default_config')
 for key in dir(obj):
     if key.isupper():
         CONFIG[key] = getattr(obj, key)
