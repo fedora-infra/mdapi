@@ -96,7 +96,7 @@ def get_co_packages(session, srcpkg_name):
             raise
         else:
             time.sleep(0.1)
-            get_co_packages(session, pkg_name)
+            get_co_packages(session, srcpkg_name)
 
     return output
 
@@ -121,7 +121,7 @@ def get_files(session, pkg_id):
             raise
         else:
             time.sleep(0.1)
-            get_files(session, pkg_name)
+            get_files(session, pkg_id)
 
     return output
 
@@ -146,6 +146,6 @@ def get_changelog(session, pkg_id):
             raise
         else:
             time.sleep(0.1)
-            get_changelog(session, pkg_name)
+            get_changelog(session, pkg_id)
 
     return output
