@@ -30,6 +30,7 @@ except ImportError:
     import json
 
 import asyncio
+import werkzeug
 from aiohttp import web
 
 import mdapi.lib as mdapilib
@@ -37,7 +38,7 @@ import mdapi.file_lock as file_lock
 
 
 CONFIG = dict()
-obj = __import__('mdapi.default_config')
+obj = werkzeug.import_string('mdapi.default_config')
 for key in dir(obj):
     if key.isupper():
         CONFIG[key] = getattr(obj, key)
