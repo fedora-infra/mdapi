@@ -44,6 +44,8 @@ import tempfile
 
 import requests
 
+import file_lock
+
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
 
@@ -64,22 +66,26 @@ def decompress_primary_db(archive, location):
         import lzma
         with contextlib.closing(lzma.LZMAFile(archive)) as stream_xz:
             data = stream_xz.read()
-        with open(location, 'wb') as stream:
-            stream.write(data)
+        with file_lock.FileFlock(location + '.lock'):
+            with open(location, 'wb') as stream:
+                stream.write(data)
     elif archive.endswith('.gz'):
         import tarfile
-        with tarfile.open(archive) as tar:
-            tar.extractall(path=location)
+        with file_lock.FileFlock(location + '.lock'):
+            with tarfile.open(archive) as tar:
+                tar.extractall(path=location)
     elif archive.endswith('.bz2'):
         import bz2
-        with open(location, 'wb') as out:
-            bzar = bz2.BZ2File(archive)
-            out.write(bzar.read())
-            bzar.close()
+        with file_lock.FileFlock(location + '.lock'):
+            with open(location, 'wb') as out:
+                bzar = bz2.BZ2File(archive)
+                out.write(bzar.read())
+                bzar.close()
     elif archive.endswith('.sqlite'):
-        with open(location, 'wb') as out:
-            with open(archive) as inp:
-                out.write(inp.read())
+        with file_lock.FileFlock(location + '.lock'):
+            with open(location, 'wb') as out:
+                with open(archive) as inp:
+                    out.write(inp.read())
 
 
 def process_repo(tupl):

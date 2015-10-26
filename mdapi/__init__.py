@@ -33,6 +33,7 @@ import asyncio
 from aiohttp import web
 
 import lib as mdapilib
+import file_lock
 
 
 CONFIG = dict()
@@ -67,15 +68,17 @@ def _get_pkg(branch, name):
                 CONFIG['DB_FOLDER'], branch, repotype)
         else:
             dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
+
         if not os.path.exists(dbfile):
             wrongdb = True
             continue
 
         wrongdb = False
 
-        session = mdapilib.create_session('sqlite:///%s' % dbfile)
-        pkg = mdapilib.get_package(session, name)
-        session.close()
+        with file_lock.FileFlock(dbfile + '.lock'):
+            session = mdapilib.create_session('sqlite:///%s' % dbfile)
+            pkg = mdapilib.get_package(session, name)
+            session.close()
         if pkg:
             break
 
@@ -98,16 +101,18 @@ def get_pkg(request):
 
     dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
         CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
-    session = mdapilib.create_session('sqlite:///%s' % dbfile)
-    if pkg.rpm_sourcerpm:
-        output['co-packages'] = list(set([
-            cpkg.name
-            for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
-        ]))
-    else:
-        output['co-packages'] = []
-    output['repo'] = repotype if repotype else 'release'
-    session.close()
+
+    with file_lock.FileFlock(dbfile + '.lock'):
+        session = mdapilib.create_session('sqlite:///%s' % dbfile)
+        if pkg.rpm_sourcerpm:
+            output['co-packages'] = list(set([
+                cpkg.name
+                for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
+            ]))
+        else:
+            output['co-packages'] = []
+        output['repo'] = repotype if repotype else 'release'
+        session.close()
     return web.Response(body=json.dumps(output).encode('utf-8'))
 
 
@@ -122,9 +127,10 @@ def get_pkg_files(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
-    filelist = mdapilib.get_files(session2, pkg.pkgId)
-    session2.close()
+    with file_lock.FileFlock(dbfile + '.lock'):
+        session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
+        filelist = mdapilib.get_files(session2, pkg.pkgId)
+        session2.close()
     return web.Response(body=json.dumps({
         'files': [fileinfo.to_json() for fileinfo in filelist],
         'repo': repotype if repotype else 'release',
@@ -142,9 +148,10 @@ def get_pkg_changelog(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
-    changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
-    session2.close()
+    with file_lock.FileFlock(dbfile + '.lock'):
+        session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
+        changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
+        session2.close()
     return web.Response(body=json.dumps({
         'files': [changelog.to_json() for changelog in changelogs],
         'repo': repotype if repotype else 'release',
