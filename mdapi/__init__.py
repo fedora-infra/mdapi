@@ -32,8 +32,8 @@ except ImportError:
 import asyncio
 from aiohttp import web
 
-import lib as mdapilib
-import file_lock
+import mdapi.lib as mdapilib
+import mdapi.file_lock as file_lock
 
 
 CONFIG = dict()

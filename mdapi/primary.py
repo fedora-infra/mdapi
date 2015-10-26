@@ -27,8 +27,6 @@ import sqlalchemy as sa
 
 from sqlalchemy.ext.declarative import declarative_base
 
-import filelist
-
 BASE = declarative_base()
 
 

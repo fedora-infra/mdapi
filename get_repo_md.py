@@ -44,7 +44,7 @@ import tempfile
 
 import requests
 
-import file_lock
+import mdapi.file_lock as file_lock
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'

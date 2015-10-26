@@ -29,9 +29,9 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
 from sqlalchemy.exc import SQLAlchemyError
 
-import changelog
-import filelist
-import primary
+import mdapi.changelog as changelog
+import mdapi.filelist as filelist
+import mdapi.primary as primary
 
 
 def create_session(db_url, debug=False, pool_recycle=3600):
