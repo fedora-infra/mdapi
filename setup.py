@@ -41,7 +41,5 @@ setup(
     packages=['mdapi'],
     include_package_data=True,
     install_requires=get_requirements(),
-    scripts=[
-        'get_repo_md.py',
-    ],
+    scripts=['mdapi-get_repo_md'],
 )
