@@ -20,7 +20,7 @@ def get_requirements(requirements_file='requirements.txt'):
 
     lines = open(requirements_file).readlines()
     return [
-        'python3-%s' % line.rstrip().split('#')[0]
+        line.rstrip().split('#')[0]
         for line in lines
         if not line.startswith('#')
     ]
