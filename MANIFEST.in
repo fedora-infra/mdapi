@@ -1,0 +1,5 @@
+include COPYING
+include requirements.txt
+
+recursive-include mdapi *
+
