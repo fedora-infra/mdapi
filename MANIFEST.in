@@ -1,5 +1,6 @@
 include COPYING
 include requirements.txt
+include mdapi.spec
 
 recursive-include mdapi *
 
