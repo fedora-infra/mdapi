@@ -41,6 +41,9 @@ import multiprocessing
 import os
 import shutil
 import tempfile
+import hashlib
+
+import xml.etree.ElementTree as ET
 
 import requests
 
@@ -48,6 +51,11 @@ import mdapi.file_lock as file_lock
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
+
+repomd_xml_namespace = {
+    'repo': 'http://linux.duke.edu/metadata/repo',
+    'rpm': 'http://linux.duke.edu/metadata/rpm',
+}
 
 
 def list_branches(status='Active'):
@@ -87,6 +95,30 @@ def decompress_primary_db(archive, location):
                 with open(archive) as inp:
                     out.write(inp.read())
 
+def needs_update(local_file, remote_sha, sha_type):
+    ''' Compare sha of a local and remote file.
+    Return True if our local file needs to be updated.
+    '''
+
+    if not os.path.isfile(local_file):
+        # If we have never downloaded this before, then obviously it has
+        # "changed"
+        return True
+
+    # Old old epel5 doesn't even know which sha it is using..
+    if sha_type == 'sha':
+        sha_type = 'sha1'
+
+    hash = getattr(hashlib, sha_type)()
+    with open(local_file, 'rb') as f:
+        hash.update(f.read())
+
+    local_sha = hash.hexdigest()
+    if local_sha != remote_sha:
+        return True
+
+    return False
+
 
 def process_repo(tupl):
     ''' Retrieve the repo metadata at the given url and store them using
@@ -96,19 +128,30 @@ def process_repo(tupl):
     url, name = repo
     repomd_url = url + '/repomd.xml'
     response = requests.get(repomd_url)
-    files = []
-    for row in response.text.split('\n'):
-        if '.sqlite' in row:
-            files.append(row.split('"')[1].replace('repodata/', ''))
+    if not bool(response):
+        print("!! Failed to get %r %r" % (repomd_url, response))
+        return
+
+    # Parse the xml doc and get a list of locations and their shasum.
+    files = ((
+        node.find('repo:location', repomd_xml_namespace),
+        node.find('repo:open-checksum', repomd_xml_namespace),
+    ) for node in ET.fromstring(response.text))
+
+    # Extract out the attributes that we're really interested in.
+    files = (
+        (f.attrib['href'].replace('repodata/', ''), s.text, s.attrib['type'])
+        for f, s in files if f is not None and s is not None
+    )
+
+    # Filter down to only sqlite dbs
+    files = ((f, s, t) for f, s, t in files if '.sqlite' in f)
 
     working_dir = tempfile.mkdtemp(prefix='mdapi-')
-    for filename in files:
+    for filename, shasum, shatype in files:
         repomd_url = url + '/' + filename
-        print('%s - Download file: %s' % (name.ljust(10), repomd_url))
-        response = requests.get(repomd_url)
-        archive = os.path.join(working_dir, filename)
-        with open(archive, 'wb') as stream:
-            stream.write(response.content)
+
+        # First, determine if the file has changed by comparing hash
         db = None
         if 'primary.sqlite' in filename:
             db = 'mdapi-%s-primary.sqlite' % name
@@ -118,6 +161,18 @@ def process_repo(tupl):
             db = 'mdapi-%s-other.sqlite' % name
 
         destfile = os.path.join(destfolder, db)
+        if not needs_update(destfile, shasum, shatype):
+            print('%s - No change of %s' % (name.ljust(10), repomd_url))
+            continue
+
+        # If it has changed, then download it and move it into place.
+        print('%s - Downloading file: %s' % (name.ljust(10), repomd_url))
+        print('%s                 to: %s' % (name.ljust(10), destfile))
+        response = requests.get(repomd_url)
+        archive = os.path.join(working_dir, filename)
+        print(archive, filename)
+        with open(archive, 'wb') as stream:
+            stream.write(response.content)
         decompress_primary_db(archive, destfile)
 
     shutil.rmtree(working_dir)
