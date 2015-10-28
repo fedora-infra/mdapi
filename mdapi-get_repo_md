@@ -57,6 +57,8 @@ repomd_xml_namespace = {
     'rpm': 'http://linux.duke.edu/metadata/rpm',
 }
 
+padding = 22
+
 
 def list_branches(status='Active'):
     ''' Return the list of Fedora branches corresponding to the given
@@ -129,7 +131,8 @@ def process_repo(tupl):
     repomd_url = url + '/repomd.xml'
     response = requests.get(repomd_url)
     if not bool(response):
-        print("!! Failed to get %r %r" % (repomd_url, response))
+        print('%s !! Failed to get %r %r' % (
+            name.ljust(padding), repomd_url, response))
         return
 
     # Parse the xml doc and get a list of locations and their shasum.
@@ -162,15 +165,14 @@ def process_repo(tupl):
 
         destfile = os.path.join(destfolder, db)
         if not needs_update(destfile, shasum, shatype):
-            print('%s - No change of %s' % (name.ljust(10), repomd_url))
+            print('%s - No change of %s' % (name.ljust(padding), repomd_url))
             continue
 
         # If it has changed, then download it and move it into place.
-        print('%s - Downloading file: %s' % (name.ljust(10), repomd_url))
-        print('%s                 to: %s' % (name.ljust(10), destfile))
+        print('%s - Downloading file: %s' % (name.ljust(padding), repomd_url))
+        print('%s                 to: %s' % (name.ljust(padding), destfile))
         response = requests.get(repomd_url)
         archive = os.path.join(working_dir, filename)
-        print(archive, filename)
         with open(archive, 'wb') as stream:
             stream.write(response.content)
         decompress_primary_db(archive, destfile)
