@@ -55,8 +55,8 @@ def list_branches(status='Active'):
     status.
     '''
     url = PKGDB2_URL + 'api/collections?clt_status=%s' % status
-    req = requests.get(url)
-    data = req.json()
+    response = requests.get(url)
+    data = response.json()
     return data['collections']
 
 
@@ -95,9 +95,9 @@ def process_repo(tupl):
     destfolder, repo = tupl
     url, name = repo
     repomd_url = url + '/repomd.xml'
-    req = requests.get(repomd_url)
+    response = requests.get(repomd_url)
     files = []
-    for row in req.text.split('\n'):
+    for row in response.text.split('\n'):
         if '.sqlite' in row:
             files.append(row.split('"')[1].replace('repodata/', ''))
 
@@ -105,10 +105,10 @@ def process_repo(tupl):
     for filename in files:
         repomd_url = url + '/' + filename
         print('%s - Download file: %s' % (name.ljust(10), repomd_url))
-        req = requests.get(repomd_url)
+        response = requests.get(repomd_url)
         archive = os.path.join(working_dir, filename)
         with open(archive, 'wb') as stream:
-            stream.write(req.content)
+            stream.write(response.content)
         db = None
         if 'primary.sqlite' in filename:
             db = 'mdapi-%s-primary.sqlite' % name
