@@ -68,6 +68,83 @@ fedmsg.init(
 )
 
 
+# Some queries to help us sort out what is in the repos
+relations_query = """
+    SELECT
+        {table}.name,
+        {table}.flags,
+        {table}.epoch,
+        {table}.version,
+        {table}.release,
+        packages.name
+    FROM {table}, packages
+    WHERE {table}.pkgKey == packages.pkgKey;
+    """
+
+files_query = """
+    SELECT
+        {table}.name,
+        {table}.type,
+        packages.name
+    FROM {table}, packages
+    WHERE {table}.pkgKey == packages.pkgKey;
+    """
+
+packages_cache_builder = """
+    SELECT
+        {table}.pkgId,
+        {table}.name
+    FROM {table};
+    """
+
+packages_query = """
+    SELECT
+        {table}.name,
+        {table}.version,
+        {table}.release,
+        {table}.epoch,
+        {table}.arch
+    FROM {table};
+    """
+
+changelog_query = """
+    SELECT
+        packages.pkgId,
+        {table}.author,
+        {table}.date,
+        {table}.changelog
+    FROM {table}, packages
+    WHERE {table}.pkgKey == packages.pkgKey;
+    """
+
+filelist_query = """
+    SELECT
+        packages.pkgId,
+        {table}.dirname,
+        {table}.filenames,
+        {table}.filetypes
+    FROM {table}, packages
+    WHERE {table}.pkgKey == packages.pkgKey;
+    """
+
+default_query = "SELECT * from {table};"
+
+queries = {
+    'conflicts': relations_query,
+    'enhances': relations_query,
+    'obsoletes': relations_query,
+    'provides': relations_query,
+    'requires': relations_query,
+    'supplements': relations_query,
+    'recommends': relations_query,
+    'suggests': relations_query,
+    'files': files_query,
+    'packages': packages_query,
+    'changelog': changelog_query,
+    'filelist': filelist_query,
+}
+
+
 def list_branches(status='Active'):
     ''' Return the list of Fedora branches corresponding to the given
     status.
@@ -123,20 +200,6 @@ def compare_dbs(name, db1, db2, cache1, cache2):
                     yield name
 
     def get_all_rows(uri, table, cache):
-        queries = {
-            'conflicts': relations_query,
-            'enhances': relations_query,
-            'obsoletes': relations_query,
-            'provides': relations_query,
-            'requires': relations_query,
-            'supplements': relations_query,
-            'recommends': relations_query,
-            'suggests': relations_query,
-            'files': files_query,
-            'packages': packages_query,
-            'changelog': changelog_query,
-            'filelist': filelist_query,
-        }
         query = text(queries.get(table, default_query).format(table=table))
         with file_lock.FileFlock(uri + '.lock'):
             with mdapilib.session_manager('sqlite:///' + uri) as session:
@@ -330,6 +393,7 @@ def process_repo(tupl):
         with tempfile.TemporaryDirectory(**tempargs) as working_dir:
             tempdb = os.path.join(working_dir, db)
             archive = os.path.join(working_dir, filename)
+
             download_db(name, repomd_url, archive)
             decompress_db(name, archive, tempdb)
             differences = compare_dbs(name, tempdb, destfile, cache1, cache2)
@@ -424,68 +488,6 @@ def main():
         process_repo(t)
 
     return 0
-
-
-# Some queries to help us sort out what is in the repos
-relations_query = """
-    SELECT
-        {table}.name,
-        {table}.flags,
-        {table}.epoch,
-        {table}.version,
-        {table}.release,
-        packages.name
-    FROM {table}, packages
-    WHERE {table}.pkgKey == packages.pkgKey;
-    """
-
-files_query = """
-    SELECT
-        {table}.name,
-        {table}.type,
-        packages.name
-    FROM {table}, packages
-    WHERE {table}.pkgKey == packages.pkgKey;
-    """
-
-packages_cache_builder = """
-    SELECT
-        {table}.pkgId,
-        {table}.name
-    FROM {table};
-    """
-
-packages_query = """
-    SELECT
-        {table}.name,
-        {table}.version,
-        {table}.release,
-        {table}.epoch,
-        {table}.arch
-    FROM {table};
-    """
-
-changelog_query = """
-    SELECT
-        packages.pkgId,
-        {table}.author,
-        {table}.date,
-        {table}.changelog
-    FROM {table}, packages
-    WHERE {table}.pkgKey == packages.pkgKey;
-    """
-
-filelist_query = """
-    SELECT
-        packages.pkgId,
-        {table}.dirname,
-        {table}.filenames,
-        {table}.filetypes
-    FROM {table}, packages
-    WHERE {table}.pkgKey == packages.pkgKey;
-    """
-
-default_query = "SELECT * from {table};"
 
 
 if __name__ == '__main__':
