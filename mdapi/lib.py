@@ -23,6 +23,7 @@
 MDAPI internal API to interact with the database.
 '''
 
+import contextlib
 import time
 
 import sqlalchemy as sa
@@ -54,6 +55,20 @@ def create_session(db_url, debug=False, pool_recycle=3600):
         db_url, echo=debug, pool_recycle=pool_recycle)
     scopedsession = scoped_session(sessionmaker(bind=engine))
     return scopedsession
+
+
+@contextlib.contextmanager
+def session_manager(db_url, debug=False, pool_recycle=3600):
+    """ A handy context manager for our sessions. """
+    session = create_session(db_url, debug=debug, pool_recycle=pool_recycle)
+    try:
+        yield session
+        session.commit()
+    except:
+        session.rollback()
+        raise
+    finally:
+        session.close()
 
 
 def get_package(session, pkg_name):
