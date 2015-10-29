@@ -169,21 +169,18 @@ def decompress_db(name, archive, location):
         import lzma
         with contextlib.closing(lzma.LZMAFile(archive)) as stream_xz:
             data = stream_xz.read()
-        with file_lock.FileFlock(location + '.lock'):
-            with open(location, 'wb') as stream:
-                stream.write(data)
+        with open(location, 'wb') as stream:
+            stream.write(data)
     elif archive.endswith('.gz'):
         import tarfile
-        with file_lock.FileFlock(location + '.lock'):
-            with tarfile.open(archive) as tar:
-                tar.extractall(path=location)
+        with tarfile.open(archive) as tar:
+            tar.extractall(path=location)
     elif archive.endswith('.bz2'):
         import bz2
-        with file_lock.FileFlock(location + '.lock'):
-            with open(location, 'wb') as out:
-                bzar = bz2.BZ2File(archive)
-                out.write(bzar.read())
-                bzar.close()
+        with open(location, 'wb') as out:
+            bzar = bz2.BZ2File(archive)
+            out.write(bzar.read())
+            bzar.close()
     else:
         raise NotImplementedError(archive)
 
@@ -192,33 +189,30 @@ def compare_dbs(name, db1, db2, cache1, cache2):
     print('%s Comparing %s and %s' % (name.ljust(padding), db1, db2))
 
     def get_table_names(uri):
-        with file_lock.FileFlock(uri + '.lock'):
-            with mdapilib.session_manager('sqlite:///' + uri) as session:
-                for name in session.connection().engine.table_names():
-                    if name == 'db_info':
-                        continue
-                    yield name
+        with mdapilib.session_manager('sqlite:///' + uri) as session:
+            for name in session.connection().engine.table_names():
+                if name == 'db_info':
+                    continue
+                yield name
 
     def get_all_rows(uri, table, cache):
         query = text(queries.get(table, default_query).format(table=table))
-        with file_lock.FileFlock(uri + '.lock'):
-            with mdapilib.session_manager('sqlite:///' + uri) as session:
-                engine = session.connection().engine
-                for i, row in enumerate(engine.execute(query)):
-                    if table in cache_dependant_tables:
-                        row = list(row)  # lists support item assignment
-                        row[0] = cache[row[0]]
+        with mdapilib.session_manager('sqlite:///' + uri) as session:
+            engine = session.connection().engine
+            for i, row in enumerate(engine.execute(query)):
+                if table in cache_dependant_tables:
+                    row = list(row)  # lists support item assignment
+                    row[0] = cache[row[0]]
 
-                    yield tuple(row)
+                yield tuple(row)
 
 
     def build_cache(uri, cache):
         query = text(packages_cache_builder.format(table=table))
-        with file_lock.FileFlock(uri + '.lock'):
-            with mdapilib.session_manager('sqlite:///' + uri) as session:
-                engine = session.connection().engine
-                for pkgId, pkgname in engine.execute(query):
-                    cache[pkgId] = pkgname
+        with mdapilib.session_manager('sqlite:///' + uri) as session:
+            engine = session.connection().engine
+            for pkgId, pkgname in engine.execute(query):
+                cache[pkgId] = pkgname
 
     tables1 = list(get_table_names(db1))
     tables2 = list(get_table_names(db2))
