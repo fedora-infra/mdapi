@@ -270,7 +270,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
     return results
 
 
-def publish_changes(name, differences):
+def publish_changes(name, differences, repomd_url):
     print('%s Publishing differences to fedmsg:' % (name.ljust(padding)))
 
     change = False
@@ -287,12 +287,21 @@ def publish_changes(name, differences):
 
     #import pprint; pprint.pprint(differences)
 
+    # Just publish the suffix of the URL.  The prefix is dl.fedoraproject.org
+    # for lots of these, but we don't want to encourage people to download from
+    # there.  It is the master mirror.  We want people to use
+    # download.fedoraproject.org.. so, just obscure *exactly* which repo we're
+    # talking about.
+    url = '/'.join(repomd_url.split('/')[4:])
+    print("%s   url %s" % (name.ljust(padding), url))
+
     fedmsg.publish(
         modname='mdapi',
         topic='repo.update',
         msg=dict(
             name=name,
             differences=differences,
+            url=url,
         )
     )
 
@@ -391,7 +400,7 @@ def process_repo(tupl):
             download_db(name, repomd_url, archive)
             decompress_db(name, archive, tempdb)
             differences = compare_dbs(name, tempdb, destfile, cache1, cache2)
-            publish_changes(name, differences)
+            publish_changes(name, differences, repomd_url)
             install_db(name, tempdb, destfile)
 
 
