@@ -38,6 +38,20 @@ repositories
 %install
 %{__python3} setup.py install -O1 --skip-build --root=%{buildroot}
 
+# Install the systemd service file
+mkdir -p $RPM_BUILD_ROOT/%{_unitdir}
+install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
+
+
+%post
+%systemd_post mdapi.service
+
+%preun
+%systemd_preun mdapi.service
+
+%postun
+%systemd_postun_with_restart mdapi.service
+
 
 %files
 %doc COPYING
@@ -45,6 +59,7 @@ repositories
 %{python3_sitelib}/mdapi*.egg-info
 %{_bindir}/mdapi-get_repo_md
 %{_bindir}/mdapi-run
+%{_unitdir}/mdapi.service
 
 
 %changelog
