@@ -1,0 +1,11 @@
+[Unit]
+Description=mdapi, a simple API to expose metadata from RPM repositories
+Documentation=https://pagure.io/mdapi
+
+[Service]
+ExecStart=/usr/bin/mdapi-run
+Type=simple
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
