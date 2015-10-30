@@ -1,6 +1,8 @@
 include COPYING
 include requirements.txt
 include mdapi.spec
+include mdapi-run
+include mdapi-get_repo_md
 
 recursive-include mdapi *
 
