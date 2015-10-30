@@ -44,6 +44,7 @@ repositories
 %{python3_sitelib}/mdapi/
 %{python3_sitelib}/mdapi*.egg-info
 %{_bindir}/mdapi-get_repo_md
+%{_bindir}/mdapi-run
 
 
 %changelog
