@@ -1,0 +1,14 @@
+#!/usr/bin/env python3
+
+import asyncio
+import mdapi
+
+
+loop = asyncio.get_event_loop()
+loop.run_until_complete(mdapi.init(loop))
+
+try:
+    loop.run_forever()
+except KeyboardInterrupt:
+    pass
+
