@@ -202,9 +202,16 @@ def compare_dbs(name, db1, db2, cache1, cache2):
             for i, row in enumerate(engine.execute(query)):
                 if table in cache_dependant_tables:
                     row = list(row)  # lists support item assignment
-                    row[0] = cache[row[0]]
-
-                yield tuple(row)
+                    if row[0] in cache:
+                        row[0] = cache[row[0]]
+                        yield tuple(row)
+                    else:
+                        print("%s ! %r does not appear in the "
+                              "%r cache for %r.  Dropping "
+                              "from comparison." % (
+                                  name.ljust(padding), row[0], table, uri))
+                else:
+                    yield tuple(row)
 
 
     def build_cache(uri, cache):
