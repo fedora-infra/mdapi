@@ -183,7 +183,7 @@ def init(loop):
     routes = []
     prefix = CONFIG.get('PREFIX', '')
     if prefix:
-        routes.append(('%s', index))
+        routes.append(('', index))
 
     routes.extend([
         ('/', index),
