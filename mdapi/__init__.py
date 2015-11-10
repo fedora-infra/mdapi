@@ -180,12 +180,26 @@ def index(request):
 @asyncio.coroutine
 def init(loop):
     app = web.Application(loop=loop)
-    app.router.add_route('GET', '/', index)
-    app.router.add_route('GET', '/branches', list_branches)
-    app.router.add_route('GET', '/{branch}/pkg/{name}', get_pkg)
-    app.router.add_route('GET', '/{branch}/files/{name}', get_pkg_files)
     app.router.add_route(
-        'GET', '/{branch}/changelog/{name}', get_pkg_changelog)
+        'GET',
+        '%s/' % CONFIG.get('PREFIX', ''),
+        index)
+    app.router.add_route(
+        'GET',
+        '%s/branches' % CONFIG.get('PREFIX', ''),
+        list_branches)
+    app.router.add_route(
+        'GET',
+        '%s/{branch}/pkg/{name}' % CONFIG.get('PREFIX', ''),
+        get_pkg)
+    app.router.add_route(
+        'GET',
+        '%s/{branch}/files/{name}' % CONFIG.get('PREFIX', ''),
+        get_pkg_files)
+    app.router.add_route(
+        'GET',
+        '%s/{branch}/changelog/{name}' % CONFIG.get('PREFIX', ''),
+        get_pkg_changelog)
 
     srv = yield from loop.create_server(
         app.make_handler(),
