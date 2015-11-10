@@ -52,8 +52,11 @@ from sqlalchemy import text
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
 
+
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
+DL_SERVER = 'http://dl.fedoraproject.org'
+
 
 repomd_xml_namespace = {
     'repo': 'http://linux.duke.edu/metadata/repo',
@@ -430,6 +433,11 @@ def main():
         print('Could not find the configuration file')
         return 1
 
+    global PKGDB2_URL, KOJI_REPO, DL_SERVER
+    PKGDB2_URL = CONFIG.get('PKGDB2_URL', PKGDB2_URL)
+    KOJI_REPO = CONFIG.get('KOJI_REPO', KOJI_REPO)
+    DL_SERVER = CONFIG.get('DL_SERVER', DL_SERVER)
+
     repositories = []
     # Get the koji repo
     repositories.append(
@@ -444,8 +452,8 @@ def main():
         version = release['version']
         if version == 'devel':
             version = 'rawhide'
-        url = 'http://dl.fedoraproject.org/pub/fedora/linux/' \
-            'development/%s/x86_64/os/repodata' % version
+        url = '%s/pub/fedora/linux/' \
+            'development/%s/x86_64/os/repodata' % (DL_SERVER, version)
         repositories.append(
             (url, release['koji_name'])
         )
@@ -453,17 +461,14 @@ def main():
     urls = {
         'Fedora':
             [
-                'http://dl.fedoraproject.org/pub/fedora/linux/'
-                'releases/%s/Everything/x86_64/os/repodata',
-                'http://dl.fedoraproject.org/pub/fedora/linux/'
-                'updates/%s/x86_64/repodata',
-                'http://dl.fedoraproject.org/pub/fedora/linux/'
-                'updates/testing/%s/x86_64/repodata',
+                '%s/pub/fedora/linux/releases/%s/Everything/x86_64/os/repodata',
+                '%s/pub/fedora/linux/updates/%s/x86_64/repodata',
+                '%s/pub/fedora/linux/updates/testing/%s/x86_64/repodata',
             ],
         'Fedora EPEL':
             [
-                'http://dl.fedoraproject.org/pub/epel/%s/x86_64/repodata/',
-                'http://dl.fedoraproject.org/pub/epel/testing/%s/x86_64/repodata',
+                '%s/pub/epel/%s/x86_64/repodata/',
+                '%s/pub/epel/testing/%s/x86_64/repodata',
             ]
     }
     fedora_repos = ['%s', '%s-updates', '%s-updates-testing']
@@ -480,7 +485,7 @@ def main():
                 name = fedora_repos[idx] % release['koji_name']
             else:
                 name = epel_repos[idx] % release['koji_name']
-            rurl =  url % version
+            rurl =  url % (DL_SERVER, version)
             repositories.append((rurl, name))
 
     # In parallel
