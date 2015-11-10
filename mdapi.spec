@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        0.1
+Version:        1.0
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -15,6 +15,8 @@ BuildRequires:  python3-setuptools
 BuildRequires:  python3-simplejson
 BuildRequires:  python3-sqlalchemy
 BuildRequires:  python3-werkzeug
+BuildRequires:  python3-devel
+BuildRequires:  systemd
 
 Requires:  python3-aiohttp
 Requires:  python3-requests
@@ -22,6 +24,11 @@ Requires:  python3-setuptools
 Requires:  python3-simplejson
 Requires:  python3-sqlalchemy
 Requires:  python3-werkzeug
+
+Requires(post):     systemd
+Requires(preun):    systemd
+Requires(postun):   systemd
+
 
 %description
 Small web and asynchronous application serving the metadata of the Fedora
@@ -63,5 +70,8 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Mon Nov 09 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 1.0-1
+- Update to 1.0
+
 * Tue Oct 27 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 0.1-1
 - First package for Fedora
