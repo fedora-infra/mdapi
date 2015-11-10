@@ -180,6 +180,11 @@ def index(request):
 @asyncio.coroutine
 def init(loop):
     app = web.Application(loop=loop)
+    if CONFIG.get('PREFIX'):
+        app.router.add_route(
+        'GET',
+        '%s' % CONFIG.get('PREFIX', ''),
+        index)
     app.router.add_route(
         'GET',
         '%s/' % CONFIG.get('PREFIX', ''),
