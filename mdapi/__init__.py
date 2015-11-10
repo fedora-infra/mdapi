@@ -186,14 +186,14 @@ def init(loop):
         routes.append(('%s', index))
 
     routes.extend([
-        ('%s/', index),
-        ('%s/branches', list_branches),
-        ('%s/{branch}/pkg/{name}', get_pkg),
-        ('%s/{branch}/files/{name}', get_pkg_files),
-        ('%s/{branch}/changelog/{name}', get_pkg_changelog),
+        ('/', index),
+        ('/branches', list_branches),
+        ('/{branch}/pkg/{name}', get_pkg),
+        ('/{branch}/files/{name}', get_pkg_files),
+        ('/{branch}/changelog/{name}', get_pkg_changelog),
     ])
     for route in routes:
-        app.router.add_route('GET', route[0] % prefix, route[1])
+        app.router.add_route('GET', prefix + route[0], route[1])
 
     srv = yield from loop.create_server(
         app.make_handler(),
