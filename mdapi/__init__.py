@@ -180,31 +180,20 @@ def index(request):
 @asyncio.coroutine
 def init(loop):
     app = web.Application(loop=loop)
-    if CONFIG.get('PREFIX'):
-        app.router.add_route(
-        'GET',
-        '%s' % CONFIG.get('PREFIX', ''),
-        index)
-    app.router.add_route(
-        'GET',
-        '%s/' % CONFIG.get('PREFIX', ''),
-        index)
-    app.router.add_route(
-        'GET',
-        '%s/branches' % CONFIG.get('PREFIX', ''),
-        list_branches)
-    app.router.add_route(
-        'GET',
-        '%s/{branch}/pkg/{name}' % CONFIG.get('PREFIX', ''),
-        get_pkg)
-    app.router.add_route(
-        'GET',
-        '%s/{branch}/files/{name}' % CONFIG.get('PREFIX', ''),
-        get_pkg_files)
-    app.router.add_route(
-        'GET',
-        '%s/{branch}/changelog/{name}' % CONFIG.get('PREFIX', ''),
-        get_pkg_changelog)
+    routes = []
+    prefix = CONFIG.get('PREFIX', '')
+    if prefix:
+        routes.append(('%s', index))
+
+    routes.extend([
+        ('%s/', index),
+        ('%s/branches', list_branches),
+        ('%s/{branch}/pkg/{name}', get_pkg),
+        ('%s/{branch}/files/{name}', get_pkg_files),
+        ('%s/{branch}/changelog/{name}', get_pkg_changelog),
+    ])
+    for route in routes:
+        app.router.add_route('GET', route[0] % prefix, route[1])
 
     srv = yield from loop.create_server(
         app.make_handler(),
