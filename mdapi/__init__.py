@@ -95,6 +95,9 @@ def _get_pkg(branch, name):
 @asyncio.coroutine
 def get_pkg(request):
     branch = request.match_info.get('branch')
+    pretty = False
+    if request.query_string.lower() in ['pretty=1', 'pretty=true']:
+        pretty = True
     name = request.match_info.get('name')
     pkg, repotype = _get_pkg(branch, name)
 
@@ -135,13 +138,20 @@ def get_pkg(request):
             output['co-packages'] = []
         output['repo'] = repotype if repotype else 'release'
         session.close()
-    return web.Response(body=json.dumps(output).encode('utf-8'))
+
+    return web.Response(body=json.dumps(
+            output,
+            sort_keys=pretty, indent=4, separators=(',', ': ')
+    ).encode('utf-8'))
 
 
 @asyncio.coroutine
 def get_pkg_files(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
+    pretty = False
+    if request.query_string.lower() in ['pretty=1', 'pretty=true']:
+        pretty = True
     pkg, repotype = _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-filelists.sqlite' % (
@@ -153,16 +163,22 @@ def get_pkg_files(request):
         session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
         filelist = mdapilib.get_files(session2, pkg.pkgId)
         session2.close()
-    return web.Response(body=json.dumps({
-        'files': [fileinfo.to_json() for fileinfo in filelist],
-        'repo': repotype if repotype else 'release',
-    }).encode('utf-8'))
+    return web.Response(body=json.dumps(
+        {
+            'files': [fileinfo.to_json() for fileinfo in filelist],
+            'repo': repotype if repotype else 'release',
+        },
+        sort_keys=pretty, indent=4, separators=(',', ': ')
+    ).encode('utf-8'))
 
 
 @asyncio.coroutine
 def get_pkg_changelog(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
+    pretty = False
+    if request.query_string.lower() in ['pretty=1', 'pretty=true']:
+        pretty = True
     pkg, repotype = _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-other.sqlite' % (
@@ -174,10 +190,13 @@ def get_pkg_changelog(request):
         session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
         changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
         session2.close()
-    return web.Response(body=json.dumps({
-        'files': [changelog.to_json() for changelog in changelogs],
-        'repo': repotype if repotype else 'release',
-    }).encode('utf-8'))
+    return web.Response(body=json.dumps(
+        {
+            'files': [changelog.to_json() for changelog in changelogs],
+            'repo': repotype if repotype else 'release',
+        },
+        sort_keys=pretty, indent=4, separators=(',', ': ')
+    ).encode('utf-8'))
 
 
 @asyncio.coroutine
@@ -190,7 +209,9 @@ def list_branches(request):
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ]))
-    return web.Response(body=json.dumps(output).encode('utf-8'))
+    return web.Response(body=json.dumps(
+        output, sort_keys=pretty, indent=4, separators=(',', ': ')
+    ).encode('utf-8'))
 
 
 @asyncio.coroutine
