@@ -105,6 +105,27 @@ def get_pkg(request):
 
     with file_lock.FileFlock(dbfile + '.lock'):
         session = mdapilib.create_session('sqlite:///%s' % dbfile)
+        # Fill in some extra info
+
+        # Basic infos, always present regardless of the version of the repo
+        for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
+            data = mdapilib.get_package_info(
+                session, pkg.pkgKey, datatype.capitalize())
+            if data:
+                output[datatype] = [item.to_json() for item in data]
+            else:
+                output[datatype] = data
+
+        # New meta-data present for soft dependency management in RPM
+        for datatype in ['enhances', 'recommends', 'suggests', 'supplements']:
+            data = mdapilib.get_package_info(
+                session, pkg.pkgKey, datatype.capitalize())
+            if data:
+                output[datatype] = [item.to_json() for item in data]
+            else:
+                output[datatype] = data
+
+        # Add the list of packages built from the same src.rpm
         if pkg.rpm_sourcerpm:
             output['co-packages'] = list(set([
                 cpkg.name
