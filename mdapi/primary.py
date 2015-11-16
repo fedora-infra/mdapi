@@ -62,3 +62,87 @@ class Package(BASE):
             'basename': self.basename,
         }
         return pkg
+
+
+class BaseDependency(object):
+    ''' Base mapping for the tables in the primary.sqlite database that
+    contain all the dependencies information
+    '''
+    rowid = sa.Column(sa.Integer, primary_key=True)
+    pkgKey = sa.Column(sa.Integer, index=True)
+    name = sa.Column(sa.Text)
+    epoch = sa.Column(sa.Text)
+    version = sa.Column(sa.Text)
+    release = sa.Column(sa.Text)
+
+    def to_json(self):
+        pkg = {
+            'name': self.name,
+            'epoch': self.epoch,
+            'version': self.version,
+            'release': self.release,
+        }
+        return pkg
+
+
+BASEDEP = declarative_base(cls=BaseDependency)
+
+
+class Requires(BASEDEP):
+    ''' Maps the requires table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'requires'
+
+
+class Provides(BASEDEP):
+    ''' Maps the provides table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'provides'
+
+
+class Conflicts(BASEDEP):
+    ''' Maps the conflicts table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'conflicts'
+
+
+
+class Obsoletes(BASEDEP):
+    ''' Maps the provides table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'obsoletes'
+
+
+# New soft-dependencies
+
+
+class Enhances(BASEDEP):
+    ''' Maps the enhances table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'enhances'
+
+
+class Recommends(BASEDEP):
+    ''' Maps the recommends table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'recommends'
+
+
+class Suggests(BASEDEP):
+    ''' Maps the suggests table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'suggests'
+
+
+class Supplements(BASEDEP):
+    ''' Maps the supplements table in the primary.sqlite database from
+    repodata to a python object.
+    '''
+    __tablename__ = 'supplements'
