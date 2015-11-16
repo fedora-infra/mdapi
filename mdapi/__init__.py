@@ -92,12 +92,17 @@ def _get_pkg(branch, name):
     return (pkg, repotype)
 
 
-@asyncio.coroutine
-def get_pkg(request):
-    branch = request.match_info.get('branch')
+def _get_pretty(request):
     pretty = False
     if request.query_string.lower() in ['pretty=1', 'pretty=true']:
         pretty = True
+    return pretty
+
+
+@asyncio.coroutine
+def get_pkg(request):
+    branch = request.match_info.get('branch')
+    pretty = _get_pretty(request)
     name = request.match_info.get('name')
     pkg, repotype = _get_pkg(branch, name)
 
@@ -149,9 +154,7 @@ def get_pkg(request):
 def get_pkg_files(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
-    pretty = False
-    if request.query_string.lower() in ['pretty=1', 'pretty=true']:
-        pretty = True
+    pretty = _get_pretty(request)
     pkg, repotype = _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-filelists.sqlite' % (
@@ -176,9 +179,7 @@ def get_pkg_files(request):
 def get_pkg_changelog(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
-    pretty = False
-    if request.query_string.lower() in ['pretty=1', 'pretty=true']:
-        pretty = True
+    pretty = _get_pretty(request)
     pkg, repotype = _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-other.sqlite' % (
@@ -203,6 +204,7 @@ def get_pkg_changelog(request):
 def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
+    pretty = _get_pretty(request)
     output = list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
         filename.replace('mdapi-', '').rsplit('-', 2)[0].replace('-updates', '')
