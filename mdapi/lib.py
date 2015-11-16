@@ -30,11 +30,12 @@ import sqlalchemy as sa
 
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.orm import scoped_session
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, OperationalError
 
 import mdapi.changelog as changelog
 import mdapi.filelist as filelist
 import mdapi.primary as primary
+import mdapi.primary_new as primary_new
 
 RETRY_ATTEMPT = 3
 
@@ -89,6 +90,32 @@ def get_package(session, pkg_name):
         else:
             time.sleep(0.1)
             output = get_package(session, pkg_name)
+
+    return output
+
+
+def get_package_info(session, pkgKey, tablename):
+    ''' Return the information contained in the specified table for the
+    given package.
+    '''
+    table = getattr(primary, tablename)
+    cnt = 0
+    try:
+        query = session.query(
+            table
+        ).filter(
+            table.pkgKey == pkgKey
+        )
+        output = query.all()
+    except OperationalError:
+        return None
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            output = get_package_info(session, pkgKey, tablename)
 
     return output
 
