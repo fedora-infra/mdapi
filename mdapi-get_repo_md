@@ -52,9 +52,6 @@ from sqlalchemy import text
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
 
-# Suppress urllib3's warning about insecure requests
-requests.packages.urllib3.disable_warnings()
-
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
 DL_SERVER = 'http://dl.fedoraproject.org'
@@ -420,7 +417,6 @@ def process_repo(tupl):
             install_db(name, tempdb, destfile)
 
 
-
 def main():
     ''' Get the repo metadata. '''
     parser = argparse.ArgumentParser(prog="get_repo_md")
@@ -445,6 +441,10 @@ def main():
     DL_SERVER = CONFIG.get('DL_SERVER', DL_SERVER)
     PKGDB2_VERIFY = CONFIG.get('PKGDB2_VERIFY', PKGDB2_VERIFY)
     DL_VERIFY = CONFIG.get('DL_VERIFY', DL_VERIFY)
+
+    if not DL_VERIFY or not PKGDB2_VERIFY:
+        # Suppress urllib3's warning about insecure requests
+        requests.packages.urllib3.disable_warnings()
 
     repositories = []
     # Get the koji repo
