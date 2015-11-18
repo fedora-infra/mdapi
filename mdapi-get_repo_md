@@ -52,10 +52,16 @@ from sqlalchemy import text
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
 
+# Suppress urllib3's warning about insecure requests
+requests.packages.urllib3.disable_warnings()
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
 DL_SERVER = 'http://dl.fedoraproject.org'
+# Enforce, or not, checking the SSL certs
+PKGDB2_VERIFY = True
+# Valid for both koji and the download server
+DL_VERIFY = True
 
 
 repomd_xml_namespace = {
@@ -153,14 +159,14 @@ def list_branches(status='Active'):
     status.
     '''
     url = PKGDB2_URL + 'api/collections?clt_status=%s' % status
-    response = requests.get(url)
+    response = requests.get(url, verify=PKGDB2_VERIFY)
     data = response.json()
     return data['collections']
 
 
 def download_db(name, repomd_url, archive):
     print('%s Downloading file: %s' % (name.ljust(padding), repomd_url))
-    response = requests.get(repomd_url)
+    response = requests.get(repomd_url, , verify=DL_VERIFY)
     with open(archive, 'wb') as stream:
         stream.write(response.content)
 
@@ -354,7 +360,7 @@ def process_repo(tupl):
     destfolder, repo = tupl
     url, name = repo
     repomd_url = url + '/repomd.xml'
-    response = requests.get(repomd_url)
+    response = requests.get(repomd_url, verify=DL_VERIFY)
     if not bool(response):
         print('%s !! Failed to get %r %r' % (
             name.ljust(padding), repomd_url, response))
@@ -433,10 +439,12 @@ def main():
         print('Could not find the configuration file')
         return 1
 
-    global PKGDB2_URL, KOJI_REPO, DL_SERVER
+    global PKGDB2_URL, KOJI_REPO, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY
     PKGDB2_URL = CONFIG.get('PKGDB2_URL', PKGDB2_URL)
     KOJI_REPO = CONFIG.get('KOJI_REPO', KOJI_REPO)
     DL_SERVER = CONFIG.get('DL_SERVER', DL_SERVER)
+    PKGDB2_VERIFY = CONFIG.get('PKGDB2_VERIFY', PKGDB2_VERIFY)
+    DL_VERIFY = CONFIG.get('DL_VERIFY', DL_VERIFY)
 
     repositories = []
     # Get the koji repo
