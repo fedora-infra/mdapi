@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        1.2.2
+Version:        2.0
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -70,6 +70,14 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Thu Nov 19 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.0-1
+- Update to 2.0
+- Fix typos on the front page
+- Add the dependencies (Requires, Obsoletes, Provides, Conflicts, Enhances,
+  Recommends, Suggests, Supplements) to the JSON returned
+- Add the option to return a prettier JSON
+- Add the possibility to disable checking the SSL cert
+
 * Tue Nov 10 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 1.2.2-1
 - Update to 1.2.2
 - Be consistent about providing links on the front page
