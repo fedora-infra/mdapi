@@ -35,7 +35,7 @@ from sqlalchemy.exc import SQLAlchemyError, OperationalError
 import mdapi.changelog as changelog
 import mdapi.filelist as filelist
 import mdapi.primary as primary
-import mdapi.primary_new as primary_new
+
 
 RETRY_ATTEMPT = 3
 
