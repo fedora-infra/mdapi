@@ -144,10 +144,11 @@ def get_pkg(request):
         output['repo'] = repotype if repotype else 'release'
         session.close()
 
-    return web.Response(body=json.dumps(
-            output,
-            sort_keys=pretty, indent=4, separators=(',', ': ')
-    ).encode('utf-8'))
+    args = {}
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
 
 
 @asyncio.coroutine
@@ -166,13 +167,16 @@ def get_pkg_files(request):
         session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
         filelist = mdapilib.get_files(session2, pkg.pkgId)
         session2.close()
-    return web.Response(body=json.dumps(
-        {
-            'files': [fileinfo.to_json() for fileinfo in filelist],
-            'repo': repotype if repotype else 'release',
-        },
-        sort_keys=pretty, indent=4, separators=(',', ': ')
-    ).encode('utf-8'))
+
+    output = {
+        'files': [fileinfo.to_json() for fileinfo in filelist],
+        'repo': repotype if repotype else 'release',
+    }
+    args = {}
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
 
 
 @asyncio.coroutine
@@ -191,13 +195,16 @@ def get_pkg_changelog(request):
         session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
         changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
         session2.close()
-    return web.Response(body=json.dumps(
-        {
-            'files': [changelog.to_json() for changelog in changelogs],
-            'repo': repotype if repotype else 'release',
-        },
-        sort_keys=pretty, indent=4, separators=(',', ': ')
-    ).encode('utf-8'))
+
+    output = {
+        'files': [changelog.to_json() for changelog in changelogs],
+        'repo': repotype if repotype else 'release',
+    }
+    args = {}
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
 
 
 @asyncio.coroutine
@@ -211,9 +218,11 @@ def list_branches(request):
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ]))
-    return web.Response(body=json.dumps(
-        output, sort_keys=pretty, indent=4, separators=(',', ': ')
-    ).encode('utf-8'))
+
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
 
 
 @asyncio.coroutine
