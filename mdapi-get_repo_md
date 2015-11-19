@@ -163,7 +163,7 @@ def list_branches(status='Active'):
 
 def download_db(name, repomd_url, archive):
     print('%s Downloading file: %s' % (name.ljust(padding), repomd_url))
-    response = requests.get(repomd_url, , verify=DL_VERIFY)
+    response = requests.get(repomd_url, verify=DL_VERIFY)
     with open(archive, 'wb') as stream:
         stream.write(response.content)
 
