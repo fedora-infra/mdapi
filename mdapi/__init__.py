@@ -54,7 +54,7 @@ indexfile = os.path.join(
 INDEX = ''
 with open(indexfile) as stream:
     INDEX = stream.read()
-    INDEX = INDEX.replace('$PREFIX', config.get('PREFIX', ''))
+    INDEX = INDEX.replace('$PREFIX', CONFIG.get('PREFIX', ''))
 
 
 def _get_pkg(branch, name):
