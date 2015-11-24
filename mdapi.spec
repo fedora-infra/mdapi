@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.2.2
+Version:        2.2.3
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -70,6 +70,10 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Tue Nov 24 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.2.3-1
+- Update to 2.2.3
+- Fix the branches endpoint (un-instantiated variable)
+
 * Mon Nov 23 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.2.2-1
 - Update to 2.2.2
 - Fix accessing the configuration to adjust the link on the front page
