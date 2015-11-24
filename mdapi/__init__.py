@@ -220,6 +220,7 @@ def list_branches(request):
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ]))
 
+    args = {}
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
