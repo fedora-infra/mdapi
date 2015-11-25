@@ -81,6 +81,10 @@ def get_package(session, pkg_name):
             primary.Package
         ).filter(
             primary.Package.name == pkg_name
+        ).order_by(
+            primary.Package.epoch.desc(),
+            primary.Package.version.desc(),
+            primary.Package.release.desc(),
         )
         output = pkg.first()
     except SQLAlchemyError as err:
