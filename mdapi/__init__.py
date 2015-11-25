@@ -99,8 +99,7 @@ def _get_pretty(request):
     if query_string in ['pretty=1', 'pretty=true']:
         pretty = True
     # Assume pretty if html is requested and pretty is not disabled
-    elif not query_string in ['pretty=0', 'pretty=false'] and \
-            request.accept_mimetypes.best == "text/html":
+    elif 'text/html' in request.headers.get('ACCEPT', ''):
         pretty = True
     return pretty
 
