@@ -202,7 +202,7 @@ def get_pkg_changelog(request):
         session2.close()
 
     output = {
-        'files': [changelog.to_json() for changelog in changelogs],
+        'changelogs': [changelog.to_json() for changelog in changelogs],
         'repo': repotype if repotype else 'release',
     }
     args = {}
