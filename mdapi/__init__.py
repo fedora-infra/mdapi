@@ -97,8 +97,9 @@ def _get_pkg(branch, name):
 def _get_pretty(request):
     pretty = False
     get_params = MultiDict(urllib.parse.parse_qsl(request.query_string.lower()))
-    if str(get_params.get('pretty', None)) in ['1', 'true']:
-        pretty = True
+    if get_params.get('pretty'):
+        if str(get_params.get('pretty', None)) in ['1', 'true']:
+            pretty = True
     # Assume pretty if html is requested and pretty is not disabled
     elif 'text/html' in request.headers.get('ACCEPT', ''):
         pretty = True
