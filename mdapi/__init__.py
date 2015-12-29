@@ -23,6 +23,7 @@
 Top level of the mdapi aiohttp application.
 '''
 import os
+import urllib
 
 try:
     import simplejson as json
@@ -31,7 +32,7 @@ except ImportError:
 
 import asyncio
 import werkzeug
-from aiohttp import web
+from aiohttp import web, MultiDict
 
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
@@ -95,8 +96,8 @@ def _get_pkg(branch, name):
 
 def _get_pretty(request):
     pretty = False
-    query_string = request.query_string.lower()
-    if query_string in ['pretty=1', 'pretty=true']:
+    get_params = MultiDict(urllib.parse.parse_qsl(request.query_string.lower()))
+    if str(get_params.get('pretty', None)) in ['1', 'true']:
         pretty = True
     # Assume pretty if html is requested and pretty is not disabled
     elif 'text/html' in request.headers.get('ACCEPT', ''):
