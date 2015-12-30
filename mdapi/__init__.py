@@ -22,13 +22,10 @@
 '''
 Top level of the mdapi aiohttp application.
 '''
+import json
 import os
 import urllib
 
-try:
-    import simplejson as json
-except ImportError:
-    import json
 
 import asyncio
 import werkzeug
