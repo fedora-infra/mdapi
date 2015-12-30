@@ -12,7 +12,6 @@ BuildArch:      noarch
 BuildRequires:  python3-aiohttp
 BuildRequires:  python3-requests
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-simplejson
 BuildRequires:  python3-sqlalchemy
 BuildRequires:  python3-werkzeug
 BuildRequires:  python3-devel
@@ -21,7 +20,6 @@ BuildRequires:  systemd
 Requires:  python3-aiohttp
 Requires:  python3-requests
 Requires:  python3-setuptools
-Requires:  python3-simplejson
 Requires:  python3-sqlalchemy
 Requires:  python3-werkzeug
 
