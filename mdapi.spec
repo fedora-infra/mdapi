@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.2.3
+Version:        2.3
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,16 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Wed Jan 13 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.3-1
+- Update to 2.3
+- Return pretty JSON when the accept header is text/html (Till Maas)
+- Order packages by their Epoch-Version-Release and return only the most recent
+- Mention deployment URL in the README
+- Adjust the JSON key from `files` to `changelogs` to reflect the content
+- Rely on urllib and aiohttp.MultiDict to do the url arguments parsing
+- Fix using ?pretty=False in a browser
+- Drop the dependency on simplejson
+
 * Tue Nov 24 2015 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.2.3-1
 - Update to 2.2.3
 - Fix the branches endpoint (un-instantiated variable)
