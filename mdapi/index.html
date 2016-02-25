@@ -109,6 +109,47 @@ So for example, for the kernel in rawhide:
     <a href="$PREFIX/rawhide/changelog/kernel">/rawhide/changelog/kernel</a>
 
 
+Retrieve the packages having a specific property
+------------------------------------------------
+
+You can retrieve the list of packages having a specific property. These
+properties can be any of:
+    requires, provides, obsoletes, conflicts, enhances, recommends, suggests, supplements.
+
+    /{property}/{package name}
+
+For example to retrieve the list of packages that require a specific package:
+
+    /requires/{package name}
+
+Few examples:
+
+    packages requiring R in rawhide:
+    <a href="$PREFIX/rawhide/requires/R">/rawhide/requires/R</a>
+
+    packages providing perl(SetupLog) in rawhide:
+    <a href="$PREFIX/rawhide/provides/perl(SetupLog)">/rawhide/provides/perl(SetupLog)</a>
+
+    packages obsoleting cabal2spec in rawhide:
+    <a href="$PREFIX/rawhide/obsoletes/cabal2spec">rawhide/obsoletes/cabal2spec</a>
+
+    packages conflicting with mariadb in rawhide:
+    <a href="$PREFIX/rawhide/conflicts/mariadb">rawhide/conflicts/mariadb</a>
+
+    packages enhancing vagrant in rawhide:
+    <a href="$PREFIX/rawhide/enhances/vagrant">rawhide/enhances/vagrant</a>
+
+    packages recommending python3-dateutils in rawhide:
+    <a href="$PREFIX/rawhide/recommends/python3-dateutils">rawhide/recommends/python3-dateutils</a>
+
+    packages suggesting tag in rawhide:
+    <a href="$PREFIX/rawhide/suggests/tar">rawhide/suggests/tar</a>
+
+    packages supplementing `(hunspell and langpacks-fr)` in rawhide:
+    <a href="$PREFIX/rawhide/supplements/(hunspell and langpacks-fr)">rawhide/supplements/(hunspell and langpacks-fr)</a>
+
+
+
 
 
                                                   |‾|
