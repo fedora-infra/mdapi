@@ -285,6 +285,31 @@ def get_obsoletes(request):
 
 
 @asyncio.coroutine
+def get_conflicts(request):
+    return process_dep(request, 'conflicts')
+
+
+@asyncio.coroutine
+def get_enhances(request):
+    return process_dep(request, 'enhances')
+
+
+@asyncio.coroutine
+def get_recommends(request):
+    return process_dep(request, 'recommends')
+
+
+@asyncio.coroutine
+def get_suggests(request):
+    return process_dep(request, 'suggests')
+
+
+@asyncio.coroutine
+def get_supplements(request):
+    return process_dep(request, 'supplements')
+
+
+@asyncio.coroutine
 def index(request):
     return web.Response(body=INDEX.encode('utf-8'))
 
@@ -301,9 +326,17 @@ def init(loop):
         ('/', index),
         ('/branches', list_branches),
         ('/{branch}/pkg/{name}', get_pkg),
+
         ('/{branch}/provides/{name}', get_provides),
         ('/{branch}/requires/{name}', get_requires),
         ('/{branch}/obsoletes/{name}', get_obsoletes),
+        ('/{branch}/conflicts/{name}', get_conflicts),
+
+        ('/{branch}/enhances/{name}', get_enhances),
+        ('/{branch}/recommends/{name}', get_recommends),
+        ('/{branch}/suggests/{name}', get_suggests),
+        ('/{branch}/supplements/{name}', get_supplements),
+
         ('/{branch}/files/{name}', get_pkg_files),
         ('/{branch}/changelog/{name}', get_pkg_changelog),
     ])
