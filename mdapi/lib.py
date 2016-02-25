@@ -98,12 +98,12 @@ def get_package(session, pkg_name):
     return output
 
 
-def get_package_by(session, tablename, key):
+def get_package_by(session, tablename, key, cnt=None):
     ''' Return information the package providing the provides, if we can find it.
     '''
     table = getattr(primary, tablename.capitalize())
 
-    cnt = 0
+    cnt = cnt or 0
     try:
         pkg = session.query(
             primary.Package
@@ -123,7 +123,7 @@ def get_package_by(session, tablename, key):
             raise
         else:
             time.sleep(0.1)
-            output = get_package_by_provides(session, pkg_name)
+            output = get_package_by(session, tablename, key, cnt=cnt)
 
     return output
 
