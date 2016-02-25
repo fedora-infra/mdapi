@@ -103,6 +103,59 @@ def _get_pretty(request):
     return pretty
 
 
+def _expand_pkg_info(pkgs, branch, repotype=None):
+    ''' Return a JSON blob containing all the information we want to return
+    for the provided package or packages.
+    '''
+    singleton = False
+    if not isinstance(pkgs, (list, tuple)):
+        singleton = True
+        pkgs = [pkgs]
+    output = []
+    for pkg in pkgs:
+        out = pkg.to_json()
+        dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
+            CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
+
+        with file_lock.FileFlock(dbfile + '.lock'):
+            session = mdapilib.create_session('sqlite:///%s' % dbfile)
+            # Fill in some extra info
+
+            # Basic infos, always present regardless of the version of the repo
+            for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
+                data = mdapilib.get_package_info(
+                    session, pkg.pkgKey, datatype.capitalize())
+                if data:
+                    out[datatype] = [item.to_json() for item in data]
+                else:
+                    out[datatype] = data
+
+            # New meta-data present for soft dependency management in RPM
+            for datatype in ['enhances', 'recommends', 'suggests', 'supplements']:
+                data = mdapilib.get_package_info(
+                    session, pkg.pkgKey, datatype.capitalize())
+                if data:
+                    out[datatype] = [item.to_json() for item in data]
+                else:
+                    out[datatype] = data
+
+            # Add the list of packages built from the same src.rpm
+            if pkg.rpm_sourcerpm:
+                out['co-packages'] = list(set([
+                    cpkg.name
+                    for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
+                ]))
+            else:
+                out['co-packages'] = []
+            out['repo'] = repotype if repotype else 'release'
+            session.close()
+        output.append(out)
+    if singleton:
+        return output[0]
+    else:
+        return output
+
+
 @asyncio.coroutine
 def get_pkg(request):
     branch = request.match_info.get('branch')
@@ -110,43 +163,7 @@ def get_pkg(request):
     name = request.match_info.get('name')
     pkg, repotype = _get_pkg(branch, name)
 
-    output = pkg.to_json()
-
-    dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
-        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
-
-    with file_lock.FileFlock(dbfile + '.lock'):
-        session = mdapilib.create_session('sqlite:///%s' % dbfile)
-        # Fill in some extra info
-
-        # Basic infos, always present regardless of the version of the repo
-        for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
-            data = mdapilib.get_package_info(
-                session, pkg.pkgKey, datatype.capitalize())
-            if data:
-                output[datatype] = [item.to_json() for item in data]
-            else:
-                output[datatype] = data
-
-        # New meta-data present for soft dependency management in RPM
-        for datatype in ['enhances', 'recommends', 'suggests', 'supplements']:
-            data = mdapilib.get_package_info(
-                session, pkg.pkgKey, datatype.capitalize())
-            if data:
-                output[datatype] = [item.to_json() for item in data]
-            else:
-                output[datatype] = data
-
-        # Add the list of packages built from the same src.rpm
-        if pkg.rpm_sourcerpm:
-            output['co-packages'] = list(set([
-                cpkg.name
-                for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
-            ]))
-        else:
-            output['co-packages'] = []
-        output['repo'] = repotype if repotype else 'release'
-        session.close()
+    output = _expand_pkg_info(pkg, branch, repotype)
 
     args = {}
     if pretty:
