@@ -55,7 +55,7 @@ with open(indexfile) as stream:
     INDEX = INDEX.replace('$PREFIX', CONFIG.get('PREFIX', ''))
 
 
-def _get_pkg(branch, name):
+def _get_pkg(branch, name, action=None):
     ''' Return the pkg information for the given package in the specified
     branch or raise an aiohttp exception.
     '''
@@ -77,7 +77,10 @@ def _get_pkg(branch, name):
 
         with file_lock.FileFlock(dbfile + '.lock'):
             session = mdapilib.create_session('sqlite:///%s' % dbfile)
-            pkg = mdapilib.get_package(session, name)
+            if action:
+                pkg = mdapilib.get_package_by(session, action, name)
+            else:
+                pkg = mdapilib.get_package(session, name)
             session.close()
         if pkg:
             break
@@ -247,6 +250,40 @@ def list_branches(request):
     return web.Response(body=json.dumps(output, **args).encode('utf-8'))
 
 
+def process_dep(request, action):
+    ''' Return the information about the packages having the specified
+    action (provides, requires, obsoletes...)
+    '''
+    branch = request.match_info.get('branch')
+    pretty = _get_pretty(request)
+    name = request.match_info.get('name')
+
+    pkg, repotype = _get_pkg(branch, name, action=action)
+
+    output = _expand_pkg_info(pkg, branch, repotype)
+
+    args = {}
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+
+
+@asyncio.coroutine
+def get_provides(request):
+    return process_dep(request, 'provides')
+
+
+@asyncio.coroutine
+def get_requires(request):
+    return process_dep(request, 'requires')
+
+
+@asyncio.coroutine
+def get_obsoletes(request):
+    return process_dep(request, 'obsoletes')
+
+
 @asyncio.coroutine
 def index(request):
     return web.Response(body=INDEX.encode('utf-8'))
@@ -264,6 +301,9 @@ def init(loop):
         ('/', index),
         ('/branches', list_branches),
         ('/{branch}/pkg/{name}', get_pkg),
+        ('/{branch}/provides/{name}', get_provides),
+        ('/{branch}/requires/{name}', get_requires),
+        ('/{branch}/obsoletes/{name}', get_obsoletes),
         ('/{branch}/files/{name}', get_pkg_files),
         ('/{branch}/changelog/{name}', get_pkg_changelog),
     ])
