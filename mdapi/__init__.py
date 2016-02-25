@@ -258,7 +258,10 @@ def process_dep(request, action):
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
 
-    pkg, repotype = _get_pkg(branch, name, action=action)
+    try:
+        pkg, repotype = _get_pkg(branch, name, action=action)
+    except:
+        raise web.HTTPBadRequest()
 
     output = _expand_pkg_info(pkg, branch, repotype)
 
