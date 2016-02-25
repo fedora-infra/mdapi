@@ -98,6 +98,36 @@ def get_package(session, pkg_name):
     return output
 
 
+def get_package_by(session, tablename, key):
+    ''' Return information the package providing the provides, if we can find it.
+    '''
+    table = getattr(primary, tablename.capitalize())
+
+    cnt = 0
+    try:
+        pkg = session.query(
+            primary.Package
+        ).filter(
+            table.name == key
+        ).filter(
+            table.pkgKey == primary.Package.pkgKey
+        ).order_by(
+            primary.Package.epoch.desc(),
+            primary.Package.version.desc(),
+            primary.Package.release.desc(),
+        )
+        output = pkg.all()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            output = get_package_by_provides(session, pkg_name)
+
+    return output
+
+
 def get_package_info(session, pkgKey, tablename):
     ''' Return the information contained in the specified table for the
     given package.
