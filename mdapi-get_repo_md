@@ -41,6 +41,7 @@ import multiprocessing
 import os
 import shutil
 import tempfile
+import time
 import hashlib
 import xml.etree.ElementTree as ET
 
@@ -505,10 +506,15 @@ def main():
 
     # In serial
     for t in itertools.product(
-        [CONFIG.get('DB_FOLDER', '/var/tmp')],
-        repositories):
+            [CONFIG.get('DB_FOLDER', '/var/tmp')],
+            repositories):
 
-        process_repo(t)
+        try:
+            process_repo(t)
+        except OSError:
+            # Most often due to an invalid stream, so let's try a second time
+            time.sleep(30)
+            process_repo(t)
 
     return 0
 
