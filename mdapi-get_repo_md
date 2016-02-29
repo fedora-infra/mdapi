@@ -505,6 +505,7 @@ def main():
     #)
 
     # In serial
+    sleep_for = CONFIG.get('CRON_SLEEP', 30)
     for t in itertools.product(
             [CONFIG.get('DB_FOLDER', '/var/tmp')],
             repositories):
@@ -513,7 +514,7 @@ def main():
             process_repo(t)
         except OSError:
             # Most often due to an invalid stream, so let's try a second time
-            time.sleep(30)
+            time.sleep(sleep_for)
             process_repo(t)
 
     return 0
