@@ -55,6 +55,7 @@ with open(indexfile) as stream:
     INDEX = INDEX.replace('$PREFIX', CONFIG.get('PREFIX', ''))
 
 
+@asyncio.coroutine
 def _get_pkg(branch, name, action=None):
     ''' Return the pkg information for the given package in the specified
     branch or raise an aiohttp exception.
@@ -67,7 +68,8 @@ def _get_pkg(branch, name, action=None):
             dbfile = '%s/mdapi-%s-%s-primary.sqlite' % (
                 CONFIG['DB_FOLDER'], branch, repotype)
         else:
-            dbfile = '%s/mdapi-%s-primary.sqlite' % (CONFIG['DB_FOLDER'], branch)
+            dbfile = '%s/mdapi-%s-primary.sqlite' % (
+                CONFIG['DB_FOLDER'], branch)
 
         if not os.path.exists(dbfile):
             wrongdb = True
@@ -76,11 +78,13 @@ def _get_pkg(branch, name, action=None):
         wrongdb = False
 
         with file_lock.FileFlock(dbfile + '.lock'):
-            session = mdapilib.create_session('sqlite:///%s' % dbfile)
+            session = yield from mdapilib.create_session(
+                'sqlite:///%s' % dbfile)
             if action:
-                pkg = mdapilib.get_package_by(session, action, name)
+                pkg = yield from mdapilib.get_package_by(
+                    session, action, name)
             else:
-                pkg = mdapilib.get_package(session, name)
+                pkg = yield from mdapilib.get_package(session, name)
             session.close()
         if pkg:
             break
@@ -106,6 +110,7 @@ def _get_pretty(request):
     return pretty
 
 
+@asyncio.coroutine
 def _expand_pkg_info(pkgs, branch, repotype=None):
     ''' Return a JSON blob containing all the information we want to return
     for the provided package or packages.
@@ -121,12 +126,13 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
             CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
 
         with file_lock.FileFlock(dbfile + '.lock'):
-            session = mdapilib.create_session('sqlite:///%s' % dbfile)
+            session = yield from mdapilib.create_session(
+                'sqlite:///%s' % dbfile)
             # Fill in some extra info
 
             # Basic infos, always present regardless of the version of the repo
             for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
-                data = mdapilib.get_package_info(
+                data = yield from mdapilib.get_package_info(
                     session, pkg.pkgKey, datatype.capitalize())
                 if data:
                     out[datatype] = [item.to_json() for item in data]
@@ -135,7 +141,7 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
 
             # New meta-data present for soft dependency management in RPM
             for datatype in ['enhances', 'recommends', 'suggests', 'supplements']:
-                data = mdapilib.get_package_info(
+                data = yield from mdapilib.get_package_info(
                     session, pkg.pkgKey, datatype.capitalize())
                 if data:
                     out[datatype] = [item.to_json() for item in data]
@@ -144,9 +150,10 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
 
             # Add the list of packages built from the same src.rpm
             if pkg.rpm_sourcerpm:
+                copkgs = yield from mdapilib.get_co_packages(
+                    session, pkg.rpm_sourcerpm)
                 out['co-packages'] = list(set([
-                    cpkg.name
-                    for cpkg in mdapilib.get_co_packages(session, pkg.rpm_sourcerpm)
+                    cpkg.name for cpkg in copkgs
                 ]))
             else:
                 out['co-packages'] = []
@@ -164,9 +171,9 @@ def get_pkg(request):
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
-    pkg, repotype = _get_pkg(branch, name)
+    pkg, repotype = yield from _get_pkg(branch, name)
 
-    output = _expand_pkg_info(pkg, branch, repotype)
+    output = yield from _expand_pkg_info(pkg, branch, repotype)
 
     args = {}
     if pretty:
@@ -180,7 +187,7 @@ def get_pkg_files(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
-    pkg, repotype = _get_pkg(branch, name)
+    pkg, repotype = yield from _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-filelists.sqlite' % (
         CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
@@ -188,8 +195,9 @@ def get_pkg_files(request):
         raise web.HTTPBadRequest()
 
     with file_lock.FileFlock(dbfile + '.lock'):
-        session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
-        filelist = mdapilib.get_files(session2, pkg.pkgId)
+        session2 = yield from mdapilib.create_session(
+            'sqlite:///%s' % dbfile)
+        filelist = yield from mdapilib.get_files(session2, pkg.pkgId)
         session2.close()
 
     output = {
@@ -208,7 +216,7 @@ def get_pkg_changelog(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
-    pkg, repotype = _get_pkg(branch, name)
+    pkg, repotype = yield from _get_pkg(branch, name)
 
     dbfile = '%s/mdapi-%s%s-other.sqlite' % (
         CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
@@ -216,8 +224,9 @@ def get_pkg_changelog(request):
         raise web.HTTPBadRequest()
 
     with file_lock.FileFlock(dbfile + '.lock'):
-        session2 = mdapilib.create_session('sqlite:///%s' % dbfile)
-        changelogs = mdapilib.get_changelog(session2, pkg.pkgId)
+        session2 = yield from mdapilib.create_session(
+            'sqlite:///%s' % dbfile)
+        changelogs = yield from mdapilib.get_changelog(session2, pkg.pkgId)
         session2.close()
 
     output = {
@@ -259,11 +268,11 @@ def process_dep(request, action):
     name = request.match_info.get('name')
 
     try:
-        pkg, repotype = _get_pkg(branch, name, action=action)
+        pkg, repotype = yield from _get_pkg(branch, name, action=action)
     except:
         raise web.HTTPBadRequest()
 
-    output = _expand_pkg_info(pkg, branch, repotype)
+    output = yield from _expand_pkg_info(pkg, branch, repotype)
 
     args = {}
     if pretty:

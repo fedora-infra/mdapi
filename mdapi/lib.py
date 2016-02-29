@@ -26,6 +26,7 @@ MDAPI internal API to interact with the database.
 import contextlib
 import time
 
+import asyncio
 import sqlalchemy as sa
 
 from sqlalchemy.orm import sessionmaker
@@ -40,6 +41,7 @@ import mdapi.primary as primary
 RETRY_ATTEMPT = 3
 
 
+@asyncio.coroutine
 def create_session(db_url, debug=False, pool_recycle=3600):
     """ Create the Session object to use to query the database.
 
@@ -61,7 +63,8 @@ def create_session(db_url, debug=False, pool_recycle=3600):
 @contextlib.contextmanager
 def session_manager(db_url, debug=False, pool_recycle=3600):
     """ A handy context manager for our sessions. """
-    session = create_session(db_url, debug=debug, pool_recycle=pool_recycle)
+    session = yield from create_session(
+        db_url, debug=debug, pool_recycle=pool_recycle)
     try:
         yield session
         session.commit()
@@ -72,6 +75,7 @@ def session_manager(db_url, debug=False, pool_recycle=3600):
         session.close()
 
 
+@asyncio.coroutine
 def get_package(session, pkg_name):
     ''' Return information about a package, if we can find it.
     '''
@@ -93,11 +97,11 @@ def get_package(session, pkg_name):
             raise
         else:
             time.sleep(0.1)
-            output = get_package(session, pkg_name)
+            output = yield from get_package(session, pkg_name)
 
     return output
 
-
+@asyncio.coroutine
 def get_package_by(session, tablename, key, cnt=None):
     ''' Return information the package providing the provides, if we can find it.
     '''
@@ -123,11 +127,12 @@ def get_package_by(session, tablename, key, cnt=None):
             raise
         else:
             time.sleep(0.1)
-            output = get_package_by(session, tablename, key, cnt=cnt)
+            output = yield from get_package_by(
+                session, tablename, key, cnt=cnt)
 
     return output
 
-
+@asyncio.coroutine
 def get_package_info(session, pkgKey, tablename):
     ''' Return the information contained in the specified table for the
     given package.
@@ -149,11 +154,11 @@ def get_package_info(session, pkgKey, tablename):
             raise
         else:
             time.sleep(0.1)
-            output = get_package_info(session, pkgKey, tablename)
+            output = yield from get_package_info(session, pkgKey, tablename)
 
     return output
 
-
+@asyncio.coroutine
 def get_co_packages(session, srcpkg_name):
     ''' Return the name of all the packages coming from the same
     source-package.
@@ -172,11 +177,11 @@ def get_co_packages(session, srcpkg_name):
             raise
         else:
             time.sleep(0.1)
-            output = get_co_packages(session, srcpkg_name)
+            output = yield from get_co_packages(session, srcpkg_name)
 
     return output
 
-
+@asyncio.coroutine
 def get_files(session, pkg_id):
     ''' Return the list of all the files in a package given its key.
     '''
@@ -197,11 +202,11 @@ def get_files(session, pkg_id):
             raise
         else:
             time.sleep(0.1)
-            output = get_files(session, pkg_id)
+            output = yield from get_files(session, pkg_id)
 
     return output
 
-
+@asyncio.coroutine
 def get_changelog(session, pkg_id):
     ''' Return the list of all the changelog in a package given its key.
     '''
@@ -222,6 +227,6 @@ def get_changelog(session, pkg_id):
             raise
         else:
             time.sleep(0.1)
-            output = get_changelog(session, pkg_id)
+            output = yield from get_changelog(session, pkg_id)
 
     return output
