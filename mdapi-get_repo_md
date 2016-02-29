@@ -510,12 +510,19 @@ def main():
             [CONFIG.get('DB_FOLDER', '/var/tmp')],
             repositories):
 
-        try:
-            process_repo(t)
-        except OSError:
-            # Most often due to an invalid stream, so let's try a second time
-            time.sleep(sleep_for)
-            process_repo(t)
+        loop = True
+        cnt = 0
+        while loop:
+            cnt += 1
+            try:
+                process_repo(t)
+                loop = False
+            except OSError:
+                if cnt == 4:
+                    raise
+                # Most often due to an invalid stream, so let's try a second time
+                time.sleep(sleep_for)
+                process_repo(t)
 
     return 0
 
