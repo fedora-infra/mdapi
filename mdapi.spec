@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.3
+Version:        2.4
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,14 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Mon Feb 29 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.4-1
+- Update to 2.4
+- Adjust copyright year
+- Expand mdapi to return dependencies information (conflicts, enhances,
+  recommends, suggests, supplements, requires, provides and obsoletes)
+- Improve the cron script to retry after 30 seconds waiting, 3 times max if it
+  fails to get info for a repo
+
 * Wed Jan 13 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.3-1
 - Update to 2.3
 - Return pretty JSON when the accept header is text/html (Till Maas)
