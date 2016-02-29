@@ -163,7 +163,8 @@ def list_branches(status='Active'):
 
 
 def download_db(name, repomd_url, archive):
-    print('%s Downloading file: %s' % (name.ljust(padding), repomd_url))
+    print('%s Downloading file: %s to %s' % (
+        name.ljust(padding), repomd_url, archive))
     response = requests.get(repomd_url, verify=DL_VERIFY)
     with open(archive, 'wb') as stream:
         stream.write(response.content)
@@ -202,6 +203,13 @@ def compare_dbs(name, db1, db2, cache1, cache2):
                     continue
                 yield name
 
+    def row_to_package(row):
+        if '/' in row[0]:
+            name = row[-1]
+        else:
+            name = row[0]
+        return name.split('(')[0]
+
     def get_all_rows(uri, table, cache):
         query = text(queries.get(table, default_query).format(table=table))
         with mdapilib.session_manager('sqlite:///' + uri) as session:
@@ -239,7 +247,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         # so we have nothing to compare it against.  Just return and say there
         # are "no differences".
         print('%s Empty!  %s  Cannot compare.' % (name.ljust(padding), db2))
-        return {}
+        return set()
 
     assert len(tables1) == len(tables2), "Cannot compare disparate dbs."
     # These should be the same
@@ -268,38 +276,27 @@ def compare_dbs(name, db1, db2, cache1, cache2):
 
     tables = [table for table in tables if should_compare(table)]
 
-    # Finally, compare the contents of both tables and return a diff
-    results = {}
+    # Compare the contents of both tables and return a list of changed packages
+    results = set()
     for table in tables:
         if table in cache_producing_tables:
             build_cache(db1, cache1)
             build_cache(db2, cache2)
         rows1 = set(list(get_all_rows(db1, table, cache1)))
         rows2 = set(list(get_all_rows(db2, table, cache2)))
-        results[table] = {
-            'added': rows1 - rows2,
-            'removed': rows2 - rows1,
-        }
+        changed = rows1.symmetric_difference(rows2)
+        results.update(set([row_to_package(row) for row in changed]))
 
     return results
 
 
-def publish_changes(name, differences, repomd_url):
+def publish_changes(name, packages, repomd_url):
     print('%s Publishing differences to fedmsg:' % (name.ljust(padding)))
 
-    change = False
-    for table, details in differences.items():
-        print("%s   %s, %i added, %i removed." % (
-            name.ljust(padding), table,
-            len(details['added']), len(details['removed'])
-        ))
-        # If anything changed in any table, flip this flag to True
-        change = change or bool(details['added']) or bool(details['removed'])
-
+    change = bool(packages)
     if not change:
         print('%s No real changes.  Skipping fedmsg.' % (name.ljust(padding)))
-
-    #import pprint; pprint.pprint(differences)
+        return
 
     # Just publish the suffix of the URL.  The prefix is dl.fedoraproject.org
     # for lots of these, but we don't want to encourage people to download from
@@ -314,7 +311,7 @@ def publish_changes(name, differences, repomd_url):
         topic='repo.update',
         msg=dict(
             name=name,
-            differences=differences,
+            packages=packages,
             url=url,
         )
     )
@@ -413,8 +410,8 @@ def process_repo(tupl):
 
             download_db(name, repomd_url, archive)
             decompress_db(name, archive, tempdb)
-            differences = compare_dbs(name, tempdb, destfile, cache1, cache2)
-            publish_changes(name, differences, repomd_url)
+            packages = compare_dbs(name, tempdb, destfile, cache1, cache2)
+            publish_changes(name, packages, repomd_url)
             install_db(name, tempdb, destfile)
 
 
