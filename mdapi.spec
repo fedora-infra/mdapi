@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.4
+Version:        2.5
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,13 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Wed Mar 02 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.5-1
+- Update to 2.5
+- Chain the method as coroutines making the process more asynchronous and a
+  little bit faster
+- Streamline the fedmsg diff publication to reduce the amount of data sent per
+  message (especially for new repo where the diff concerns all the packages)
+
 * Mon Feb 29 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.4-1
 - Update to 2.4
 - Adjust copyright year
