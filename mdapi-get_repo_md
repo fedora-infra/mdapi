@@ -179,10 +179,15 @@ def decompress_db(name, archive, location):
             data = stream_xz.read()
         with open(location, 'wb') as stream:
             stream.write(data)
-    elif archive.endswith('.gz'):
+    elif archive.endswith('.tar.gz'):
         import tarfile
         with tarfile.open(archive) as tar:
             tar.extractall(path=location)
+    elif archive.endswith('.gz'):
+        import gzip
+        with open(location, 'wb') as out:
+            with gzip.open(archive, 'rb') as inp:
+                out.write(inp.read())
     elif archive.endswith('.bz2'):
         import bz2
         with open(location, 'wb') as out:
