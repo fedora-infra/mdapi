@@ -179,7 +179,8 @@ def get_pkg(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 
 @asyncio.coroutine
@@ -208,7 +209,8 @@ def get_pkg_files(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 
 @asyncio.coroutine
@@ -237,7 +239,8 @@ def get_pkg_changelog(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 
 @asyncio.coroutine
@@ -256,7 +259,8 @@ def list_branches(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 
 def process_dep(request, action):
@@ -278,7 +282,8 @@ def process_dep(request, action):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'))
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 
 @asyncio.coroutine
