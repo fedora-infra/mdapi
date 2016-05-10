@@ -464,7 +464,7 @@ def main():
         if version == 'devel':
             version = 'rawhide'
         url = '%s/pub/fedora/linux/' \
-            'development/%s/x86_64/os/repodata' % (DL_SERVER, version)
+            'development/%s/Everything/x86_64/os/repodata' % (DL_SERVER, version)
         repositories.append(
             (url, release['koji_name'])
         )
