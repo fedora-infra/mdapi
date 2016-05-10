@@ -6,11 +6,13 @@ the information contained in the metadata files generated for RPM repositories.
 It is currently deployed at:
 https://apps.fedoraproject.org/mdapi
 
+You can contribute to mdapi with bug reports or pull requests at:
+https://pagure.io/mdapi
 
 Development
 -----------
-
-If you wish to set-up this project.
+If you wish to set up a
+development instance of this project, follow these steps:
 
 * Install virtualenvwrapper
 
