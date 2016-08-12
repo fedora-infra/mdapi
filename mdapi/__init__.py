@@ -60,7 +60,7 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
     ''' Return the pkg information for the given package in the specified
     branch or raise an aiohttp exception.
     '''
-    if not name and not srcname:
+    if (not name and not srcname) or (name and srcname):
         raise web.HTTPBadRequest()
 
     pkg = None
