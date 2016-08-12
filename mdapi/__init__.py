@@ -56,10 +56,13 @@ with open(indexfile) as stream:
 
 
 @asyncio.coroutine
-def _get_pkg(branch, name, action=None):
+def _get_pkg(branch, name=None, action=None, srcname=None):
     ''' Return the pkg information for the given package in the specified
     branch or raise an aiohttp exception.
     '''
+    if not name and not srcname:
+        raise web.HTTPBadRequest()
+
     pkg = None
     wrongdb = False
     for repotype in ['updates-testing', 'updates', 'testing', None]:
@@ -80,11 +83,14 @@ def _get_pkg(branch, name, action=None):
         with file_lock.FileFlock(dbfile + '.lock'):
             session = yield from mdapilib.create_session(
                 'sqlite:///%s' % dbfile)
-            if action:
-                pkg = yield from mdapilib.get_package_by(
-                    session, action, name)
-            else:
-                pkg = yield from mdapilib.get_package(session, name)
+            if name:
+                if action:
+                    pkg = yield from mdapilib.get_package_by(
+                        session, action, name)
+                else:
+                    pkg = yield from mdapilib.get_package(session, name)
+            elif srcname:
+                pkg = yield from mdapilib.get_package_by_src(session, srcname)
             session.close()
         if pkg:
             break
@@ -182,6 +188,22 @@ def get_pkg(request):
     return web.Response(body=json.dumps(output, **args).encode('utf-8'),
                         content_type='application/json')
 
+
+@asyncio.coroutine
+def get_src_pkg(request):
+    branch = request.match_info.get('branch')
+    pretty = _get_pretty(request)
+    name = request.match_info.get('name')
+    pkg, repotype = yield from _get_pkg(branch, srcname=name)
+
+    output = yield from _expand_pkg_info(pkg, branch, repotype)
+
+    args = {}
+    if pretty:
+        args = dict(sort_keys=True, indent=4, separators=(',', ': '))
+
+    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                        content_type='application/json')
 
 @asyncio.coroutine
 def get_pkg_files(request):
@@ -343,6 +365,7 @@ def init(loop):
         ('/', index),
         ('/branches', list_branches),
         ('/{branch}/pkg/{name}', get_pkg),
+        ('/{branch}/srcpkg/{name}', get_src_pkg),
 
         ('/{branch}/provides/{name}', get_provides),
         ('/{branch}/requires/{name}', get_requires),

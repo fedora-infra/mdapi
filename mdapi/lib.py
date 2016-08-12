@@ -101,6 +101,34 @@ def get_package(session, pkg_name):
 
     return output
 
+
+@asyncio.coroutine
+def get_package_by_src(session, pkg_name):
+    ''' Return information about a package, if we can find it.
+    '''
+    cnt = 0
+    try:
+        pkg = session.query(
+            primary.Package
+        ).filter(
+            primary.Package.rpm_sourcerpm.like('{}%'.format(pkg_name))
+        ).order_by(
+            primary.Package.epoch.desc(),
+            primary.Package.version.desc(),
+            primary.Package.release.desc(),
+        )
+        output = pkg.first()
+    except SQLAlchemyError as err:
+        cnt += 1
+        if cnt > RETRY_ATTEMPT:
+            raise
+        else:
+            time.sleep(0.1)
+            output = yield from get_package(session, pkg_name)
+
+    return output
+
+
 @asyncio.coroutine
 def get_package_by(session, tablename, key, cnt=None):
     ''' Return information the package providing the provides, if we can find it.
