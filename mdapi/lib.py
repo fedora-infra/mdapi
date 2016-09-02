@@ -111,7 +111,7 @@ def get_package_by_src(session, pkg_name):
         pkg = session.query(
             primary.Package
         ).filter(
-            primary.Package.rpm_sourcerpm.like('{}%'.format(pkg_name))
+            primary.Package.basename == pkg_name
         ).order_by(
             primary.Package.epoch.desc(),
             primary.Package.version.desc(),
