@@ -74,6 +74,7 @@ class BaseDependency(object):
     epoch = sa.Column(sa.Text)
     version = sa.Column(sa.Text)
     release = sa.Column(sa.Text)
+    flags = sa.Column(sa.Text)
 
     def to_json(self):
         pkg = {
@@ -81,6 +82,7 @@ class BaseDependency(object):
             'epoch': self.epoch,
             'version': self.version,
             'release': self.release,
+            'flags': self.flags,
         }
         return pkg
 
