@@ -24,7 +24,7 @@ development instance of this project, follow these steps:
 
 ::
 
-    mkvirtualenv mdapi
+    mkvirtualenv mdapi -p python3
 
 * Install the dependencies
 
