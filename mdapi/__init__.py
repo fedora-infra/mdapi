@@ -352,7 +352,8 @@ def get_supplements(request):
 def index(request):
     return web.Response(
         body=INDEX.encode('utf-8'),
-        content_type='text/html; charset=utf-8')
+        content_type='text/html',
+        charset='utf-8')
 
 
 @asyncio.coroutine
