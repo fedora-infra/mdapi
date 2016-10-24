@@ -18,7 +18,13 @@ development instance of this project, follow these steps:
 
 ::
 
-    dnf install python-virtualenvwrapper
+    dnf install python-virtualenvwrapper python3-devel openssl-devel
+
+* Get the mkvirtualenv shell function
+
+::
+
+    . /etc/profile.d/virtualenvwrapper.sh
 
 * Create the virtualenv
 
@@ -36,7 +42,7 @@ development instance of this project, follow these steps:
 
 ::
 
-    mdapi-get_repo_md mdapi/default_config.py
+    ./mdapi-get_repo_md mdapi/default_config.py
 
 * Start the server
 
@@ -44,5 +50,11 @@ development instance of this project, follow these steps:
 
     ./mdapi-run
 
+* If you need to reactivate the virtual env later, use workon:
 
-..note: This project is python3 only
+::
+
+    workon mdapi
+
+
+**Note:** This project is python3 only
