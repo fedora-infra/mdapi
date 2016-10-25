@@ -1,5 +1,5 @@
 aiohttp
+fedmsg[all]
 requests
 sqlalchemy
 werkzeug
-fedmsg
