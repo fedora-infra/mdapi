@@ -6,6 +6,8 @@ fedmsg endpoints.
 """
 
 import socket
+
+
 hostname = socket.gethostname().split('.')[0]
 
 config = dict(
