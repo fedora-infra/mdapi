@@ -270,12 +270,12 @@ def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
     pretty = _get_pretty(request)
-    output = list(set([
+    output = sorted(list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
         filename.replace('mdapi-', '').rsplit('-', 2)[0].replace('-updates', '')
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
-    ]))
+    ])))
 
     args = {}
     if pretty:
