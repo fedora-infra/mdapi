@@ -469,6 +469,9 @@ def main():
             (url, release['koji_name'])
         )
 
+        url = url.replace('/x86_64/os/', '/source/tree/')
+        repositories.append((url, 'src_%s' % release['koji_name']))
+
     urls = {
         'Fedora':
             [
@@ -498,6 +501,9 @@ def main():
                 name = epel_repos[idx] % release['koji_name']
             rurl =  url % (DL_SERVER, version)
             repositories.append((rurl, name))
+
+            rurl = rurl.replace('/x86_64/', '/SRPMS/')
+            repositories.append((rurl, 'src_%s' % name))
 
     # In parallel
     #p = multiprocessing.Pool(10)

@@ -70,6 +70,14 @@ at:
 
     <a href="$PREFIX/branches">/branches</a>
 
+
+Note:
+  The src_* branches refer to the source repositories metadata, they will
+  thus return you information about the source package.
+  So to find the BuildRequires of a package, check its requires provided in
+  its information against in a src_* branch.
+
+
 Retrieve information about a package
 ------------------------------------
 
@@ -136,6 +144,7 @@ Few examples:
 
     packages requiring R in rawhide:
     <a href="$PREFIX/rawhide/requires/R">/rawhide/requires/R</a>
+      To see what R itself requires, check its information using: <a href="$PREFIX/rawhide/pkg/R">/rawhide/pkg/R</a>
 
     packages providing perl(SetupLog) in rawhide:
     <a href="$PREFIX/rawhide/provides/perl(SetupLog)">/rawhide/provides/perl(SetupLog)</a>
