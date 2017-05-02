@@ -30,7 +30,7 @@ print(get_requirements())
 setup(
     name='mdapi',
     description='A simple API to serve the package repository metadata',
-    version='2.7',
+    version='2.8',
     author='Pierre-Yves Chibon',
     author_email='pingou@pingoured.fr',
     maintainer='Pierre-Yves Chibon',

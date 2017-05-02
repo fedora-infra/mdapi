@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.7
+Version:        2.8
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,13 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Tue May 02 2017 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.8-1
+- Update to 2.8
+- Fix and improve the README
+- Set the content_type and charset of the index page
+- Download the source repository metadata as src_<name> and expose them
+- Order the list of branches returned
+
 * Mon Sep 12 2016 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.7-1
 - Update to 2.7
 - Add the possibility to query package by the name of their source package
