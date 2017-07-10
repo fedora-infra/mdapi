@@ -22,10 +22,11 @@
 '''
 Top level of the mdapi aiohttp application.
 '''
+import functools
 import json
 import os
 import urllib
-
+from urllib.parse import parse_qs
 
 import asyncio
 import werkzeug
@@ -54,6 +55,31 @@ with open(indexfile) as stream:
     INDEX = stream.read()
     INDEX = INDEX.replace('$PREFIX', CONFIG.get('PREFIX', ''))
 
+
+def allows_jsonp(function):
+    ''' Add support for JSONP queries to the endpoint decorated. '''
+
+    @functools.wraps(function)
+    def wrapper(request, *args, **kwargs):
+        ''' Actually does the job with the arguments provided.
+
+        :arg request: the request that was called that we want to add JSONP
+        support to
+        :type request: aiohttp.web_request.Request
+        
+        '''
+        response = yield from function(request, *args, **kwargs)
+        url_arg = parse_qs(request.query_string)
+        callback = url_arg.get('callback')
+        if callback and request.method == 'GET':
+            if isinstance(callback, list):
+                callback = callback[0]
+            response.mimetype = 'application/javascript'
+            response.text = '%s(%s);' % (callback, response.text)
+
+        return response
+
+    return wrapper
 
 @asyncio.coroutine
 def _get_pkg(branch, name=None, action=None, srcname=None):
@@ -173,6 +199,7 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
 
 
 @asyncio.coroutine
+@allows_jsonp
 def get_pkg(request):
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
@@ -185,11 +212,13 @@ def get_pkg(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
+    output = web.Response(body=json.dumps(output, **args).encode('utf-8'),
                         content_type='application/json')
+    return output
 
 
 @asyncio.coroutine
+@allows_jsonp
 def get_src_pkg(request):
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
@@ -206,6 +235,7 @@ def get_src_pkg(request):
                         content_type='application/json')
 
 @asyncio.coroutine
+@allows_jsonp
 def get_pkg_files(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
@@ -236,6 +266,7 @@ def get_pkg_files(request):
 
 
 @asyncio.coroutine
+@allows_jsonp
 def get_pkg_changelog(request):
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
@@ -266,6 +297,7 @@ def get_pkg_changelog(request):
 
 
 @asyncio.coroutine
+@allows_jsonp
 def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
@@ -284,7 +316,7 @@ def list_branches(request):
     return web.Response(body=json.dumps(output, **args).encode('utf-8'),
                         content_type='application/json')
 
-
+@allows_jsonp
 def process_dep(request, action):
     ''' Return the information about the packages having the specified
     action (provides, requires, obsoletes...)
