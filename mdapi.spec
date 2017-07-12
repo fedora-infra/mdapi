@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.8
+Version:        2.9
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,10 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Wed Jul 12 2017 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.9-1
+- Update to 2.9
+- Add JSONP support to the application for easier integration with other apps
+
 * Tue May 02 2017 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.8-1
 - Update to 2.8
 - Fix and improve the README
