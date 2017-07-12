@@ -316,6 +316,7 @@ def list_branches(request):
     return web.Response(body=json.dumps(output, **args).encode('utf-8'),
                         content_type='application/json')
 
+@asyncio.coroutine
 @allows_jsonp
 def process_dep(request, action):
     ''' Return the information about the packages having the specified
