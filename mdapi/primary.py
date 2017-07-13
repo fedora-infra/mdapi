@@ -26,7 +26,6 @@ DB mapping for the primary sqlite DB.
 import sqlalchemy as sa
 
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.ext.hybrid import hybrid_property
 
 BASE = declarative_base()
 
@@ -47,22 +46,10 @@ class Package(BASE):
     summary = sa.Column(sa.Text)
     description = sa.Column(sa.Text)
 
-    @hybrid_property
+    @property
     def basename(self):
         ''' Return the base package name using the rpm_sourcerpms info. '''
-        suffix_len = len('-{0.version}-{0.release}.src.rpm'.format(self))
-        return self.rpm_sourcerpm[0:-suffix_len]
-
-    @basename.expression
-    def basename(cls):
-        # -{0.version}
-        suffix_ver = 1 + sa.func.length(cls.version)
-        # -{0.release}
-        suffix_rel = 1 + sa.func.length(cls.release)
-        # Combined
-        suffix_len = suffix_ver + suffix_rel + len('.src.rpm')
-        return sa.func.substr(cls.rpm_sourcerpm, 1,
-                              sa.func.length(cls.rpm_sourcerpm) - suffix_len)
+        return self.rpm_sourcerpm.rsplit('-', 2)[0]
 
     def to_json(self):
         pkg = {
