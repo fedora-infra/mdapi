@@ -297,7 +297,6 @@ def get_pkg_changelog(request):
 
 
 @asyncio.coroutine
-@allows_jsonp
 def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
@@ -313,8 +312,23 @@ def list_branches(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
-                        content_type='application/json')
+    response = web.Response(body=json.dumps(output, **args).encode('utf-8'),
+                            content_type='application/json')
+
+    # The decorator doesn't work for this endpoint, so do it manually here
+    # I am not really sure what doesn't work but it seems this endpoint is
+    # returning an object instead of the expected generator despite it being
+    # flagged as an asyncio coroutine
+    url_arg = parse_qs(request.query_string)
+    callback = url_arg.get('callback')
+    if callback and request.method == 'GET':
+        if isinstance(callback, list):
+            callback = callback[0]
+        response.mimetype = 'application/javascript'
+        response.text = '%s(%s);' % (callback, response.text)
+
+    return response
+
 
 @asyncio.coroutine
 @allows_jsonp
