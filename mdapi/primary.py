@@ -45,6 +45,7 @@ class Package(BASE):
     arch = sa.Column(sa.Text)
     summary = sa.Column(sa.Text)
     description = sa.Column(sa.Text)
+    url = sa.Column(sa.Text)
 
     @property
     def basename(self):
@@ -60,6 +61,7 @@ class Package(BASE):
             'summary': self.summary,
             'description': self.description,
             'basename': self.basename,
+            'url': self.url,
         }
         return pkg
 
