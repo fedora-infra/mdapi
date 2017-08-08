@@ -1,5 +1,5 @@
 Name:           mdapi
-Version:        2.10
+Version:        2.10.1
 Release:        1%{?dist}
 Summary:        A simple API to query the metadata of the repositories
 
@@ -68,6 +68,10 @@ install -m 644 mdapi.service $RPM_BUILD_ROOT/%{_unitdir}/mdapi.service
 
 
 %changelog
+* Tue Aug 08 2017 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.10.1-1
+- Update to 2.10.1
+- Fix the srcpkg endpoints
+
 * Wed Aug 02 2017 Pierre-Yves Chibon <pingou@pingoured.fr> - 2.10-1
 - Update to 2.10
 - Fix displaying the proper basename
