@@ -1,5 +1,7 @@
 aiohttp
 fedmsg[all]
+# this is a requirement of aiohttp but better safe than sorry
+multidict 
 requests
 sqlalchemy
 werkzeug

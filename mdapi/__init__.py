@@ -30,7 +30,8 @@ from urllib.parse import parse_qs
 
 import asyncio
 import werkzeug
-from aiohttp import web, MultiDict
+from aiohttp import web
+from multidict import MultiDict
 
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
@@ -66,7 +67,7 @@ def allows_jsonp(function):
         :arg request: the request that was called that we want to add JSONP
         support to
         :type request: aiohttp.web_request.Request
-        
+
         '''
         response = yield from function(request, *args, **kwargs)
         url_arg = parse_qs(request.query_string)
