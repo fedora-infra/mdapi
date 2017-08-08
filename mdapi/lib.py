@@ -111,13 +111,15 @@ def get_package_by_src(session, pkg_name):
         pkg = session.query(
             primary.Package
         ).filter(
-            primary.Package.basename == pkg_name
+            primary.Package.rpm_sourcerpm.like('{}%'.format(pkg_name))
         ).order_by(
             primary.Package.epoch.desc(),
             primary.Package.version.desc(),
             primary.Package.release.desc(),
         )
-        output = pkg.first()
+        for pkg in pkg.all():
+            if pkg.basename == pkg_name:
+                return pkg
     except SQLAlchemyError as err:
         cnt += 1
         if cnt > RETRY_ATTEMPT:
