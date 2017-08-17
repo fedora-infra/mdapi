@@ -79,6 +79,7 @@ def session_manager(db_url, debug=False, pool_recycle=3600):
 def get_package(session, pkg_name):
     ''' Return information about a package, if we can find it.
     '''
+    output = None
     cnt = 0
     try:
         pkg = session.query(
@@ -106,6 +107,7 @@ def get_package(session, pkg_name):
 def get_package_by_src(session, pkg_name):
     ''' Return information about a package, if we can find it.
     '''
+    output = None
     cnt = 0
     try:
         pkg = session.query(
@@ -137,6 +139,7 @@ def get_package_by(session, tablename, key, cnt=None):
     '''
     table = getattr(primary, tablename.capitalize())
 
+    output = None
     cnt = cnt or 0
     try:
         pkg = session.query(
@@ -168,6 +171,7 @@ def get_package_info(session, pkgKey, tablename):
     given package.
     '''
     table = getattr(primary, tablename)
+    output = None
     cnt = 0
     try:
         query = session.query(
@@ -193,6 +197,7 @@ def get_co_packages(session, srcpkg_name):
     ''' Return the name of all the packages coming from the same
     source-package.
     '''
+    output = None
     cnt = 0
     try:
         pkg = session.query(
@@ -215,6 +220,7 @@ def get_co_packages(session, srcpkg_name):
 def get_files(session, pkg_id):
     ''' Return the list of all the files in a package given its key.
     '''
+    output = None
     cnt = 0
     try:
         pkg = session.query(
@@ -240,6 +246,7 @@ def get_files(session, pkg_id):
 def get_changelog(session, pkg_id):
     ''' Return the list of all the changelog in a package given its key.
     '''
+    output = None
     cnt = 0
     try:
         pkg = session.query(
