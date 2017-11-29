@@ -128,9 +128,7 @@ def get_package_by_src(session, pkg_name):
             raise
         else:
             time.sleep(0.1)
-            output = yield from get_package(session, pkg_name)
-
-    return output
+            yield from get_package_by_src(session, pkg_name)
 
 
 @asyncio.coroutine
