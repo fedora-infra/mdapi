@@ -76,6 +76,7 @@ def allows_jsonp(function):
             if isinstance(callback, list):
                 callback = callback[0]
             response.mimetype = 'application/javascript'
+            response.content_type = 'application/javascript'
             response.text = '%s(%s);' % (callback, response.text)
 
         return response
@@ -326,6 +327,7 @@ def list_branches(request):
         if isinstance(callback, list):
             callback = callback[0]
         response.mimetype = 'application/javascript'
+        response.content_type = 'application/javascript'
         response.text = '%s(%s);' % (callback, response.text)
 
     return response
