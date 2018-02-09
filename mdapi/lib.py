@@ -107,6 +107,12 @@ def get_package(session, pkg_name):
 def get_package_by_src(session, pkg_name):
     ''' Return information about a package, if we can find it.
     '''
+    # First try if there is a package matching exactly the provided name
+    simple_match = yield from get_package(session, pkg_name)
+    if simple_match and simple_match.basename == pkg_name:
+        return simple_match
+
+    # If there is not a direct match, look by the sourcerpm name
     output = None
     cnt = 0
     try:
