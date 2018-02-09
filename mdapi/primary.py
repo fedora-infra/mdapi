@@ -113,7 +113,6 @@ class Conflicts(BASEDEP):
     __tablename__ = 'conflicts'
 
 
-
 class Obsoletes(BASEDEP):
     ''' Maps the provides table in the primary.sqlite database from
     repodata to a python object.

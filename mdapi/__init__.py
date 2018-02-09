@@ -83,6 +83,7 @@ def allows_jsonp(function):
 
     return wrapper
 
+
 @asyncio.coroutine
 def _get_pkg(branch, name=None, action=None, srcname=None):
     ''' Return the pkg information for the given package in the specified
@@ -134,7 +135,8 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
 
 def _get_pretty(request):
     pretty = False
-    get_params = MultiDict(urllib.parse.parse_qsl(request.query_string.lower()))
+    get_params = MultiDict(urllib.parse.parse_qsl(
+        request.query_string.lower()))
     if get_params.get('pretty'):
         if str(get_params.get('pretty', None)) in ['1', 'true']:
             pretty = True
@@ -174,7 +176,8 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
                     out[datatype] = data
 
             # New meta-data present for soft dependency management in RPM
-            for datatype in ['enhances', 'recommends', 'suggests', 'supplements']:
+            for datatype in [
+                    'enhances', 'recommends', 'suggests', 'supplements']:
                 data = yield from mdapilib.get_package_info(
                     session, pkg.pkgKey, datatype.capitalize())
                 if data:
@@ -214,8 +217,9 @@ def get_pkg(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    output = web.Response(body=json.dumps(output, **args).encode('utf-8'),
-                        content_type='application/json')
+    output = web.Response(
+        body=json.dumps(output, **args).encode('utf-8'),
+        content_type='application/json')
     return output
 
 
@@ -233,8 +237,10 @@ def get_src_pkg(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
-                        content_type='application/json')
+    return web.Response(
+        body=json.dumps(output, **args).encode('utf-8'),
+        content_type='application/json')
+
 
 @asyncio.coroutine
 @allows_jsonp
@@ -263,8 +269,9 @@ def get_pkg_files(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
-                        content_type='application/json')
+    return web.Response(
+        body=json.dumps(output, **args).encode('utf-8'),
+        content_type='application/json')
 
 
 @asyncio.coroutine
@@ -294,8 +301,9 @@ def get_pkg_changelog(request):
     if pretty:
         args = dict(sort_keys=True, indent=4, separators=(',', ': '))
 
-    return web.Response(body=json.dumps(output, **args).encode('utf-8'),
-                        content_type='application/json')
+    return web.Response(
+        body=json.dumps(output, **args).encode('utf-8'),
+        content_type='application/json')
 
 
 @asyncio.coroutine
@@ -305,7 +313,8 @@ def list_branches(request):
     pretty = _get_pretty(request)
     output = sorted(list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
-        filename.replace('mdapi-', '').rsplit('-', 2)[0].replace('-updates', '')
+        filename.replace('mdapi-', '').rsplit('-', 2)[0].replace(
+            '-updates', '')
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
     ])))

@@ -113,7 +113,6 @@ def get_package_by_src(session, pkg_name):
         return simple_match
 
     # If there is not a direct match, look by the sourcerpm name
-    output = None
     cnt = 0
     try:
         pkg = session.query(
@@ -169,6 +168,7 @@ def get_package_by(session, tablename, key, cnt=None):
 
     return output
 
+
 @asyncio.coroutine
 def get_package_info(session, pkgKey, tablename):
     ''' Return the information contained in the specified table for the
@@ -196,6 +196,7 @@ def get_package_info(session, pkgKey, tablename):
 
     return output
 
+
 @asyncio.coroutine
 def get_co_packages(session, srcpkg_name):
     ''' Return the name of all the packages coming from the same
@@ -219,6 +220,7 @@ def get_co_packages(session, srcpkg_name):
             output = yield from get_co_packages(session, srcpkg_name)
 
     return output
+
 
 @asyncio.coroutine
 def get_files(session, pkg_id):
@@ -245,6 +247,7 @@ def get_files(session, pkg_id):
             output = yield from get_files(session, pkg_id)
 
     return output
+
 
 @asyncio.coroutine
 def get_changelog(session, pkg_id):
