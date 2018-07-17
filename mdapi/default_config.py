@@ -25,3 +25,34 @@ mdapi default configuration.
 
 # url to the database server:
 DB_FOLDER = '/var/tmp'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': '%(asctime)s [%(levelname)s] %(name)s: %(message)s'
+        },
+    },
+    'handlers': {
+        'console': {
+            'level': 'INFO',
+            'formatter': 'standard',
+            'class': 'logging.StreamHandler',
+            'stream': 'ext://sys.stdout',
+        },
+    },
+    # The root logger configuration; this is a catch-all configuration
+    # that applies to all log messages not handled by a different logger
+    'root': {
+        'level': 'INFO',
+        'handlers': ['console'],
+    },
+    'loggers': {
+        'sqlalchemy': {
+            'handlers': ['console'],
+            'level': 'WARN',
+            'propagate': False
+        }
+    }
+}

@@ -24,6 +24,8 @@ Top level of the mdapi aiohttp application.
 '''
 import functools
 import json
+import logging
+import logging.config
 import os
 import urllib
 from urllib.parse import parse_qs
@@ -55,6 +57,9 @@ INDEX = ''
 with open(indexfile) as stream:
     INDEX = stream.read()
     INDEX = INDEX.replace('$PREFIX', CONFIG.get('PREFIX', ''))
+
+
+_log = logging.getLogger(__name__)
 
 
 def allows_jsonp(function):
@@ -206,6 +211,7 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg(request):
+    _log.info('get_pkg %s', request)
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -226,6 +232,7 @@ def get_pkg(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_src_pkg(request):
+    _log.info('get_src_pkg %s', request)
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -245,6 +252,7 @@ def get_src_pkg(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg_files(request):
+    _log.info('get_pkg_files %s', request)
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
@@ -277,6 +285,7 @@ def get_pkg_files(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg_changelog(request):
+    _log.info('get_pkg_changelog %s', request)
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
@@ -310,6 +319,7 @@ def get_pkg_changelog(request):
 def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
+    _log.info('list_branches: %s', request)
     pretty = _get_pretty(request)
     output = sorted(list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
@@ -348,6 +358,7 @@ def process_dep(request, action):
     ''' Return the information about the packages having the specified
     action (provides, requires, obsoletes...)
     '''
+    _log.info('process_dep %s: %s', action, request)
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -409,6 +420,7 @@ def get_supplements(request):
 
 @asyncio.coroutine
 def index(request):
+    _log.info('index %s', request)
     return web.Response(
         body=INDEX.encode('utf-8'),
         content_type='text/html',
@@ -417,6 +429,9 @@ def index(request):
 
 @asyncio.coroutine
 def init(loop):
+    logging.basicConfig()
+    logging.config.dictConfig(CONFIG.get('LOGGING') or {'version': 1})
+
     app = web.Application(loop=loop)
     routes = []
     prefix = CONFIG.get('PREFIX', '')
