@@ -32,8 +32,10 @@ import subprocess
 import sys
 import tempfile
 
+import mock
 import pytest
 from aiohttp import web
+from sqlalchemy.exc import SQLAlchemyError
 
 sys.path.insert(0, os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..'))
@@ -44,7 +46,7 @@ HERE = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
 TMPDIR = None
 
-@pytest.fixture(scope="session", autouse=True)
+@pytest.fixture(scope="module")
 def set_env(request):
     """
     Collects the sqlite database from the mirror to have some data to test
@@ -77,7 +79,7 @@ def tmpdir():
 
 
 @pytest.fixture
-def cli(tmpdir, loop, aiohttp_client):
+def cli(set_env, tmpdir, loop, aiohttp_client):
     mdapi.CONFIG['DB_FOLDER'] = tmpdir
     app = web.Application()
     app = mdapi._set_routes(app)
@@ -104,9 +106,9 @@ async def test_view_index_page(cli):
 async def test_view_branches(cli):
     resp = await cli.get('/branches')
     assert resp.status == 200
-    assert '["dist-6E", "dist-6E-epel", "epel7", "f27", "f28", "f29", ' \
-           '"koji", "rawhide", "src_dist-6E", "src_dist-6E-epel", ' \
-           '"src_epel7", "src_rawhide"]' == await resp.text()
+    output = await resp.text()
+    assert 'src_rawhide' in output
+    assert 'rawhide' in output
 
 
 async def test_view_pkg_rawhide(cli):

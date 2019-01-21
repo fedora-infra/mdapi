@@ -8,3 +8,5 @@ dist/
 *~
 .coverage
 alembic.ini
+.tox/
+.pytest_cache/
