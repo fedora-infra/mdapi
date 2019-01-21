@@ -394,6 +394,9 @@ def process_repo(tupl):
     # of the contents of the filelist and changelog dbs.
     cache1, cache2 = {}, {}
 
+    if not files:
+        print('No sqlite database could be found in %s' % url)
+
     for filename, shasum, shatype in files:
         repomd_url = url + '/' + filename
 
@@ -470,6 +473,7 @@ def main():
             version = 'rawhide'
         url = '%s/pub/fedora/linux/' \
             'development/%s/Everything/x86_64/os/repodata' % (DL_SERVER, version)
+        print(release['koji_name'], version, release['status'], url)
         repositories.append(
             (url, release['koji_name'])
         )
