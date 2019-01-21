@@ -427,12 +427,7 @@ def index(request):
         charset='utf-8')
 
 
-@asyncio.coroutine
-def init(loop):
-    logging.basicConfig()
-    logging.config.dictConfig(CONFIG.get('LOGGING') or {'version': 1})
-
-    app = web.Application(loop=loop)
+def _set_routes(app):
     routes = []
     prefix = CONFIG.get('PREFIX', '')
     if prefix:
@@ -459,6 +454,16 @@ def init(loop):
     ])
     for route in routes:
         app.router.add_route('GET', prefix + route[0], route[1])
+    return app
+
+
+@asyncio.coroutine
+def init(loop):
+    logging.basicConfig()
+    logging.config.dictConfig(CONFIG.get('LOGGING') or {'version': 1})
+
+    app = web.Application(loop=loop)
+    app = _set_routes(app)
 
     srv = yield from loop.create_server(
         app.make_handler(),
