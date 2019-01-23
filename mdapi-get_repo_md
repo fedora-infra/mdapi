@@ -44,11 +44,14 @@ import tempfile
 import time
 import hashlib
 import xml.etree.ElementTree as ET
+import sys
 
-import fedmsg
+
 import requests
 
 from sqlalchemy import text
+from fedora_messaging.api import Message, publish
+from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
 import mdapi.lib as mdapilib
 import mdapi.file_lock as file_lock
@@ -68,11 +71,6 @@ repomd_xml_namespace = {
 }
 
 padding = 22
-
-fedmsg.init(
-    active=True,
-    cert_prefix='mdapi',
-)
 
 
 # Some queries to help us sort out what is in the repos
@@ -296,11 +294,11 @@ def compare_dbs(name, db1, db2, cache1, cache2):
 
 
 def publish_changes(name, packages, repomd_url):
-    print('%s Publishing differences to fedmsg:' % (name.ljust(padding)))
+    print('%s Publishing differences to fedora messaging:' % (name.ljust(padding)))
 
     change = bool(packages)
     if not change:
-        print('%s No real changes.  Skipping fedmsg.' % (name.ljust(padding)))
+        print('%s No real changes.  Skipping fedora messaging.' % (name.ljust(padding)))
         return
 
     # Just publish the suffix of the URL.  The prefix is dl.fedoraproject.org
@@ -311,15 +309,22 @@ def publish_changes(name, packages, repomd_url):
     url = '/'.join(repomd_url.split('/')[4:])
     print("%s   url %s" % (name.ljust(padding), url))
 
-    fedmsg.publish(
-        modname='mdapi',
-        topic='repo.update',
-        msg=dict(
-            name=name,
-            packages=packages,
-            url=url,
+    try:
+        msg = Message(
+            topic="mdapi.repo.update.v1",
+            body=dict(
+                name=name,
+                packages=packages,
+                url=url,
+            )
         )
-    )
+        publish(msg)
+    except PublishReturned as e:
+        print(
+            f"Fedora Messaging broker rejected message {msg.id}: {e}", file=sys.stderr
+        )
+    except ConnectionException as e:
+        print(f"Error sending message {msg.id}: {e}", file=sys.stderr)
 
 
 def install_db(name, src, dest):
