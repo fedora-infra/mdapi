@@ -52,9 +52,9 @@ import requests
 from sqlalchemy import text
 from fedora_messaging.api import Message, publish
 from fedora_messaging.exceptions import PublishReturned, ConnectionException
+from flufl.lock import Lock
 
 import mdapi.lib as mdapilib
-import mdapi.file_lock as file_lock
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
@@ -329,7 +329,7 @@ def publish_changes(name, packages, repomd_url):
 
 def install_db(name, src, dest):
     print('%s Installing %s to %s.' % (name.ljust(padding), src, dest))
-    with file_lock.FileFlock(dest + '.lock'):
+    with Lock(dest + '.lock'):
         shutil.move(src, dest)
 
 

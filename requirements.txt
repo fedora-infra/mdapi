@@ -5,3 +5,4 @@ multidict
 requests
 sqlalchemy
 werkzeug
+flufl.lock

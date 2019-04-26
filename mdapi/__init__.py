@@ -34,9 +34,10 @@ import asyncio
 import werkzeug
 from aiohttp import web
 from multidict import MultiDict
+from flufl.lock import Lock
 
 import mdapi.lib as mdapilib
-import mdapi.file_lock as file_lock
+
 
 
 CONFIG = dict()
@@ -114,7 +115,7 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
 
         wrongdb = False
 
-        with file_lock.FileFlock(dbfile + '.lock'):
+        with Lock(dbfile + '.lock'):
             session = yield from mdapilib.create_session(
                 'sqlite:///%s' % dbfile)
             if name:
@@ -166,7 +167,7 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
         dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
             CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
 
-        with file_lock.FileFlock(dbfile + '.lock'):
+        with Lock(dbfile + '.lock'):
             session = yield from mdapilib.create_session(
                 'sqlite:///%s' % dbfile)
             # Fill in some extra info
@@ -263,7 +264,7 @@ def get_pkg_files(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    with file_lock.FileFlock(dbfile + '.lock'):
+    with Lock(dbfile + '.lock'):
         session2 = yield from mdapilib.create_session(
             'sqlite:///%s' % dbfile)
         filelist = yield from mdapilib.get_files(session2, pkg.pkgId)
@@ -296,7 +297,7 @@ def get_pkg_changelog(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    with file_lock.FileFlock(dbfile + '.lock'):
+    with Lock(dbfile + '.lock'):
         session2 = yield from mdapilib.create_session(
             'sqlite:///%s' % dbfile)
         changelogs = yield from mdapilib.get_changelog(session2, pkg.pkgId)
