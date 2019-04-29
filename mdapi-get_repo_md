@@ -314,7 +314,7 @@ def publish_changes(name, packages, repomd_url):
             topic="mdapi.repo.update.v1",
             body=dict(
                 name=name,
-                packages=packages,
+                packages=list(packages),
                 url=url,
             )
         )
