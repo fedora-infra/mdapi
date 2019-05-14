@@ -311,7 +311,7 @@ def publish_changes(name, packages, repomd_url):
 
     try:
         msg = Message(
-            topic="mdapi.repo.update.v1",
+            topic="mdapi.repo.update",
             body=dict(
                 name=name,
                 packages=list(packages),
