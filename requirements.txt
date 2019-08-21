@@ -1,7 +1,6 @@
-aiohttp
+aiohttp >= 3.5.4
 fedora_messaging
 # this is a requirement of aiohttp but better safe than sorry
-multidict
 requests
 sqlalchemy
 werkzeug

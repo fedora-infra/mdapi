@@ -25,18 +25,13 @@ Top level of the mdapi aiohttp application.
 import functools
 import json
 import logging
-import logging.config
 import os
-import urllib
-from urllib.parse import parse_qs
 
 import asyncio
 import werkzeug
 from aiohttp import web
-from multidict import MultiDict
 
 import mdapi.lib as mdapilib
-
 
 
 CONFIG = dict()
@@ -75,7 +70,7 @@ def allows_jsonp(function):
 
         '''
         response = yield from function(request, *args, **kwargs)
-        url_arg = parse_qs(request.query_string)
+        url_arg = request.query
         callback = url_arg.get('callback')
         if callback and request.method == 'GET':
             if isinstance(callback, list):
@@ -139,11 +134,9 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
 
 def _get_pretty(request):
     pretty = False
-    get_params = MultiDict(urllib.parse.parse_qsl(
-        request.query_string.lower()))
-    if get_params.get('pretty'):
-        if str(get_params.get('pretty', None)) in ['1', 'true']:
-            pretty = True
+    params = request.query
+    if params.get('pretty') in ['1', 'true']:
+        pretty = True
     # Assume pretty if html is requested and pretty is not disabled
     elif 'text/html' in request.headers.get('ACCEPT', ''):
         pretty = True
@@ -336,7 +329,7 @@ def list_branches(request):
     # I am not really sure what doesn't work but it seems this endpoint is
     # returning an object instead of the expected generator despite it being
     # flagged as an asyncio coroutine
-    url_arg = parse_qs(request.query_string)
+    url_arg = request.query
     callback = url_arg.get('callback')
     if callback and request.method == 'GET':
         if isinstance(callback, list):
@@ -451,32 +444,3 @@ def _set_routes(app):
     for route in routes:
         app.router.add_route('GET', prefix + route[0], route[1])
     return app
-
-
-@asyncio.coroutine
-def init(loop):
-    logging.basicConfig()
-    logging.config.dictConfig(CONFIG.get('LOGGING') or {'version': 1})
-
-    app = web.Application(loop=loop)
-    app = _set_routes(app)
-
-    srv = yield from loop.create_server(
-        app.make_handler(),
-        CONFIG.get('HOST', '127.0.0.1'),
-        CONFIG.get('PORT', 8080))
-    print(
-        "Server started at http://%s:%s" % (
-            CONFIG.get('HOST', '127.0.0.1'),
-            CONFIG.get('PORT', 8080))
-    )
-    return srv
-
-
-if __name__ == '__main__':
-    loop = asyncio.get_event_loop()
-    loop.run_until_complete(init(loop))
-    try:
-        loop.run_forever()
-    except KeyboardInterrupt:
-        pass

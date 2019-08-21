@@ -149,7 +149,7 @@ async def test_view_changelog_rawhide(cli):
     ("conflicts", "mariadb", 200),
     ("enhances", "httpd", 200),
     ("recommends", "flac", 200),
-    ("suggests", "R-tools", 200),
+    ("suggests", "httpd", 200),
     ("supplements", "(hunspell and langpacks-fr)", 200),
 ])
 async def test_view_property_koji(cli, action, package, status_code):
