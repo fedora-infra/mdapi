@@ -34,7 +34,6 @@ import asyncio
 import werkzeug
 from aiohttp import web
 from multidict import MultiDict
-from flufl.lock import Lock
 
 import mdapi.lib as mdapilib
 
@@ -115,18 +114,17 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
 
         wrongdb = False
 
-        with Lock(dbfile + '.lock'):
-            session = yield from mdapilib.create_session(
-                'sqlite:///%s' % dbfile)
-            if name:
-                if action:
-                    pkg = yield from mdapilib.get_package_by(
-                        session, action, name)
-                else:
-                    pkg = yield from mdapilib.get_package(session, name)
-            elif srcname:
-                pkg = yield from mdapilib.get_package_by_src(session, srcname)
-            session.close()
+        session = yield from mdapilib.create_session(
+            'sqlite:///%s' % dbfile)
+        if name:
+            if action:
+                pkg = yield from mdapilib.get_package_by(
+                    session, action, name)
+            else:
+                pkg = yield from mdapilib.get_package(session, name)
+        elif srcname:
+            pkg = yield from mdapilib.get_package_by_src(session, srcname)
+        session.close()
         if pkg:
             break
 
@@ -167,41 +165,40 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
         dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
             CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
 
-        with Lock(dbfile + '.lock'):
-            session = yield from mdapilib.create_session(
-                'sqlite:///%s' % dbfile)
-            # Fill in some extra info
+        session = yield from mdapilib.create_session(
+            'sqlite:///%s' % dbfile)
+        # Fill in some extra info
 
-            # Basic infos, always present regardless of the version of the repo
-            for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
-                data = yield from mdapilib.get_package_info(
-                    session, pkg.pkgKey, datatype.capitalize())
-                if data:
-                    out[datatype] = [item.to_json() for item in data]
-                else:
-                    out[datatype] = data
-
-            # New meta-data present for soft dependency management in RPM
-            for datatype in [
-                    'enhances', 'recommends', 'suggests', 'supplements']:
-                data = yield from mdapilib.get_package_info(
-                    session, pkg.pkgKey, datatype.capitalize())
-                if data:
-                    out[datatype] = [item.to_json() for item in data]
-                else:
-                    out[datatype] = data
-
-            # Add the list of packages built from the same src.rpm
-            if pkg.rpm_sourcerpm:
-                copkgs = yield from mdapilib.get_co_packages(
-                    session, pkg.rpm_sourcerpm)
-                out['co-packages'] = list(set([
-                    cpkg.name for cpkg in copkgs
-                ]))
+        # Basic infos, always present regardless of the version of the repo
+        for datatype in ['conflicts', 'obsoletes', 'provides', 'requires']:
+            data = yield from mdapilib.get_package_info(
+                session, pkg.pkgKey, datatype.capitalize())
+            if data:
+                out[datatype] = [item.to_json() for item in data]
             else:
-                out['co-packages'] = []
-            out['repo'] = repotype if repotype else 'release'
-            session.close()
+                out[datatype] = data
+
+        # New meta-data present for soft dependency management in RPM
+        for datatype in [
+                'enhances', 'recommends', 'suggests', 'supplements']:
+            data = yield from mdapilib.get_package_info(
+                session, pkg.pkgKey, datatype.capitalize())
+            if data:
+                out[datatype] = [item.to_json() for item in data]
+            else:
+                out[datatype] = data
+
+        # Add the list of packages built from the same src.rpm
+        if pkg.rpm_sourcerpm:
+            copkgs = yield from mdapilib.get_co_packages(
+                session, pkg.rpm_sourcerpm)
+            out['co-packages'] = list(set([
+                cpkg.name for cpkg in copkgs
+            ]))
+        else:
+            out['co-packages'] = []
+        out['repo'] = repotype if repotype else 'release'
+        session.close()
         output.append(out)
     if singleton:
         return output[0]
@@ -264,11 +261,10 @@ def get_pkg_files(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    with Lock(dbfile + '.lock'):
-        session2 = yield from mdapilib.create_session(
-            'sqlite:///%s' % dbfile)
-        filelist = yield from mdapilib.get_files(session2, pkg.pkgId)
-        session2.close()
+    session2 = yield from mdapilib.create_session(
+        'sqlite:///%s' % dbfile)
+    filelist = yield from mdapilib.get_files(session2, pkg.pkgId)
+    session2.close()
 
     output = {
         'files': [fileinfo.to_json() for fileinfo in filelist],
@@ -297,11 +293,10 @@ def get_pkg_changelog(request):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    with Lock(dbfile + '.lock'):
-        session2 = yield from mdapilib.create_session(
-            'sqlite:///%s' % dbfile)
-        changelogs = yield from mdapilib.get_changelog(session2, pkg.pkgId)
-        session2.close()
+    session2 = yield from mdapilib.create_session(
+        'sqlite:///%s' % dbfile)
+    changelogs = yield from mdapilib.get_changelog(session2, pkg.pkgId)
+    session2.close()
 
     output = {
         'changelogs': [changelog.to_json() for changelog in changelogs],

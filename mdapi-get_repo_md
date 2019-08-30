@@ -52,7 +52,6 @@ import requests
 from sqlalchemy import text
 from fedora_messaging.api import Message, publish
 from fedora_messaging.exceptions import PublishReturned, ConnectionException
-from flufl.lock import Lock
 
 import mdapi.lib as mdapilib
 
@@ -329,8 +328,7 @@ def publish_changes(name, packages, repomd_url):
 
 def install_db(name, src, dest):
     print('%s Installing %s to %s.' % (name.ljust(padding), src, dest))
-    with Lock(dest + '.lock'):
-        shutil.move(src, dest)
+    shutil.move(src, dest)
 
 
 def needs_update(local_file, remote_sha, sha_type):
