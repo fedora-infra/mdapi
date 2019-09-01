@@ -483,8 +483,8 @@ def main():
         'Fedora':
             [
                 '%s/pub/fedora/linux/releases/%s/Everything/x86_64/os/repodata',
-                '%s/pub/fedora/linux/updates/%s/x86_64/repodata',
-                '%s/pub/fedora/linux/updates/testing/%s/x86_64/repodata',
+                '%s/pub/fedora/linux/updates/%s/Everything/x86_64/repodata',
+                '%s/pub/fedora/linux/updates/testing/%s/Everything/x86_64/repodata',
             ],
         'Fedora EPEL':
             [
@@ -504,12 +504,15 @@ def main():
         for idx, url in enumerate(urls[release['name']]):
             if release['name'] == 'Fedora':
                 name = fedora_repos[idx] % release['koji_name']
+            elif release['name'] == 'Fedora EPEL' and version == "8":
+                name = epel_repos[idx] % release['koji_name']
+                url = url.replace('/x86_64/', '/Everything/x86_64/')
             else:
                 name = epel_repos[idx] % release['koji_name']
             rurl =  url % (DL_SERVER, version)
             repositories.append((rurl, name))
 
-            rurl = rurl.replace('/x86_64/', '/SRPMS/')
+            rurl = rurl.replace('/x86_64/os', '/source/tree')
             repositories.append((rurl, 'src_%s' % name))
 
     # In parallel
