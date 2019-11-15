@@ -54,11 +54,11 @@ def set_env(request):
     """
     global TMPDIR
     TMPDIR = tempfile.mkdtemp(prefix="mdapi-test-")
-    print("Creating %s" % TMPDIR)
+    print(f"Creating {TMPDIR}")
     configfile = os.path.join(TMPDIR, "config")
 
     with open(configfile, "w") as stream:
-        stream.write("DB_FOLDER = '%s'\n" % TMPDIR)
+        stream.write(f"DB_FOLDER = '{TMPDIR}'\n")
 
     print("Downloading the databases...")
     subprocess.check_output(
@@ -68,7 +68,7 @@ def set_env(request):
     assert len(os.listdir(TMPDIR)) > 2
 
     def clean_up():
-        print("\nRemoving %s" % TMPDIR)
+        print(f"\nRemoving {TMPDIR}")
         shutil.rmtree(TMPDIR)
     request.addfinalizer(clean_up)
 
@@ -153,7 +153,7 @@ async def test_view_changelog_rawhide(cli):
     ("supplements", "(hunspell and langpacks-fr)", 200),
 ])
 async def test_view_property_koji(cli, action, package, status_code):
-    resp = await cli.get('/koji/%s/%s' % (action, package))
+    resp = await cli.get(f'/koji/{action}/{package}')
     assert resp.status == status_code
     if status_code == 200:
         json.loads(await resp.text())

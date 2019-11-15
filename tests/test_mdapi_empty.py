@@ -109,6 +109,6 @@ async def test_view_changelog_rawhide(cli):
     "enhances", "recommends", "suggests", "supplements",
 ])
 async def test_view_property_koji(cli, action):
-    resp = await cli.get('/koji/%s/R' % action)
+    resp = await cli.get(f'/koji/{action}/R')
     assert resp.status == 400
     assert '400: Bad Request' == await resp.text()

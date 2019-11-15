@@ -153,15 +153,14 @@ def list_branches(status='Active'):
     ''' Return the list of Fedora branches corresponding to the given
     status.
     '''
-    url = PKGDB2_URL + 'api/collections?clt_status=%s' % status
+    url = PKGDB2_URL + f'api/collections?clt_status={status}'
     response = requests.get(url, verify=PKGDB2_VERIFY)
     data = response.json()
     return data['collections']
 
 
 def download_db(name, repomd_url, archive):
-    print('%s Downloading file: %s to %s' % (
-        name.ljust(padding), repomd_url, archive))
+    print(f'{name.ljust(padding)} Downloading file: {repomd_url} to {archive}')
     response = requests.get(repomd_url, verify=DL_VERIFY)
     with open(archive, 'wb') as stream:
         stream.write(response.content)
@@ -169,7 +168,7 @@ def download_db(name, repomd_url, archive):
 
 def decompress_db(name, archive, location):
     ''' Decompress the given XZ archive at the specified location. '''
-    print('%s Extracting %s to %s' % (name.ljust(padding), archive, location))
+    print(f'{name.ljust(padding)} Extracting {archive} to {location}')
     if archive.endswith('.xz'):
         import lzma
         with contextlib.closing(lzma.LZMAFile(archive)) as stream_xz:
@@ -196,7 +195,7 @@ def decompress_db(name, archive, location):
 
 
 def compare_dbs(name, db1, db2, cache1, cache2):
-    print('%s Comparing %s and %s' % (name.ljust(padding), db1, db2))
+    print(f'{name.ljust(padding)} Comparing {db1} and {db2}')
 
     def get_table_names(uri):
         with mdapilib.session_manager('sqlite:///' + uri) as session:
@@ -223,10 +222,8 @@ def compare_dbs(name, db1, db2, cache1, cache2):
                         row[0] = cache[row[0]]
                         yield tuple(row)
                     else:
-                        print("%s ! %r does not appear in the "
-                              "%r cache for %r.  Dropping "
-                              "from comparison." % (
-                                  name.ljust(padding), row[0], table, uri))
+                        print(f"{name.ljust(padding)} ! {row[0]!r} does not appear in the "
+                              f"{table!r} cache for {uri}. Dropping from comparison.")
                 else:
                     yield tuple(row)
 
@@ -248,7 +245,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         # We have never downloaded this before...
         # so we have nothing to compare it against.  Just return and say there
         # are "no differences".
-        print('%s Empty!  %s  Cannot compare.' % (name.ljust(padding), db2))
+        print(f'{name.ljust(padding)} Empty! {db2} Cannot compare.')
         return set()
 
     assert len(tables1) == len(tables2), "Cannot compare disparate dbs."
@@ -293,11 +290,11 @@ def compare_dbs(name, db1, db2, cache1, cache2):
 
 
 def publish_changes(name, packages, repomd_url):
-    print('%s Publishing differences to fedora messaging:' % (name.ljust(padding)))
+    print(f'{name.ljust(padding)} Publishing differences to fedora messaging:')
 
     change = bool(packages)
     if not change:
-        print('%s No real changes.  Skipping fedora messaging.' % (name.ljust(padding)))
+        print(f'{name.ljust(padding)} No real changes.  Skipping fedora messaging.')
         return
 
     # Just publish the suffix of the URL.  The prefix is dl.fedoraproject.org
@@ -306,7 +303,7 @@ def publish_changes(name, packages, repomd_url):
     # download.fedoraproject.org.. so, just obscure *exactly* which repo we're
     # talking about.
     url = '/'.join(repomd_url.split('/')[4:])
-    print("%s   url %s" % (name.ljust(padding), url))
+    print(f"{name.ljust(padding)} url {url}")
 
     try:
         msg = Message(
@@ -327,7 +324,7 @@ def publish_changes(name, packages, repomd_url):
 
 
 def install_db(name, src, dest):
-    print('%s Installing %s to %s.' % (name.ljust(padding), src, dest))
+    print(f'{name.ljust(padding)} Installing {src} to {dest}.')
     shutil.move(src, dest)
 
 
@@ -365,8 +362,7 @@ def process_repo(tupl):
     repomd_url = url + '/repomd.xml'
     response = requests.get(repomd_url, verify=DL_VERIFY)
     if not bool(response):
-        print('%s !! Failed to get %r %r' % (
-            name.ljust(padding), repomd_url, response))
+        print(f'{name.ljust(padding)} !! Failed to get {repomd_url!r} {response!r}')
         return
 
     # Parse the xml doc and get a list of locations and their shasum.
@@ -393,7 +389,7 @@ def process_repo(tupl):
     cache1, cache2 = {}, {}
 
     if not files:
-        print('No sqlite database could be found in %s' % url)
+        print(f'No sqlite database could be found in {url}')
 
     for filename, shasum, shatype in files:
         repomd_url = url + '/' + filename
@@ -401,16 +397,16 @@ def process_repo(tupl):
         # First, determine if the file has changed by comparing hash
         db = None
         if 'primary.sqlite' in filename:
-            db = 'mdapi-%s-primary.sqlite' % name
+            db = f'mdapi-{name}-primary.sqlite'
         elif 'filelists.sqlite' in filename:
-            db = 'mdapi-%s-filelists.sqlite' % name
+            db = f'mdapi-{name}-filelists.sqlite'
         elif 'other.sqlite' in filename:
-            db = 'mdapi-%s-other.sqlite' % name
+            db = f'mdapi-{name}-other.sqlite'
 
         # Have we downloaded this before?  Did it change?
         destfile = os.path.join(destfolder, db)
         if not needs_update(destfile, shasum, shatype):
-            print('%s No change of %s' % (name.ljust(padding), repomd_url))
+            print(f'{name.ljust(padding)} No change of {repomd_url}')
             continue
 
         # If it has changed, then download it and move it into place.
@@ -469,15 +465,14 @@ def main():
         version = release['version']
         if version == 'devel':
             version = 'rawhide'
-        url = '%s/pub/fedora/linux/' \
-            'development/%s/Everything/x86_64/os/repodata' % (DL_SERVER, version)
+        url = f'{DL_SERVER}/pub/fedora/linux/development/{version}/Everything/x86_64/os/repodata'
         print(release['koji_name'], version, release['status'], url)
         repositories.append(
             (url, release['koji_name'])
         )
 
         url = url.replace('/x86_64/os/', '/source/tree/')
-        repositories.append((url, 'src_%s' % release['koji_name']))
+        repositories.append((url, f'src_{release["koji_name"]}'))
 
     urls = {
         'Fedora':
@@ -513,7 +508,7 @@ def main():
             repositories.append((rurl, name))
 
             rurl = rurl.replace('/x86_64/os', '/source/tree')
-            repositories.append((rurl, 'src_%s' % name))
+            repositories.append((rurl, f'src_{name}'))
 
     # In parallel
     #p = multiprocessing.Pool(10)

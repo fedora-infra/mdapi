@@ -77,7 +77,7 @@ def allows_jsonp(function):
                 callback = callback[0]
             response.mimetype = 'application/javascript'
             response.content_type = 'application/javascript'
-            response.text = '%s(%s);' % (callback, response.text)
+            response.text = f'{callback}({response.text});'
 
         return response
 
@@ -97,11 +97,9 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
     for repotype in ['updates-testing', 'updates', 'testing', None]:
 
         if repotype:
-            dbfile = '%s/mdapi-%s-%s-primary.sqlite' % (
-                CONFIG['DB_FOLDER'], branch, repotype)
+            dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}-{repotype}-primary.sqlite'
         else:
-            dbfile = '%s/mdapi-%s-primary.sqlite' % (
-                CONFIG['DB_FOLDER'], branch)
+            dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}-primary.sqlite'
 
         if not os.path.exists(dbfile):
             wrongdb = True
@@ -109,8 +107,7 @@ def _get_pkg(branch, name=None, action=None, srcname=None):
 
         wrongdb = False
 
-        session = yield from mdapilib.create_session(
-            'sqlite:///%s' % dbfile)
+        session = yield from mdapilib.create_session(f'sqlite:///{dbfile}')
         if name:
             if action:
                 pkg = yield from mdapilib.get_package_by(
@@ -155,11 +152,9 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
     output = []
     for pkg in pkgs:
         out = pkg.to_json()
-        dbfile = '%s/mdapi-%s%s-primary.sqlite' % (
-            CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
+        dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}{"-"+repotype if repotype else ""}-primary.sqlite'
 
-        session = yield from mdapilib.create_session(
-            'sqlite:///%s' % dbfile)
+        session = yield from mdapilib.create_session(f'sqlite:///{dbfile}')
         # Fill in some extra info
 
         # Basic infos, always present regardless of the version of the repo
@@ -202,7 +197,7 @@ def _expand_pkg_info(pkgs, branch, repotype=None):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg(request):
-    _log.info('get_pkg %s', request)
+    _log.info(f'get_pkg {request}')
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -223,7 +218,7 @@ def get_pkg(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_src_pkg(request):
-    _log.info('get_src_pkg %s', request)
+    _log.info(f'get_src_pkg {request}')
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -243,19 +238,17 @@ def get_src_pkg(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg_files(request):
-    _log.info('get_pkg_files %s', request)
+    _log.info(f'get_pkg_files {request}')
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
     pkg, repotype = yield from _get_pkg(branch, name)
 
-    dbfile = '%s/mdapi-%s%s-filelists.sqlite' % (
-        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
+    dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}{"-"+repotype if repotype else ""}-filelists.sqlite'
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    session2 = yield from mdapilib.create_session(
-        'sqlite:///%s' % dbfile)
+    session2 = yield from mdapilib.create_session(f'sqlite:///{dbfile}')
     filelist = yield from mdapilib.get_files(session2, pkg.pkgId)
     session2.close()
 
@@ -275,19 +268,17 @@ def get_pkg_files(request):
 @asyncio.coroutine
 @allows_jsonp
 def get_pkg_changelog(request):
-    _log.info('get_pkg_changelog %s', request)
+    _log.info(f'get_pkg_changelog {request}')
     branch = request.match_info.get('branch')
     name = request.match_info.get('name')
     pretty = _get_pretty(request)
     pkg, repotype = yield from _get_pkg(branch, name)
 
-    dbfile = '%s/mdapi-%s%s-other.sqlite' % (
-        CONFIG['DB_FOLDER'], branch, '-%s' % repotype if repotype else '')
+    dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}{"-"+repotype if repotype else ""}-other.sqlite'
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    session2 = yield from mdapilib.create_session(
-        'sqlite:///%s' % dbfile)
+    session2 = yield from mdapilib.create_session(f'sqlite:///{dbfile}')
     changelogs = yield from mdapilib.get_changelog(session2, pkg.pkgId)
     session2.close()
 
@@ -308,7 +299,7 @@ def get_pkg_changelog(request):
 def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
-    _log.info('list_branches: %s', request)
+    _log.info(f'list_branches: {request}')
     pretty = _get_pretty(request)
     output = sorted(list(set([
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
@@ -336,7 +327,7 @@ def list_branches(request):
             callback = callback[0]
         response.mimetype = 'application/javascript'
         response.content_type = 'application/javascript'
-        response.text = '%s(%s);' % (callback, response.text)
+        response.text = f'{callback}({response.text});'
 
     return response
 
@@ -347,7 +338,7 @@ def process_dep(request, action):
     ''' Return the information about the packages having the specified
     action (provides, requires, obsoletes...)
     '''
-    _log.info('process_dep %s: %s', action, request)
+    _log.info(f'process_dep {action}: {request}')
     branch = request.match_info.get('branch')
     pretty = _get_pretty(request)
     name = request.match_info.get('name')
@@ -409,7 +400,7 @@ def get_supplements(request):
 
 @asyncio.coroutine
 def index(request):
-    _log.info('index %s', request)
+    _log.info(f'index {request}')
     return web.Response(
         body=INDEX.encode('utf-8'),
         content_type='text/html',
