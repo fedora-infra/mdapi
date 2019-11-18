@@ -1,7 +1,8 @@
 aiohttp >= 3.5.4
+aiosqlite
 fedora_messaging
 # this is a requirement of aiohttp but better safe than sorry
 requests
-sqlalchemy
 werkzeug
-flufl.lock
+uvloop
+gunicorn

@@ -37,7 +37,6 @@ sqlite database are retrieved from the master Fedora mirror:
 import argparse
 import contextlib
 import itertools
-import multiprocessing
 import os
 import shutil
 import tempfile
@@ -45,15 +44,14 @@ import time
 import hashlib
 import xml.etree.ElementTree as ET
 import sys
+import sqlite3
 
 
 import requests
 
-from sqlalchemy import text
 from fedora_messaging.api import Message, publish
 from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
-import mdapi.lib as mdapilib
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
@@ -198,11 +196,12 @@ def compare_dbs(name, db1, db2, cache1, cache2):
     print(f'{name.ljust(padding)} Comparing {db1} and {db2}')
 
     def get_table_names(uri):
-        with mdapilib.session_manager('sqlite:///' + uri) as session:
-            for name in session.connection().engine.table_names():
-                if name == 'db_info':
-                    continue
-                yield name
+        conn = sqlite3.connect(uri)
+        for name in conn.execute("SELECT name FROM sqlite_master WHERE type='table'"):
+            if name[0] == 'db_info':
+                continue
+            yield name[0]
+        conn.close()
 
     def row_to_package(row):
         if '/' in row[0]:
@@ -212,28 +211,27 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         return name.split('(')[0]
 
     def get_all_rows(uri, table, cache):
-        query = text(queries.get(table, default_query).format(table=table))
-        with mdapilib.session_manager('sqlite:///' + uri) as session:
-            engine = session.connection().engine
-            for i, row in enumerate(engine.execute(query)):
-                if table in cache_dependant_tables:
-                    row = list(row)  # lists support item assignment
-                    if row[0] in cache:
-                        row[0] = cache[row[0]]
-                        yield tuple(row)
-                    else:
-                        print(f"{name.ljust(padding)} ! {row[0]!r} does not appear in the "
-                              f"{table!r} cache for {uri}. Dropping from comparison.")
-                else:
+        conn = sqlite3.connect(uri)
+        query = queries.get(table, default_query).format(table=table)
+        for i, row in enumerate(conn.execute(query)):
+            if table in cache_dependant_tables:
+                row = list(row)  # lists support item assignment
+                if row[0] in cache:
+                    row[0] = cache[row[0]]
                     yield tuple(row)
-
+                else:
+                    print(f"{name.ljust(padding)} ! {row[0]!r} does not appear in the "
+                          f"{table!r} cache for {uri}. Dropping from comparison.")
+            else:
+                yield tuple(row)
+        conn.close()
 
     def build_cache(uri, cache):
-        query = text(packages_cache_builder.format(table=table))
-        with mdapilib.session_manager('sqlite:///' + uri) as session:
-            engine = session.connection().engine
-            for pkgId, pkgname in engine.execute(query):
-                cache[pkgId] = pkgname
+        conn = sqlite3.connect(uri)
+        query = queries.get(table, default_query).format(table=table)
+        for pkgId, pkgname in conn.execute(query):
+            cache[pkgId] = pkgname
+        conn.close()
 
     tables1 = list(get_table_names(db1))
     tables2 = list(get_table_names(db2))
@@ -267,6 +265,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         # Same goes for the 'packages' table in the 'other' db.
         ('other', 'packages'),
     ]
+
     def should_compare(table):
         for test, target in ignored_db_tables:
             if test in db1 and table == target:
@@ -381,7 +380,7 @@ def process_repo(tupl):
     files = ((f, s, t) for f, s, t in files if '.sqlite' in f)
 
     # We need to ensure the primary db comes first so we can build a pkey cache
-    primary_first = lambda item: not 'primary' in item[0]
+    primary_first = lambda item: 'primary' not in item[0]
     files = sorted(files, key=primary_first)
 
     # Primary-key caches built from the primary dbs so we can make sense
@@ -504,18 +503,18 @@ def main():
                 url = url.replace('/x86_64/', '/Everything/x86_64/')
             else:
                 name = epel_repos[idx] % release['koji_name']
-            rurl =  url % (DL_SERVER, version)
+            rurl = url % (DL_SERVER, version)
             repositories.append((rurl, name))
 
             rurl = rurl.replace('/x86_64/os', '/source/tree')
             repositories.append((rurl, f'src_{name}'))
 
     # In parallel
-    #p = multiprocessing.Pool(10)
-    #p.map(process_repo, itertools.product(
+    # p = multiprocessing.Pool(10)
+    # p.map(process_repo, itertools.product(
     #    [CONFIG.get('DB_FOLDER', '/var/tmp')],
     #    repositories)
-    #)
+    # )
 
     # In serial
     sleep_for = CONFIG.get('CRON_SLEEP', 30)

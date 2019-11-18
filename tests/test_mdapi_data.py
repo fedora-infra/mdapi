@@ -41,6 +41,8 @@ sys.path.insert(0, os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..'))
 
 import mdapi
+from mdapi.server import init_app
+
 
 HERE = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
@@ -79,11 +81,11 @@ def tmpdir():
 
 
 @pytest.fixture
-def cli(set_env, tmpdir, loop, aiohttp_client):
+async def cli(set_env, tmpdir, loop, test_client):
     mdapi.CONFIG['DB_FOLDER'] = tmpdir
-    app = web.Application()
-    app = mdapi._set_routes(app)
-    return loop.run_until_complete(aiohttp_client(app))
+    app = await init_app()
+    return await test_client(app)
+
 
 
 async def test_view_index_page(cli):

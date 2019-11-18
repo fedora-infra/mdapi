@@ -38,17 +38,16 @@ sys.path.insert(0, os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..'))
 
 import mdapi
-import mdapi.lib
+from mdapi.server import init_app
 
 HERE = os.path.join(os.path.dirname(os.path.abspath(__file__)))
 
 
 @pytest.fixture
-def cli(loop, aiohttp_client):
+async def cli(loop, test_client):
     mdapi.CONFIG['DB_FOLDER'] = '.'
-    app = web.Application()
-    app = mdapi._set_routes(app)
-    return loop.run_until_complete(aiohttp_client(app))
+    app = await init_app()
+    return await test_client(app)
 
 
 async def test_view_index_page(cli):

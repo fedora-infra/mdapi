@@ -10,3 +10,4 @@ dist/
 alembic.ini
 .tox/
 .pytest_cache/
+venv/
