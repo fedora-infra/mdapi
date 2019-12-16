@@ -27,7 +27,6 @@ async def add_cors_headers(request, handler):
     resp = await handler(request)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Access-Control-Allow-Methods'] = 'GET'
-    resp.headers['Access-Control-Allow-Headers'] = 'Content-Type'
     return resp
 
 async def init_app():
