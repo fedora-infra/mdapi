@@ -2,6 +2,7 @@ import logging
 import logging.config
 
 from aiohttp import web
+from aiohttp.web import middleware
 
 from mdapi import CONFIG
 from mdapi.views import (
@@ -21,6 +22,13 @@ from mdapi.views import (
         get_pkg_changelog
 )
 
+@middleware
+async def add_cors_headers(request, handler):
+    resp = await handler(request)
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Methods'] = 'GET1'
+    resp.headers['Access-Control-Allow-Headers'] = 'Content-Type'
+    return resp
 
 async def init_app():
     """ Creates the aiohttp application.
@@ -30,7 +38,7 @@ async def init_app():
     logging.basicConfig()
     logging.config.dictConfig(CONFIG.get("LOGGING") or {"version": 1})
 
-    app = web.Application()
+    app = web.Application(middlewares=[add_cors_headers])
 
     app.add_routes([
         web.get('/', index),
