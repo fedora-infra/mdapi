@@ -229,7 +229,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
     def build_cache(uri, cache):
         conn = sqlite3.connect(uri)
         query = queries.get(table, default_query).format(table=table)
-        for pkgId, pkgname in conn.execute(query):
+        for pkgId, pkgname, *args in conn.execute(query):
             cache[pkgId] = pkgname
         conn.close()
 
