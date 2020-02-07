@@ -26,7 +26,7 @@ import logging
 import os
 
 import aiosqlite
-import werkzeug
+import werkzeug.utils
 
 from aiohttp import web
 
@@ -46,7 +46,7 @@ from mdapi.db import (
 
 
 CONFIG = dict()
-obj = werkzeug.import_string('mdapi.default_config')
+obj = werkzeug.utils.import_string('mdapi.default_config')
 for key in dir(obj):
     if key.isupper():
         CONFIG[key] = getattr(obj, key)
