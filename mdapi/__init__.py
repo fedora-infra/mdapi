@@ -90,7 +90,7 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                     pkg = [Packages(*item) for item in pkg]
                     break
             elif srcname:
-                async with db.execute(GET_PACKAGE_BY_SRC, (srcname+'%',)) as cursor:
+                async with db.execute(GET_PACKAGE_BY_SRC, (srcname+'-%',)) as cursor:
                     pkg = await cursor.fetchone()
                 if pkg:
                     pkg = Packages(*pkg)
