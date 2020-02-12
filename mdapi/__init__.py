@@ -24,6 +24,7 @@ Top level of the mdapi aiohttp application.
 '''
 import logging
 import os
+import re
 
 import aiosqlite
 import werkzeug.utils
@@ -90,11 +91,14 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                     pkg = [Packages(*item) for item in pkg]
                     break
             elif srcname:
+                pattern = re.compile(f"{srcname}-[0-9]")
                 async with db.execute(GET_PACKAGE_BY_SRC, (srcname+'-%',)) as cursor:
-                    pkg = await cursor.fetchone()
-                if pkg:
-                    pkg = Packages(*pkg)
-                    break
+                    pkgc = await cursor.fetchall()
+                if pkgc:
+                    for pkg_item in pkgc:
+                        if pattern.match(pkg_item[3]):
+                            pkg = Packages(*pkg_item)
+                            break
             else:
                 async with db.execute(GET_PACKAGE, (name,)) as cursor:
                     pkg = await cursor.fetchone()
