@@ -86,9 +86,9 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                 # user.
                 query = GET_PACKAGE_BY.format(action)
                 async with db.execute(query, (name,)) as cursor:
-                    pkg = await cursor.fetchall()
-                if pkg:
-                    pkg = [Packages(*item) for item in pkg]
+                    pkgc = await cursor.fetchall()
+                if pkgc:
+                    pkg = [Packages(*item) for item in pkgc]
                     break
             elif srcname:
                 pattern = re.compile(f"{srcname}-[0-9]")
@@ -101,9 +101,9 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                             break
             else:
                 async with db.execute(GET_PACKAGE, (name,)) as cursor:
-                    pkg = await cursor.fetchone()
-                if pkg:
-                    pkg = Packages(*pkg)
+                    pkgc = await cursor.fetchone()
+                if pkgc:
+                    pkg = Packages(*pkgc)
                     break
     if wrongdb:
         raise web.HTTPBadRequest()
