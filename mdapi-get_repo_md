@@ -287,10 +287,7 @@ def compare_dbs(name, db1, db2, cache1, cache2):
 
 
 def publish_changes(name, packages, repomd_url):
-    print(f'{name.ljust(padding)} Publishing differences to fedora messaging: '
-          f'{PUBLISH_CHANGES}')
-    if not PUBLISH_CHANGES:
-        return
+    print(f'{name.ljust(padding)} Publishing differences to fedora messaging:')
 
     change = bool(packages)
     if not change:
@@ -417,8 +414,12 @@ def process_repo(tupl):
 
             download_db(name, repomd_url, archive)
             decompress_db(name, archive, tempdb)
-            packages = compare_dbs(name, tempdb, destfile, cache1, cache2)
-            publish_changes(name, packages, repomd_url)
+            if PUBLISH_CHANGES:
+                packages = compare_dbs(name, tempdb, destfile, cache1, cache2)
+                publish_changes(name, packages, repomd_url)
+            else:
+                print(f'{name.ljust(padding)} Not publishing to Fedora '
+                      f'messaging; not comparing DBs.')
             install_db(name, tempdb, destfile)
 
 
