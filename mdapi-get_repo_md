@@ -59,6 +59,8 @@ DL_SERVER = 'http://dl.fedoraproject.org'
 PKGDB2_VERIFY = True
 # Valid for both koji and the download server
 DL_VERIFY = True
+# Whether to publish to Fedora Messaging.
+PUBLISH_CHANGES = True
 
 
 repomd_xml_namespace = {
@@ -285,7 +287,10 @@ def compare_dbs(name, db1, db2, cache1, cache2):
 
 
 def publish_changes(name, packages, repomd_url):
-    print(f'{name.ljust(padding)} Publishing differences to fedora messaging:')
+    print(f'{name.ljust(padding)} Publishing differences to fedora messaging: '
+          f'{PUBLISH_CHANGES}')
+    if not PUBLISH_CHANGES:
+        return
 
     change = bool(packages)
     if not change:
@@ -436,11 +441,13 @@ def main():
         return 1
 
     global PKGDB2_URL, KOJI_REPO, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY
+    global PUBLISH_CHANGES
     PKGDB2_URL = CONFIG.get('PKGDB2_URL', PKGDB2_URL)
     KOJI_REPO = CONFIG.get('KOJI_REPO', KOJI_REPO)
     DL_SERVER = CONFIG.get('DL_SERVER', DL_SERVER)
     PKGDB2_VERIFY = CONFIG.get('PKGDB2_VERIFY', PKGDB2_VERIFY)
     DL_VERIFY = CONFIG.get('DL_VERIFY', DL_VERIFY)
+    PUBLISH_CHANGES = CONFIG.get('PUBLISH_CHANGES', PUBLISH_CHANGES)
 
     if not DL_VERIFY or not PKGDB2_VERIFY:
         # Suppress urllib3's warning about insecure requests
