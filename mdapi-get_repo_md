@@ -35,7 +35,6 @@ sqlite database are retrieved from the master Fedora mirror:
 '''
 
 import argparse
-import contextlib
 import itertools
 import os
 import shutil
@@ -171,25 +170,20 @@ def decompress_db(name, archive, location):
     print(f'{name.ljust(padding)} Extracting {archive} to {location}')
     if archive.endswith('.xz'):
         import lzma
-        with contextlib.closing(lzma.LZMAFile(archive)) as stream_xz:
-            data = stream_xz.read()
-        with open(location, 'wb') as stream:
-            stream.write(data)
+        with lzma.open(archive) as inp, open(location, 'wb') as out:
+            out.write(inp.read())
     elif archive.endswith('.tar.gz'):
         import tarfile
         with tarfile.open(archive) as tar:
             tar.extractall(path=location)
     elif archive.endswith('.gz'):
         import gzip
-        with open(location, 'wb') as out:
-            with gzip.open(archive, 'rb') as inp:
-                out.write(inp.read())
+        with gzip.open(archive, 'rb') as inp, open(location, 'wb') as out:
+            out.write(inp.read())
     elif archive.endswith('.bz2'):
         import bz2
-        with open(location, 'wb') as out:
-            bzar = bz2.BZ2File(archive)
-            out.write(bzar.read())
-            bzar.close()
+        with bz2.open(archive) as inp, open(location, 'wb') as out:
+            out.write(inp.read())
     else:
         raise NotImplementedError(archive)
 
