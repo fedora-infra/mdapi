@@ -153,6 +153,7 @@ def list_branches(status='Active'):
     '''
     url = PKGDB2_URL + f'api/collections?clt_status={status}'
     response = requests.get(url, verify=PKGDB2_VERIFY)
+    response.raise_for_status()
     data = response.json()
     return data['collections']
 
@@ -160,6 +161,7 @@ def list_branches(status='Active'):
 def download_db(name, repomd_url, archive):
     print(f'{name.ljust(padding)} Downloading file: {repomd_url} to {archive}')
     response = requests.get(repomd_url, verify=DL_VERIFY)
+    response.raise_for_status()
     with open(archive, 'wb') as stream:
         stream.write(response.content)
 
@@ -360,7 +362,7 @@ def process_repo(tupl):
     url, name = repo
     repomd_url = url + '/repomd.xml'
     response = requests.get(repomd_url, verify=DL_VERIFY)
-    if not bool(response):
+    if not response:
         print(f'{name.ljust(padding)} !! Failed to get {repomd_url!r} {response!r}')
         return
 
