@@ -48,11 +48,4 @@ LOGGING = {
         'level': 'INFO',
         'handlers': ['console'],
     },
-    'loggers': {
-        'sqlalchemy': {
-            'handlers': ['console'],
-            'level': 'WARN',
-            'propagate': False
-        }
-    }
 }

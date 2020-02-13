@@ -35,7 +35,6 @@ import tempfile
 import mock
 import pytest
 from aiohttp import web
-from sqlalchemy.exc import SQLAlchemyError
 
 sys.path.insert(0, os.path.join(os.path.dirname(
     os.path.abspath(__file__)), '..'))
