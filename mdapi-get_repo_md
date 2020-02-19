@@ -35,7 +35,6 @@ sqlite database are retrieved from the master Fedora mirror:
 '''
 
 import argparse
-import itertools
 import os
 import shutil
 import tempfile
@@ -52,6 +51,7 @@ from fedora_messaging.api import Message, publish
 from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
 
+DB_FOLDER = '/var/tmp'
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
 DL_SERVER = 'https://dl.fedoraproject.org'
@@ -348,11 +348,10 @@ def needs_update(local_file, remote_sha, sha_type):
     return False
 
 
-def process_repo(tupl):
+def process_repo(repo):
     ''' Retrieve the repo metadata at the given url and store them using
     the provided name.
     '''
-    destfolder, repo = tupl
     url, name = repo
     repomd_url = url + '/repomd.xml'
     response = requests.get(repomd_url, verify=DL_VERIFY)
@@ -399,7 +398,7 @@ def process_repo(tupl):
             db = f'mdapi-{name}-other.sqlite'
 
         # Have we downloaded this before?  Did it change?
-        destfile = os.path.join(destfolder, db)
+        destfile = os.path.join(DB_FOLDER, db)
         if not needs_update(destfile, shasum, shatype):
             print(f'{name.ljust(padding)} No change of {repomd_url}')
             continue
@@ -435,7 +434,9 @@ def main():
         exec(compile(
             config_file.read(), configfile, 'exec'), CONFIG)
 
-    if not os.path.exists(CONFIG.get('DB_FOLDER', '/var/tmp')):
+    global DB_FOLDER
+    DB_FOLDER = CONFIG.get('DB_FOLDER', DB_FOLDER)
+    if not os.path.exists(DB_FOLDER):
         print('Could not find the configuration file')
         return 1
 
@@ -513,30 +514,25 @@ def main():
 
     # In parallel
     # p = multiprocessing.Pool(10)
-    # p.map(process_repo, itertools.product(
-    #    [CONFIG.get('DB_FOLDER', '/var/tmp')],
-    #    repositories)
-    # )
+    # p.map(process_repo, repositories)
 
     # In serial
     sleep_for = CONFIG.get('CRON_SLEEP', 30)
-    for t in itertools.product(
-            [CONFIG.get('DB_FOLDER', '/var/tmp')],
-            repositories):
+    for repo in repositories:
 
         loop = True
         cnt = 0
         while loop:
             cnt += 1
             try:
-                process_repo(t)
+                process_repo(repo)
                 loop = False
             except OSError:
                 if cnt == 4:
                     raise
                 # Most often due to an invalid stream, so let's try a second time
                 time.sleep(sleep_for)
-                process_repo(t)
+                process_repo(repo)
 
     return 0
 
