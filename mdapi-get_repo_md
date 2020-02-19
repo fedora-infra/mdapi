@@ -61,6 +61,8 @@ PKGDB2_VERIFY = True
 DL_VERIFY = True
 # Whether to publish to Fedora Messaging.
 PUBLISH_CHANGES = True
+# How long to wait between retries if processing failed.
+CRON_SLEEP = 30
 
 
 repomd_xml_namespace = {
@@ -441,13 +443,14 @@ def main():
         return 1
 
     global PKGDB2_URL, KOJI_REPO, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY
-    global PUBLISH_CHANGES
+    global PUBLISH_CHANGES, CRON_SLEEP
     PKGDB2_URL = CONFIG.get('PKGDB2_URL', PKGDB2_URL)
     KOJI_REPO = CONFIG.get('KOJI_REPO', KOJI_REPO)
     DL_SERVER = CONFIG.get('DL_SERVER', DL_SERVER)
     PKGDB2_VERIFY = CONFIG.get('PKGDB2_VERIFY', PKGDB2_VERIFY)
     DL_VERIFY = CONFIG.get('DL_VERIFY', DL_VERIFY)
     PUBLISH_CHANGES = CONFIG.get('PUBLISH_CHANGES', PUBLISH_CHANGES)
+    CRON_SLEEP = CONFIG.get('CRON_SLEEP', CRON_SLEEP)
 
     if not DL_VERIFY or not PKGDB2_VERIFY:
         # Suppress urllib3's warning about insecure requests
@@ -517,7 +520,6 @@ def main():
     # p.map(process_repo, repositories)
 
     # In serial
-    sleep_for = CONFIG.get('CRON_SLEEP', 30)
     for repo in repositories:
 
         loop = True
@@ -531,7 +533,7 @@ def main():
                 if cnt == 4:
                     raise
                 # Most often due to an invalid stream, so let's try a second time
-                time.sleep(sleep_for)
+                time.sleep(CRON_SLEEP)
                 process_repo(repo)
 
     return 0
