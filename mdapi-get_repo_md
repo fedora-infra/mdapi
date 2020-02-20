@@ -52,8 +52,8 @@ from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
 
 DB_FOLDER = '/var/tmp'
-KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
-PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
+KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos'
+PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb'
 DL_SERVER = 'https://dl.fedoraproject.org'
 # Enforce, or not, checking the SSL certs
 PKGDB2_VERIFY = True
@@ -154,7 +154,7 @@ def list_branches(status='Active'):
     ''' Return the list of Fedora branches corresponding to the given
     status.
     '''
-    url = PKGDB2_URL + f'api/collections?clt_status={status}'
+    url = f'{PKGDB2_URL}/api/collections?clt_status={status}'
     response = requests.get(url, verify=PKGDB2_VERIFY)
     response.raise_for_status()
     data = response.json()
@@ -313,9 +313,8 @@ def publish_changes(name, packages, repomd_url):
         )
         publish(msg)
     except PublishReturned as e:
-        print(
-            f"Fedora Messaging broker rejected message {msg.id}: {e}", file=sys.stderr
-        )
+        print(f"Fedora Messaging broker rejected message {msg.id}: {e}",
+              file=sys.stderr)
     except ConnectionException as e:
         print(f"Error sending message {msg.id}: {e}", file=sys.stderr)
 
@@ -355,7 +354,7 @@ def process_repo(repo):
     the provided name.
     '''
     url, name = repo
-    repomd_url = url + '/repomd.xml'
+    repomd_url = f'{url}/repomd.xml'
     response = requests.get(repomd_url, verify=DL_VERIFY)
     if not response:
         print(f'{name.ljust(padding)} !! Failed to get {repomd_url!r} {response!r}')
@@ -388,7 +387,7 @@ def process_repo(repo):
         print(f'No sqlite database could be found in {url}')
 
     for filename, shasum, shatype in files:
-        repomd_url = url + '/' + filename
+        repomd_url = f'{url}/{filename}'
 
         # First, determine if the file has changed by comparing hash
         db = None
@@ -459,7 +458,7 @@ def main():
     repositories = []
     # Get the koji repo
     repositories.append(
-        (KOJI_REPO + 'rawhide/latest/x86_64/repodata', 'koji')
+        (f'{KOJI_REPO}/rawhide/latest/x86_64/repodata', 'koji')
     )
 
     # Get the development repos (rawhide + eventually Fn+1 branched)

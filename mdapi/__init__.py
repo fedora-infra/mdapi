@@ -91,7 +91,7 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                     pkg = [Packages(*item) for item in pkgc]
                     break
             elif srcname:
-                async with db.execute(GET_PACKAGE_BY_SRC, (srcname+'-%',)) as cursor:
+                async with db.execute(GET_PACKAGE_BY_SRC, (f'{srcname}-%',)) as cursor:
                     pkgc = await cursor.fetchall()
                 if pkgc:
                     srcname = re.escape(srcname)
