@@ -30,7 +30,7 @@ Active Fedora branches are retrieved from pkgdb2:
     https://admin.fedoraproject.org/pkgdb/
 
 sqlite database are retrieved from the master Fedora mirror:
-    http://dl.fedoraproject.org/pub/fedora/linux/
+    https://dl.fedoraproject.org/pub/fedora/linux/
 
 '''
 
@@ -54,7 +54,7 @@ from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
 KOJI_REPO = 'https://kojipkgs.fedoraproject.org/repos/'
 PKGDB2_URL = 'https://admin.fedoraproject.org/pkgdb/'
-DL_SERVER = 'http://dl.fedoraproject.org'
+DL_SERVER = 'https://dl.fedoraproject.org'
 # Enforce, or not, checking the SSL certs
 PKGDB2_VERIFY = True
 # Valid for both koji and the download server
