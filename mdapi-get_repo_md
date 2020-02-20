@@ -213,15 +213,13 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         query = queries.get(table, default_query).format(table=table)
         for i, row in enumerate(conn.execute(query)):
             if table in cache_dependant_tables:
-                row = list(row)  # lists support item assignment
                 if row[0] in cache:
-                    row[0] = cache[row[0]]
-                    yield tuple(row)
+                    yield (cache[row[0]], *row[1:])
                 else:
                     print(f"{name.ljust(padding)} ! {row[0]!r} does not appear in the "
                           f"{table!r} cache for {uri}. Dropping from comparison.")
             else:
-                yield tuple(row)
+                yield row
         conn.close()
 
     def build_cache(uri, cache):
@@ -278,10 +276,10 @@ def compare_dbs(name, db1, db2, cache1, cache2):
         if table in cache_producing_tables:
             build_cache(db1, cache1)
             build_cache(db2, cache2)
-        rows1 = set(list(get_all_rows(db1, table, cache1)))
-        rows2 = set(list(get_all_rows(db2, table, cache2)))
+        rows1 = set(get_all_rows(db1, table, cache1))
+        rows2 = set(get_all_rows(db2, table, cache2))
         changed = rows1.symmetric_difference(rows2)
-        results.update(set([row_to_package(row) for row in changed]))
+        results.update({row_to_package(row) for row in changed})
 
     return results
 

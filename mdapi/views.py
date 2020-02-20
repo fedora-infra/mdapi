@@ -64,13 +64,13 @@ async def list_branches(request):
     ''' Return the list of all branches currently supported by mdapi
     '''
     _log.info(f'list_branches: {request}')
-    output = sorted(list(set([
+    output = sorted({
         # Remove the front part `mdapi-` and the end part -<type>.sqlite
         filename.replace('mdapi-', '').rsplit('-', 2)[0].replace(
             '-updates', '')
         for filename in os.listdir(CONFIG['DB_FOLDER'])
         if filename.startswith('mdapi') and filename.endswith('.sqlite')
-    ])))
+    })
 
     return web.json_response(output)
 
