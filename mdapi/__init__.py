@@ -80,7 +80,7 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
             continue
 
         wrongdb = False
-        async with aiosqlite.connect(f'{dbfile}') as db:
+        async with aiosqlite.connect(dbfile) as db:
             if action:
                 # It is safe to format the query since the action does not come from the
                 # user.
@@ -128,7 +128,7 @@ async def _expand_pkg_info(pkgs, branch, repotype=None):
         dbfile = f'{CONFIG["DB_FOLDER"]}/mdapi-{branch}{"-"+repotype if repotype else ""}'\
                  '-primary.sqlite'
 
-        async with aiosqlite.connect(f'{dbfile}') as db:
+        async with aiosqlite.connect(dbfile) as db:
             # Fill in some extra info
             # Basic infos, always present regardless of the version of the repo
             for datatype in ['conflicts',
@@ -174,7 +174,7 @@ async def _get_files(pkg_id, branch, repotype):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    async with aiosqlite.connect(f"{dbfile}") as db:
+    async with aiosqlite.connect(dbfile) as db:
         async with db.execute(GET_FILES, (pkg_id,)) as cursor:
             filelists = await cursor.fetchall()
 
@@ -195,7 +195,7 @@ async def _get_changelog(pkg_id, branch, repotype):
     if not os.path.exists(dbfile):
         raise web.HTTPBadRequest()
 
-    async with aiosqlite.connect(f"{dbfile}") as db:
+    async with aiosqlite.connect(dbfile) as db:
         async with db.execute(GET_CHANGELOGS, (pkg_id,)) as cursor:
             changelogs = await cursor.fetchall()
 
