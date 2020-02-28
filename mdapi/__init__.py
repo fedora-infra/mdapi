@@ -91,10 +91,11 @@ async def _get_pkg(branch, name=None, action=None, srcname=None):
                     pkg = [Packages(*item) for item in pkgc]
                     break
             elif srcname:
-                pattern = re.compile(f"{srcname}-[0-9]")
                 async with db.execute(GET_PACKAGE_BY_SRC, (srcname+'-%',)) as cursor:
                     pkgc = await cursor.fetchall()
                 if pkgc:
+                    srcname = re.escape(srcname)
+                    pattern = re.compile(f"{srcname}-[0-9]")
                     for pkg_item in pkgc:
                         if pattern.match(pkg_item[3]):
                             pkg = Packages(*pkg_item)
