@@ -22,12 +22,19 @@ from mdapi.views import (
         get_pkg_changelog
 )
 
+
 @middleware
 async def add_cors_headers(request, handler):
-    resp = await handler(request)
+    try:
+        resp = await handler(request)
+    except web.HTTPException as e:
+        e.headers['Access-Control-Allow-Origin'] = '*'
+        e.headers['Access-Control-Allow-Methods'] = 'GET'
+        raise
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Access-Control-Allow-Methods'] = 'GET'
     return resp
+
 
 async def init_app():
     """ Creates the aiohttp application.
