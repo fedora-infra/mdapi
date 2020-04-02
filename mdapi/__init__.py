@@ -153,7 +153,7 @@ async def _expand_pkg_info(pkgs, branch, repotype=None):
             if pkg.rpm_sourcerpm:
                 async with db.execute(GET_CO_PACKAGE, (pkg.rpm_sourcerpm,)) as cursor:
                     copkgs = await cursor.fetchall()
-                out['co-packages'] = list({cpkg[2] for cpkg in copkgs})
+                out['co-packages'] = [cpkg[0] for cpkg in copkgs]
             else:
                 out['co-packages'] = []
             out['repo'] = repotype if repotype else 'release'

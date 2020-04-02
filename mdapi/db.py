@@ -46,17 +46,7 @@ GET_PACKAGE_INFO = """SELECT rowid,
                       FROM {}
                       WHERE pkgKey = ?"""
 
-GET_CO_PACKAGE = """SELECT pkgKey,
-                           pkgId,
-                           name,
-                           rpm_sourcerpm,
-                           epoch,
-                           version,
-                           release,
-                           arch,
-                           summary,
-                           description,
-                           url
+GET_CO_PACKAGE = """SELECT DISTINCT(name)
                     FROM packages
                     WHERE rpm_sourcerpm = ?"""
 
