@@ -192,6 +192,16 @@ def decompress_db(name, archive, location):
         raise NotImplementedError(archive)
 
 
+def index_db(name, tempdb):
+    print(f'{name.ljust(padding)} Indexing file: {tempdb}')
+
+    if tempdb.endswith('primary.sqlite'):
+        conn = sqlite3.connect(tempdb)
+        conn.execute('CREATE INDEX packageSource ON packages (rpm_sourcerpm)')
+        conn.commit()
+        conn.close()
+
+
 def compare_dbs(name, db1, db2, cache1, cache2):
     print(f'{name.ljust(padding)} Comparing {db1} and {db2}')
 
@@ -412,6 +422,7 @@ def process_repo(repo):
 
             download_db(name, repomd_url, archive)
             decompress_db(name, archive, tempdb)
+            index_db(name, tempdb)
             if PUBLISH_CHANGES:
                 packages = compare_dbs(name, tempdb, destfile, cache1, cache2)
                 publish_changes(name, packages, repomd_url)
