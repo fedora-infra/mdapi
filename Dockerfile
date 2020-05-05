@@ -6,7 +6,7 @@ LABEL maintainer "Clément Verna <cverna@fedoraproject.org>"
 
 EXPOSE 8080
 
-RUN dnf -y install python3-aiohttp python3-werkzeug python3-requests python3-fedora-messaging python3-uvloop python3-pip python3-gunicorn\
+RUN dnf -y install python3-aiohttp python3-requests python3-fedora-messaging python3-uvloop python3-pip python3-gunicorn\
     && dnf clean all \
     && pip3 install aiosqlite
 

@@ -27,7 +27,6 @@ import os
 import re
 
 import aiosqlite
-import werkzeug.utils
 
 from aiohttp import web
 
@@ -44,13 +43,13 @@ from mdapi.db import (
         FileList,
         ChangeLog
 )
+from . import default_config
 
 
 CONFIG = dict()
-obj = werkzeug.utils.import_string('mdapi.default_config')
-for key in dir(obj):
+for key in dir(default_config):
     if key.isupper():
-        CONFIG[key] = getattr(obj, key)
+        CONFIG[key] = getattr(default_config, key)
 
 
 if 'MDAPI_CONFIG' in os.environ and os.path.exists(os.environ['MDAPI_CONFIG']):

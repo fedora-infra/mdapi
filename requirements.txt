@@ -3,6 +3,5 @@ aiosqlite
 fedora_messaging
 # this is a requirement of aiohttp but better safe than sorry
 requests
-werkzeug
 uvloop
 gunicorn

@@ -13,7 +13,6 @@ BuildRequires:  python3-aiohttp
 BuildRequires:  python3-aiosqlite
 BuildRequires:  python3-requests
 BuildRequires:  python3-setuptools
-BuildRequires:  python3-werkzeug
 BuildRequires:  python3-devel
 BuildRequires:  systemd
 
@@ -22,7 +21,6 @@ Requires:  python3-aiosqlite
 Requires:  python3-multidict
 Requires:  python3-requests
 Requires:  python3-setuptools
-Requires:  python3-werkzeug
 
 Requires(post):     systemd
 Requires(preun):    systemd
