@@ -47,6 +47,7 @@ import sqlite3
 
 import requests
 
+from mdapi_messages.messages import RepoUpdateV1
 from fedora_messaging.api import Message, publish
 from fedora_messaging.exceptions import PublishReturned, ConnectionException
 
@@ -313,8 +314,7 @@ def publish_changes(name, packages, repomd_url):
     print(f"{name.ljust(padding)} url {url}")
 
     try:
-        msg = Message(
-            topic="mdapi.repo.update",
+        msg = RepoUpdateV1(
             body=dict(
                 name=name,
                 packages=list(packages),

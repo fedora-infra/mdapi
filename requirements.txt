@@ -1,6 +1,7 @@
 aiohttp >= 3.5.4
 aiosqlite
 fedora_messaging
+mdapi_messages
 # this is a requirement of aiohttp but better safe than sorry
 requests
 uvloop
