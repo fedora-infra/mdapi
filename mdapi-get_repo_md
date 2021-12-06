@@ -502,6 +502,9 @@ def main():
                 '%s/pub/epel/testing/%s/x86_64/repodata',
             ]
     }
+    # We can remove this once all urls are migrated over to Fedora Linux
+    urls['Fedora'] = urls['Fedora Linux']
+
     fedora_repos = ['%s', '%s-updates', '%s-updates-testing']
     epel_repos = ['%s', '%s-testing']
 
@@ -512,7 +515,8 @@ def main():
             continue
         version = release['version']
         for idx, url in enumerate(urls[release['name']]):
-            if release['name'] == 'Fedora':
+            # We can remove this once all urls are migrated over to Fedora Linux
+            if release['name'] in ('Fedora Linux', 'Fedora'):
                 name = fedora_repos[idx] % release['koji_name']
             elif release['name'] == 'Fedora EPEL' and version == "8":
                 name = epel_repos[idx] % release['koji_name']
