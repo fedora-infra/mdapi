@@ -8,7 +8,7 @@ EXPOSE 8080
 
 RUN dnf -y install python3-aiohttp python3-requests python3-fedora-messaging python3-uvloop python3-pip python3-gunicorn\
     && dnf clean all \
-    && pip3 install aiosqlite
+    && pip3 install aiosqlite mdapi-messages
 
 ENV MDAPI_CONFIG=/etc/mdapi/mdapi.cfg
 COPY . /code
