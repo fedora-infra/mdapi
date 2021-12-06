@@ -467,10 +467,6 @@ def main():
         requests.packages.urllib3.disable_warnings()
 
     repositories = []
-    # Get the koji repo
-    repositories.append(
-        (f'{KOJI_REPO}/rawhide/latest/x86_64/repodata', 'koji')
-    )
 
     # Get the development repos (rawhide + eventually Fn+1 branched)
     dev_releases = list_branches(status='Under Development')
@@ -525,6 +521,11 @@ def main():
 
             rurl = rurl.replace('/x86_64/os', '/source/tree')
             repositories.append((rurl, f'src_{name}'))
+
+    # Finish with the koji repo
+    repositories.append(
+        (f'{KOJI_REPO}/rawhide/latest/x86_64/repodata', 'koji')
+    )
 
     # In parallel
     # p = multiprocessing.Pool(10)
