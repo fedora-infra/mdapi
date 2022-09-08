@@ -24,24 +24,13 @@ of Red Hat, Inc.
 import logging
 import logging.config
 import os
-from mdapi.database import compile_configuration
-
-
-"""
-logging.basicConfig(
-    format="%(asctime)s\t%(levelname)s\t%(message)s",
-    datefmt="%m/%d/%Y %I:%M:%S %p",
-    level=logging.DEBUG,
-)
-
-logrobjc = logging.getLogger(__name__)
-"""
 
 import click
-from mdapi import __version__
-from mdapi.confdata.servlogr import logrobjc
-from mdapi.database import index_repositories
 import requests
+
+from mdapi import __version__
+from mdapi.confdata.servlogr import logrobjc  # noqa
+from mdapi.database import compile_configuration, index_repositories
 
 
 @click.group(name="mdapi")
@@ -51,7 +40,7 @@ import requests
     "conffile",
     type=click.Path(exists=True),
     help="Read configuration from the specified Python file",
-    default=None
+    default=None,
 )
 @click.version_option(version=__version__, prog_name="mdapi")
 def main(conffile=None):
@@ -63,7 +52,17 @@ def main(conffile=None):
         CONFIG = {}
         with open(conffile, "r") as confobjc:
             exec(compile(confobjc.read(), conffile, "exec"), CONFIG)
-        DB_FOLDER, PKGDB2_URL, KOJI_REPO, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY, PUBLISH_CHANGES, CRON_SLEEP, LOGGING = compile_configuration(CONFIG)
+        (
+            DB_FOLDER,
+            PKGDB2_URL,
+            KOJI_REPO,
+            DL_SERVER,
+            PKGDB2_VERIFY,
+            DL_VERIFY,
+            PUBLISH_CHANGES,
+            CRON_SLEEP,
+            LOGGING,
+        ) = compile_configuration(CONFIG)
 
         if not os.path.exists(DB_FOLDER):
             # Cannot pull/push data from/into directory that does not exist
@@ -81,17 +80,13 @@ def main(conffile=None):
 
 
 @main.command(
-    name="database",
-    help="Fetch SQLite databases from all active Fedora Linux and EPEL branches"
+    name="database", help="Fetch SQLite databases from all active Fedora Linux and EPEL branches"
 )
 def database():
     index_repositories()
 
 
-@main.command(
-    name="serveapp",
-    help="Start the API server for querying repository metadata"
-)
+@main.command(name="serveapp", help="Start the API server for querying repository metadata")
 def serveapp():
     print("Hello world!")
     pass

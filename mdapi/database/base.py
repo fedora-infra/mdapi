@@ -24,7 +24,7 @@ of Red Hat, Inc.
 import sqlite3
 
 from mdapi.confdata.servlogr import logrobjc
-from mdapi.database.sqlq import INDEX_DATABASE, OBTAIN_TABLE_NAMES, queries, DEFAULT_QUERY
+from mdapi.database.sqlq import DEFAULT_QUERY, INDEX_DATABASE, OBTAIN_TABLE_NAMES, queries
 
 
 def index_database(name, tempdtbs):
@@ -37,7 +37,7 @@ def index_database(name, tempdtbs):
         connobjc.close()
 
 
-class compare_databases():
+class compare_databases:
     def __init__(self, name, dbsA, dbsB, cacA, cacB):
         self.name = name
         self.dbsA = dbsA
@@ -85,7 +85,10 @@ class compare_databases():
                 if rowe[0] in cacheobj:
                     yield (cacheobj[rowe[0]], *rowe[1:])
                 else:
-                    logrobjc.warning("[%s] % does not appear in the %s cache for %s" % (self.name, rowe[0], tableobj, location))
+                    logrobjc.warning(
+                        "[%s] % does not appear in the %s cache for %s"
+                        % (self.name, rowe[0], tableobj, location)
+                    )
                     logrobjc.warning("[%s] Dropping from comparison")
             else:
                 yield rowe

@@ -86,16 +86,16 @@ FILELIST_QUERY = """
 DEFAULT_QUERY = "SELECT * from {table};"
 
 queries = {
-    'conflicts': RELATIONS_QUERY,
-    'enhances': RELATIONS_QUERY,
-    'obsoletes': RELATIONS_QUERY,
-    'provides': RELATIONS_QUERY,
-    'requires': RELATIONS_QUERY,
-    'supplements': RELATIONS_QUERY,
-    'recommends': RELATIONS_QUERY,
-    'suggests': RELATIONS_QUERY,
-    'files': FILES_QUERY,
-    'packages': PACKAGES_QUERY,
-    'changelog': CHANGELOG_QUERY,
-    'filelist': FILELIST_QUERY,
+    "conflicts": RELATIONS_QUERY,
+    "enhances": RELATIONS_QUERY,
+    "obsoletes": RELATIONS_QUERY,
+    "provides": RELATIONS_QUERY,
+    "requires": RELATIONS_QUERY,
+    "supplements": RELATIONS_QUERY,
+    "recommends": RELATIONS_QUERY,
+    "suggests": RELATIONS_QUERY,
+    "files": FILES_QUERY,
+    "packages": PACKAGES_QUERY,
+    "changelog": CHANGELOG_QUERY,
+    "filelist": FILELIST_QUERY,
 }
