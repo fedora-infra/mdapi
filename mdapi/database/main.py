@@ -21,21 +21,31 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
+import bz2
+import gzip
+import hashlib
+import lzma
 import os.path
 import shutil
-import hashlib
+import tarfile
 import tempfile
 from xml.etree import ElementTree
 
-from mdapi.confdata.standard import PKGDB2_URL, PKGDB2_VERIFY, DL_VERIFY, DB_FOLDER, PUBLISH_CHANGES, repomd_xml_namespace
-from mdapi.confdata.servlogr import logrobjc
-from mdapi.database.base import index_database, compare_databases
-
-import requests, lzma, tarfile, gzip, bz2
-
+import requests
+from fedora_messaging.api import publish
+from fedora_messaging.exceptions import ConnectionException, PublishReturned
 from mdapi_messages.messages import RepoUpdateV1
-from fedora_messaging.api import Message, publish
-from fedora_messaging.exceptions import PublishReturned, ConnectionException
+
+from mdapi.confdata.servlogr import logrobjc
+from mdapi.confdata.standard import (
+    DB_FOLDER,
+    DL_VERIFY,
+    PKGDB2_URL,
+    PKGDB2_VERIFY,
+    PUBLISH_CHANGES,
+    repomd_xml_namespace,
+)
+from mdapi.database.base import compare_databases, index_database
 
 
 def list_branches(status="Active"):
@@ -79,7 +89,9 @@ def publish_changes(name, packages, repmdurl):
 
     modified = bool(packages)
     if not modified:
-        logrobjc.warning("[%s] No real changes detected - Skipping publishing on Fedora Messaging bus")
+        logrobjc.warning(
+            "[%s] No real changes detected - Skipping publishing on Fedora Messaging bus"
+        )
         return
 
     # Just publish the suffix of the URL.  The prefix is dl.fedoraproject.org
@@ -147,22 +159,26 @@ def process_repo(repo):
         return
 
     # Parse the XML document and get a list of locations and their SHAsum
-    filelist = ((
-        node.find("repo:location", repomd_xml_namespace),
-        node.find("repo:open-checksum", repomd_xml_namespace),
-    ) for node in ElementTree.fromstring(response.text))
+    filelist = (
+        (
+            node.find("repo:location", repomd_xml_namespace),
+            node.find("repo:open-checksum", repomd_xml_namespace),
+        )
+        for node in ElementTree.fromstring(response.text)
+    )
 
     # Extract out the attributes that we are really interested in
     filelist = (
         (fobj.attrib["href"].replace("repodata/", ""), sobj.text, sobj.attrib["type"])
-        for fobj, sobj in filelist if fobj is not None and sobj is not None
+        for fobj, sobj in filelist
+        if fobj is not None and sobj is not None
     )
 
     # Filter down to only SQLite3 databases
     filelist = ((fobj, sobj, tobj) for fobj, sobj, tobj in filelist if ".sqlite" in fobj)
 
     # We need to ensure the primary database comes first, so we can build a PKEY cache
-    prmyfrst = lambda item : "primary" not in item[0]
+    prmyfrst = lambda item: "primary" not in item[0]  # noqa
     filelist = sorted(filelist, key=prmyfrst)
 
     # Primary key caches built from the primary databases, so we can make sense
@@ -203,5 +219,7 @@ def process_repo(repo):
                 packages = compare_databases(name, tempdtbs, destfile, cacA, cacB).main()
                 publish_changes(name, packages, repmdurl)
             else:
-                logrobjc.warning("[%s] Not publishing to Fedora Messaging bus - Not comparing databases" % (name))
+                logrobjc.warning(
+                    "[%s] Not publishing to Fedora Messaging bus - Not comparing databases" % (name)
+                )
             install_database(name, tempdtbs, destfile)
