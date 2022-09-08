@@ -21,6 +21,12 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
-from importlib import metadata
+import logging
 
-__version__ = metadata.version("mdapi")
+logging.basicConfig(
+    format="%(asctime)s\t%(levelname)s\t%(message)s",
+    datefmt="%m/%d/%Y %I:%M:%S %p",
+    level=logging.DEBUG,
+)
+
+logrobjc = logging.getLogger(__name__)
