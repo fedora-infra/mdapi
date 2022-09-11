@@ -21,6 +21,10 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
+"""
+Queries used by the database populating backend
+"""
+
 INDEX_DATABASE = "CREATE INDEX packageSource ON packages (rpm_sourcerpm)"
 
 OBTAIN_TABLE_NAMES = "SELECT name FROM sqlite_master WHERE type='table'"
@@ -99,3 +103,105 @@ queries = {
     "changelog": CHANGELOG_QUERY,
     "filelist": FILELIST_QUERY,
 }
+
+"""
+Queries used by the mdapi web service
+"""
+
+GET_PACKAGE = """
+    SELECT
+        pkgKey,
+        pkgId,
+        name,
+        rpm_sourcerpm,
+        epoch,
+        version,
+        release,
+        arch,
+        summary,
+        description,
+        url
+    FROM packages
+    WHERE name = ?
+    ORDER BY epoch DESC, version DESC, release DESC
+"""
+
+GET_PACKAGE_INFO = """
+    SELECT
+        rowid,
+        pkgKey,
+        name,
+        epoch,
+        version,
+        release,
+        flags
+    FROM {}
+    WHERE pkgKey = ?
+"""
+
+GET_CO_PACKAGE = """
+    SELECT DISTINCT(name)
+    FROM packages
+    WHERE rpm_sourcerpm = ?
+"""
+
+GET_PACKAGE_BY_SRC = """
+    SELECT
+        pkgKey,
+        pkgId,
+        name,
+        rpm_sourcerpm,
+        epoch,
+        version,
+        release,
+        arch,
+        summary,
+        description,
+        url
+    FROM packages
+    WHERE rpm_sourcerpm LIKE ?
+    ORDER BY epoch DESC, version DESC, release DESC
+"""
+
+GET_PACKAGE_BY = """
+    SELECT
+        p.pkgKey,
+        p.pkgId,
+        p.name,
+        p.rpm_sourcerpm,
+        p.epoch,
+        p.version,
+        p.release,
+        p.arch,
+        p.summary,
+        p.description,
+        p.url
+    FROM packages p
+    JOIN {} t ON t.pkgKey = p.pkgKey
+    WHERE t.name = ?
+    ORDER BY p.epoch DESC, p.version DESC, p.release DESC
+"""
+
+GET_FILES = """
+    SELECT
+        f.pkgKey,
+        f.dirname,
+        f.filenames,
+        f.filetypes
+    FROM filelist f
+    JOIN packages p ON p.pkgId = ?
+    WHERE f.pkgKey = p.pkgKey
+    ORDER BY f.filenames
+"""
+
+GET_CHANGELOGS = """
+    SELECT
+        c.pkgKey,
+        c.author,
+        c.changelog,
+        c.date
+    FROM changelog c
+    JOIN packages p ON p.pkgId = ?
+    WHERE c.pkgKey = p.pkgKey
+    ORDER BY c.date DESC
+"""

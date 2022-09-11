@@ -29,6 +29,7 @@ import os.path
 import shutil
 import tarfile
 import tempfile
+import time
 from xml.etree import ElementTree
 
 import requests
@@ -38,8 +39,11 @@ from mdapi_messages.messages import RepoUpdateV1
 
 from mdapi.confdata.servlogr import logrobjc
 from mdapi.confdata.standard import (
+    CRON_SLEEP,
     DB_FOLDER,
+    DL_SERVER,
     DL_VERIFY,
+    KOJI_REPO,
     PKGDB2_URL,
     PKGDB2_VERIFY,
     PUBLISH_CHANGES,
@@ -223,3 +227,80 @@ def process_repo(repo):
                     "[%s] Not publishing to Fedora Messaging bus - Not comparing databases" % (name)
                 )
             install_database(name, tempdtbs, destfile)
+
+
+def index_repositories():
+    repolist = []
+
+    # Obtain the development repos (rawhide + eventually Fn+1 branched)
+    dev_releases = list_branches(status="Under Development")
+    for rels in dev_releases:
+        if rels["status"] != "Under Development":
+            continue
+        versdata = rels["version"]
+        if versdata == "devel":
+            versdata = "rawhide"
+        urlx = "%s/pub/fedora/linux/development/%s/Everything/x86_64/os/repodata" % (
+            DL_SERVER,
+            versdata,
+        )
+        logrobjc.info(
+            "Acquired repo for %s/%s of '%s' branch at %s"
+            % (rels["koji_name"], versdata, rels["status"], urlx)
+        )
+        repolist.append((urlx, rels["koji_name"]))
+        urlx = urlx.replace("/x86_64/os/", "/source/tree/")
+        repolist.append((urlx, "src_%s" % rels["koji_name"]))
+
+    urls = {
+        "Fedora Linux": [
+            "%s/pub/fedora/linux/releases/%s/Everything/x86_64/os/repodata",
+            "%s/pub/fedora/linux/updates/%s/Everything/x86_64/repodata",
+            "%s/pub/fedora/linux/updates/testing/%s/Everything/x86_64/repodata",
+        ],
+        "Fedora EPEL": [
+            "%s/pub/epel/%s/x86_64/repodata/",
+            "%s/pub/epel/testing/%s/x86_64/repodata",
+        ],
+    }
+
+    urls["Fedora"] = urls["Fedora Linux"]
+    repodict = {"fedora": ["%s", "%s-updates", "%s-updates-testing"], "epel": ["%s", "%s-testing"]}
+
+    # Obtain the stable repos
+    stable_releases = list_branches(status="Active")
+    for rels in stable_releases:
+        if rels["status"] != "Active":
+            continue
+        versdata = rels["version"]
+        for jndx, urli in enumerate(urls[rels["name"]]):
+            if rels["name"] in ("Fedora Linux", "Fedora"):
+                name = repodict["fedora"][jndx] % rels["koji_name"]
+            elif rels["name"] == "Fedora EPEL" and versdata == "8":
+                name = repodict["epel"][jndx] % rels["koji_name"]
+                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
+            else:
+                name = repodict["epel"][jndx] % rels["koji_name"]
+            rurl = urli % (DL_SERVER, versdata)
+            repolist.append((rurl, name))
+            rurl = rurl.replace("/x86_64/os", "/source/tree")
+            repolist.append((rurl, "src_%s" % name))
+
+    # Finish with the koji repo
+    repolist.append(("%s/rawhide/latest/x86_64/repodata" % KOJI_REPO, "koji"))
+
+    # In serial
+    for repo in repolist:
+        loop = True
+        qant = 0
+        while loop:
+            qant += 1
+            try:
+                process_repo(repo)
+                loop = False
+            except OSError:
+                if qant == 4:
+                    raise
+                # Most often due to an invalid stream, so let us try again
+                time.sleep(CRON_SLEEP)
+                process_repo(repo)
