@@ -23,4 +23,42 @@ of Red Hat, Inc.
 
 from importlib import metadata
 
+from mdapi.confdata.standard import (  # noqa
+    CRON_SLEEP,
+    DB_FOLDER,
+    DL_SERVER,
+    DL_VERIFY,
+    KOJI_REPO,
+    LOGGING,
+    PKGDB2_URL,
+    PKGDB2_VERIFY,
+    PUBLISH_CHANGES,
+    repomd_xml_namespace,
+)
+
 __version__ = metadata.version("mdapi")
+
+
+def compile_configuration(confobjc):
+    global DB_FOLDER, LOGGING, KOJI_REPO, PKGDB2_URL, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY
+    global PUBLISH_CHANGES, CRON_SLEEP, repomd_xml_namespace
+    DB_FOLDER = confobjc.get("DB_FOLDER", DB_FOLDER)
+    PKGDB2_URL = confobjc.get("PKGDB2_URL", PKGDB2_URL)
+    KOJI_REPO = confobjc.get("KOJI_REPO", KOJI_REPO)
+    DL_SERVER = confobjc.get("DL_SERVER", DL_SERVER)
+    PKGDB2_VERIFY = confobjc.get("PKGDB2_VERIFY", PKGDB2_VERIFY)
+    DL_VERIFY = confobjc.get("DL_VERIFY", DL_VERIFY)
+    PUBLISH_CHANGES = confobjc.get("PUBLISH_CHANGES", PUBLISH_CHANGES)
+    CRON_SLEEP = confobjc.get("CRON_SLEEP", CRON_SLEEP)
+    LOGGING = confobjc.get("LOGGING", LOGGING)
+    return (
+        DB_FOLDER,
+        PKGDB2_URL,
+        KOJI_REPO,
+        DL_SERVER,
+        PKGDB2_VERIFY,
+        DL_VERIFY,
+        PUBLISH_CHANGES,
+        CRON_SLEEP,
+        LOGGING,
+    )

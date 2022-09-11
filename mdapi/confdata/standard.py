@@ -53,6 +53,11 @@ LOGGING = {
     },
 }
 
+WEB_SERVICE = {
+    "host": "0.0.0.0",
+    "port": "8080",
+}
+
 KOJI_REPO = "https://kojipkgs.fedoraproject.org/repos"
 PKGDB2_URL = "https://admin.fedoraproject.org/pkgdb"
 DL_SERVER = "https://dl.fedoraproject.org"

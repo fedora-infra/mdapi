@@ -27,10 +27,12 @@ import os
 
 import click
 import requests
+from aiohttp.web import run_app  # noqa
 
-from mdapi import __version__
+from mdapi import __version__, compile_configuration
 from mdapi.confdata.servlogr import logrobjc  # noqa
-from mdapi.database import compile_configuration, index_repositories
+from mdapi.database.main import index_repositories
+from mdapi.services.main import buildapp  # noqa
 
 
 @click.group(name="mdapi")
@@ -89,7 +91,6 @@ def database():
 @main.command(name="serveapp", help="Start the API server for querying repository metadata")
 def serveapp():
     print("Hello world!")
-    pass
 
 
 if __name__ == "__main__":
