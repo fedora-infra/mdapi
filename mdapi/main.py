@@ -21,17 +21,11 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
-import logging
-import logging.config
-import os
 import subprocess
 
 import click
-import requests
-from aiohttp.web import run_app  # noqa
 
 from mdapi import __version__, compile_configuration
-from mdapi.confdata.servlogr import logrobjc  # noqa
 from mdapi.confdata.standard import APPSERVE
 from mdapi.database.main import index_repositories
 
@@ -55,32 +49,7 @@ def main(conffile=None):
         CONFIG = {}
         with open(conffile, "r") as confobjc:
             exec(compile(confobjc.read(), conffile, "exec"), CONFIG)
-        (
-            DB_FOLDER,
-            PKGDB2_URL,
-            KOJI_REPO,
-            DL_SERVER,
-            PKGDB2_VERIFY,
-            DL_VERIFY,
-            PUBLISH_CHANGES,
-            CRON_SLEEP,
-            LOGGING,
-            repomd_xml_namespace,
-            APPSERVE,
-        ) = compile_configuration(CONFIG)
-
-        if not os.path.exists(DB_FOLDER):
-            # Cannot pull/push data from/into directory that does not exist
-            print("Database directory not found")
-            return 1
-
-        if not DL_VERIFY or not PKGDB2_VERIFY:
-            # Suppress urllib3's warnings about insecure requests
-            requests.packages.urllib3.disable_warnings()
-
-        logging.config.dictConfig(LOGGING)
-        global logrobjc
-        logrobjc = logging.getLogger(__name__)
+        compile_configuration(CONFIG)
 
 
 @main.command(
