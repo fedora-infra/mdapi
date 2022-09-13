@@ -23,10 +23,24 @@ of Red Hat, Inc.
 
 import logging
 
+"""
+TODO:
+Scope of the logging object needs to be reworked for the logs produced by the functions present
+in the "appviews" module
+"""
+
+"""
 logging.basicConfig(
     format="%(asctime)s\t%(levelname)s\t%(message)s",
     datefmt="%m/%d/%Y %I:%M:%S %p",
     level=logging.DEBUG,
+)
+"""
+
+logging.basicConfig(
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    datefmt="[%Y-%m-%d %I:%M:%S %z]",
+    level=logging.INFO,
 )
 
 logrobjc = logging.getLogger(__name__)
