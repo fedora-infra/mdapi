@@ -24,6 +24,7 @@ of Red Hat, Inc.
 from importlib import metadata
 
 from mdapi.confdata.standard import (  # noqa
+    APPSERVE,
     CRON_SLEEP,
     DB_FOLDER,
     DL_SERVER,
@@ -41,7 +42,7 @@ __version__ = metadata.version("mdapi")
 
 def compile_configuration(confobjc):
     global DB_FOLDER, LOGGING, KOJI_REPO, PKGDB2_URL, DL_SERVER, PKGDB2_VERIFY, DL_VERIFY
-    global PUBLISH_CHANGES, CRON_SLEEP, repomd_xml_namespace
+    global PUBLISH_CHANGES, CRON_SLEEP, repomd_xml_namespace, APPSERVE
     DB_FOLDER = confobjc.get("DB_FOLDER", DB_FOLDER)
     PKGDB2_URL = confobjc.get("PKGDB2_URL", PKGDB2_URL)
     KOJI_REPO = confobjc.get("KOJI_REPO", KOJI_REPO)
@@ -51,6 +52,8 @@ def compile_configuration(confobjc):
     PUBLISH_CHANGES = confobjc.get("PUBLISH_CHANGES", PUBLISH_CHANGES)
     CRON_SLEEP = confobjc.get("CRON_SLEEP", CRON_SLEEP)
     LOGGING = confobjc.get("LOGGING", LOGGING)
+    repomd_xml_namespace = confobjc.get("repomd_xml_namespace", repomd_xml_namespace)
+    APPSERVE = confobjc.get("APPSERVE", APPSERVE)
     return (
         DB_FOLDER,
         PKGDB2_URL,
@@ -61,4 +64,6 @@ def compile_configuration(confobjc):
         PUBLISH_CHANGES,
         CRON_SLEEP,
         LOGGING,
+        repomd_xml_namespace,
+        APPSERVE,
     )

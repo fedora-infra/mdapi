@@ -24,6 +24,7 @@ of Red Hat, Inc.
 import logging
 import logging.config
 import os
+import subprocess
 
 import click
 import requests
@@ -31,8 +32,8 @@ from aiohttp.web import run_app  # noqa
 
 from mdapi import __version__, compile_configuration
 from mdapi.confdata.servlogr import logrobjc  # noqa
+from mdapi.confdata.standard import APPSERVE
 from mdapi.database.main import index_repositories
-from mdapi.services.main import buildapp  # noqa
 
 
 @click.group(name="mdapi")
@@ -64,6 +65,8 @@ def main(conffile=None):
             PUBLISH_CHANGES,
             CRON_SLEEP,
             LOGGING,
+            repomd_xml_namespace,
+            APPSERVE,
         ) = compile_configuration(CONFIG)
 
         if not os.path.exists(DB_FOLDER):
@@ -78,7 +81,6 @@ def main(conffile=None):
         logging.config.dictConfig(LOGGING)
         global logrobjc
         logrobjc = logging.getLogger(__name__)
-    print(logrobjc.getEffectiveLevel())
 
 
 @main.command(
@@ -90,7 +92,19 @@ def database():
 
 @main.command(name="serveapp", help="Start the API server for querying repository metadata")
 def serveapp():
-    print("Hello world!")
+    try:
+        startcmd = (
+            "gunicorn mdapi.services.main:buildapp --bind %s --worker-class %s --log-level %s"  # noqa
+            % (
+                APPSERVE["bind"],
+                APPSERVE["worker_class"],
+                APPSERVE["logging"]["level"],
+            )
+        )
+        subprocess.run(startcmd.split())
+    except KeyError:
+        print("Invalid configuration detected")
+        return 1
 
 
 if __name__ == "__main__":
