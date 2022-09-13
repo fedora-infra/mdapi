@@ -83,12 +83,12 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
                         if ptrn.match(pkgx[3]):
                             pckg = Packages(*pkgx)
                             break
-                else:
-                    async with dtbsobjc.execute(GET_PACKAGE, (name,)) as dbcursor:
-                        pkgc = await dbcursor.fetchone()
-                    if pkgc:
-                        pckg = Packages(*pkgc)
-                        break
+            else:
+                async with dtbsobjc.execute(GET_PACKAGE, (name,)) as dbcursor:
+                    pkgc = await dbcursor.fetchone()
+                if pkgc:
+                    pckg = Packages(*pkgc)
+                    break
 
     if wrongdbs:
         raise HTTPBadRequest()
@@ -145,17 +145,17 @@ async def _expand_package_info(pkgs, brch, repotype):
                     else:
                         otpt[datatype] = data
 
-        """
-        Add the list of packages built from the same src.rpm
-        """
-        if pkgx.rpm_sourcerpm:
-            async with dtbsobjc.execute(GET_CO_PACKAGE, (pkgx.rpm_sourcerpm,)) as dbcursor:
-                cosrcpkg = await dbcursor.fetchall()
-            otpt["co-packages"] = [cpkg[0] for cpkg in cosrcpkg]
-        else:
-            otpt["co-packages"] = []
-        otpt["repo"] = repotype if repotype else "release"
-        rslt.append(otpt)
+            """
+            Add the list of packages built from the same src.rpm
+            """
+            if pkgx.rpm_sourcerpm:
+                async with dtbsobjc.execute(GET_CO_PACKAGE, (pkgx.rpm_sourcerpm,)) as dbcursor:
+                    cosrcpkg = await dbcursor.fetchall()
+                otpt["co-packages"] = [cpkg[0] for cpkg in cosrcpkg]
+            else:
+                otpt["co-packages"] = []
+            otpt["repo"] = repotype if repotype else "release"
+            rslt.append(otpt)
 
     if singletonset:
         return rslt[0]

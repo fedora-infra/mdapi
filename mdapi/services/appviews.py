@@ -29,7 +29,7 @@ from mdapi.confdata.servlogr import logrobjc
 from mdapi.confdata.standard import DB_FOLDER
 from mdapi.services import _expand_package_info, _get_changelog, _get_files, _get_package
 
-homepage = os.path.join(os.path.dirname(os.path.abspath(__file__)), "index.html")
+homepage = os.path.join(os.path.dirname(os.path.abspath(__file__)), "homepage.html")
 
 
 async def index(rqst):
@@ -39,7 +39,7 @@ async def index(rqst):
 
 async def get_pkg(rqst):
     logrobjc.info("get_pkg %s" % rqst)
-    brch = rqst.match_info.get("branch")
+    brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
     rslt = await _expand_package_info(pckg, brch, repotype)
@@ -48,7 +48,7 @@ async def get_pkg(rqst):
 
 async def get_src_pkg(rqst):
     logrobjc.info("get_src_pkg %s" % rqst)
-    brch = rqst.match_info.get("branch")
+    brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, srcn=name)
     rslt = await _expand_package_info(pckg, brch, repotype)
@@ -77,7 +77,7 @@ async def _process_dep(rqst, actn):
     (as in provides, requires, obsoletes etc.)
     """
     logrobjc.info("process_dep %s %s" % (actn, rqst))
-    brch = rqst.match_info.get("branch")
+    brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
 
     try:
@@ -123,7 +123,7 @@ async def get_supplements(rqst):
 
 async def get_pkg_files(rqst):
     logrobjc.info("get_pkg_files %s" % rqst)
-    brch = rqst.match_info.get("branch")
+    brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
     rslt = await _get_files(pckg.pkgId, brch, repotype)

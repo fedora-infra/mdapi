@@ -66,7 +66,7 @@ async def add_cors_headers(request, handler):
     return response
 
 
-def buildapp():
+async def buildapp():
     """
     Creates an aiohttp web application
     This function creates a web application, configures the routes and returns the application
@@ -77,18 +77,18 @@ def buildapp():
         [
             get("/", index),
             get("/branches", list_branches),
-            get("/{branch}/pkg/{name}", get_pkg),
-            get("/{branch}/srcpkg/{name}", get_src_pkg),
-            get("/{branch}/provides/{name}", get_provides),
-            get("/{branch}/requires/{name}", get_requires),
-            get("/{branch}/obsoletes/{name}", get_obsoletes),
-            get("/{branch}/conflicts/{name}", get_conflicts),
-            get("/{branch}/enhances/{name}", get_enhances),
-            get("/{branch}/recommends/{name}", get_recommends),
-            get("/{branch}/suggests/{name}", get_suggests),
-            get("/{branch}/supplements/{name}", get_supplements),
-            get("/{branch}/files/{name}", get_pkg_files),
-            get("/{branch}/changelog/{name}", get_pkg_changelog),
+            get("/{brch}/pkg/{name}", get_pkg),
+            get("/{brch}/srcpkg/{name}", get_src_pkg),
+            get("/{brch}/provides/{name}", get_provides),
+            get("/{brch}/requires/{name}", get_requires),
+            get("/{brch}/obsoletes/{name}", get_obsoletes),
+            get("/{brch}/conflicts/{name}", get_conflicts),
+            get("/{brch}/enhances/{name}", get_enhances),
+            get("/{brch}/recommends/{name}", get_recommends),
+            get("/{brch}/suggests/{name}", get_suggests),
+            get("/{brch}/supplements/{name}", get_supplements),
+            get("/{brch}/files/{name}", get_pkg_files),
+            get("/{brch}/changelog/{name}", get_pkg_changelog),
         ]
     )
     return applobjc
