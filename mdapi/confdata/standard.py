@@ -33,8 +33,8 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "standard": {
-            "format": "%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-            "datefmt": "%m/%d/%Y %I:%M:%S %p",
+            "format": "%(asctime)s [%(levelname)s] %(message)s",
+            "datefmt": "[%Y-%m-%d %I:%M:%S %z]",
         },
     },
     "handlers": {
@@ -52,6 +52,10 @@ LOGGING = {
         "handlers": ["console"],
     },
 }
+
+"""
+Database fetching configuration
+"""
 
 KOJI_REPO = "https://kojipkgs.fedoraproject.org/repos"
 PKGDB2_URL = "https://admin.fedoraproject.org/pkgdb"
@@ -72,4 +76,14 @@ CRON_SLEEP = 30
 repomd_xml_namespace = {
     "repo": "http://linux.duke.edu/metadata/repo",
     "rpm": "http://linux.duke.edu/metadata/rpm",
+}
+
+"""
+Application service configuration
+"""
+
+APPSERVE = {
+    "logging": {"level": LOGGING["root"]["level"]},
+    "bind": "0.0.0.0:8080",
+    "worker_class": "aiohttp.GunicornUVLoopWebWorker",
 }

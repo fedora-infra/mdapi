@@ -21,16 +21,13 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
-import logging
-import logging.config
-import os
+import subprocess
 
 import click
-import requests
 
-from mdapi import __version__
-from mdapi.confdata.servlogr import logrobjc  # noqa
-from mdapi.database import compile_configuration, index_repositories
+from mdapi import __version__, compile_configuration
+from mdapi.confdata.standard import APPSERVE
+from mdapi.database.main import index_repositories
 
 
 @click.group(name="mdapi")
@@ -52,31 +49,7 @@ def main(conffile=None):
         CONFIG = {}
         with open(conffile, "r") as confobjc:
             exec(compile(confobjc.read(), conffile, "exec"), CONFIG)
-        (
-            DB_FOLDER,
-            PKGDB2_URL,
-            KOJI_REPO,
-            DL_SERVER,
-            PKGDB2_VERIFY,
-            DL_VERIFY,
-            PUBLISH_CHANGES,
-            CRON_SLEEP,
-            LOGGING,
-        ) = compile_configuration(CONFIG)
-
-        if not os.path.exists(DB_FOLDER):
-            # Cannot pull/push data from/into directory that does not exist
-            print("Database directory not found")
-            return 1
-
-        if not DL_VERIFY or not PKGDB2_VERIFY:
-            # Suppress urllib3's warnings about insecure requests
-            requests.packages.urllib3.disable_warnings()
-
-        logging.config.dictConfig(LOGGING)
-        global logrobjc
-        logrobjc = logging.getLogger(__name__)
-    print(logrobjc.getEffectiveLevel())
+        compile_configuration(CONFIG)
 
 
 @main.command(
@@ -88,8 +61,19 @@ def database():
 
 @main.command(name="serveapp", help="Start the API server for querying repository metadata")
 def serveapp():
-    print("Hello world!")
-    pass
+    try:
+        startcmd = (
+            "gunicorn mdapi.services.main:buildapp --bind %s --worker-class %s --log-level %s"  # noqa
+            % (
+                APPSERVE["bind"],
+                APPSERVE["worker_class"],
+                APPSERVE["logging"]["level"],
+            )
+        )
+        subprocess.run(startcmd.split())
+    except KeyError:
+        print("Invalid configuration detected")
+        return 1
 
 
 if __name__ == "__main__":

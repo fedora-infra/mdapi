@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset="utf-8" />
+    <link rel="shortcut icon" type="image/vnd.microsoft.icon"
+        href="//fedoraproject.org/static/images/favicon.ico"/>
+    <title>mdapi</title>
+    <style>
+html {
+    min-width: 800px;
+}
+
+
+body {
+    padding-left: 1em;
+    margin:auto;
+    min-width: 750px;
+    max-width:1100px;
+    white-space: pre;
+    font-family: monospace;
+    display: block;
+}
+
+a:hover, a:link, a:visited, a:active {
+    color: #5f5f5f;
+}
+</style>
+</head>
+<body>
+
+               _             _
+              | |           (_)
+ _ __ ___   __| | __ _ _ __  _
+| '_ ` _ \ / _` |/ _` | '_ \| |
+| | | | | | (_| | (_| | |_) | |
+|_| |_| |_|\__,_|\__,_| .__/|_|
+                      | |
+                      |_|
+
+
+mdapi is a small API exposing the metadata contained in different RPM
+repositories.
+
+mdapi has access to the metadata of the different Fedora repositories and will
+serve you the most recent information available, from updates-testing, if
+there is nothing in updates-testing, it will look for information from the
+updates repository and if there is still nothing, it will look for information
+in the releases repository.
+
+If you query for a non-existing branch (for example: f14), it will return
+a 400 error.
+
+If you query for a non-existing package (for example: foo), it will return
+a 404 error.
+
+For any other error, it should return a 500 error. If you see those and it
+is not transient, please inform an admin.
+
+
+USAGE
+=====
+
+List all branches
+-----------------
+
+The list of all branches for which mdapi contains information can be found
+at:
+
+    /branches
+
+    <a href="/branches">/branches</a>
+
+
+Note:
+  The src_* branches refer to the source repositories metadata, they will
+  thus return you information about the source package.
+  So to find the BuildRequires of a package, check its requires provided in
+  its information against in a src_* branch.
+
+
+Retrieve information about a package
+------------------------------------
+
+You can retrieve information about a specific package on a specific branch
+by querying:
+
+    /{branch}/pkg/{package name}
+
+So for example, for the kernel in rawhide:
+
+    <a href="/rawhide/pkg/kernel">/rawhide/pkg/kernel</a>
+
+
+You can also retrieve information about a specific package on a specific
+branch via the name of its source package by querying:
+
+    /{branch}/srcpkg/{package name}
+
+So for example, for the python-natsort in rawhide that only exists as src.rpm:
+
+    <a href="/rawhide/srcpkg/python-natsort">/rawhide/srcpkg/python-natsort</a>
+
+
+Retrieve the list of files in a package
+---------------------------------------
+
+You can retrieve the list of files present in the specific package on a
+specific branch by querying:
+
+    /{branch}/files/{package name}
+
+So for example, for the kernel-core in rawhide:
+
+    <a href="/rawhide/files/kernel-core">/rawhide/files/kernel-core</a>
+
+
+Retrieve the changelog of a package
+-----------------------------------
+
+You can retrieve the changelog of a specific package on a specific branch
+by querying:
+
+    /{branch}/{package name}
+
+So for example, for the kernel in rawhide:
+
+    <a href="/rawhide/changelog/kernel">/rawhide/changelog/kernel</a>
+
+
+Retrieve the packages having a specific property
+------------------------------------------------
+
+You can retrieve the list of packages having a specific property. These
+properties can be any of:
+    requires, provides, obsoletes, conflicts, enhances, recommends, suggests, supplements.
+
+    /{property}/{package name}
+
+For example to retrieve the list of packages that require a specific package:
+
+    /requires/{package name}
+
+Few examples:
+
+    packages requiring R in rawhide:
+    <a href="/rawhide/requires/R">/rawhide/requires/R</a>
+      To see what R itself requires, check its information using: <a href="$PREFIX/rawhide/pkg/R">/rawhide/pkg/R</a>
+
+    packages providing perl(SetupLog) in rawhide:
+    <a href="/rawhide/provides/perl(SetupLog)">/rawhide/provides/perl(SetupLog)</a>
+
+    packages obsoleting cabal2spec in rawhide:
+    <a href="/rawhide/obsoletes/cabal2spec">rawhide/obsoletes/cabal2spec</a>
+
+    packages conflicting with mariadb in rawhide:
+    <a href="/rawhide/conflicts/mariadb">rawhide/conflicts/mariadb</a>
+
+    packages enhancing httpd in rawhide:
+    <a href="/rawhide/enhances/httpd">rawhide/enhances/httpd</a>
+
+    packages recommending flac in rawhide:
+    <a href="/rawhide/recommends/flac">rawhide/recommends/flac</a>
+
+    packages suggesting R-tools in rawhide:
+    <a href="/rawhide/suggests/R-tools">rawhide/suggests/R-tools</a>
+
+    packages supplementing `(hunspell and langpacks-fr)` in rawhide:
+    <a href="/rawhide/supplements/(hunspell and langpacks-fr)">rawhide/supplements/(hunspell and langpacks-fr)</a>
+
+
+
+
+
+                                                  |‾|
+                                                  | |
+                                            |‾|/‾‾˙ |‾'‾‾\|‾'‾‾\|‾| |‾| |‾|
+                                            | | (‾| | |‾) | |‾) | | | | | |
+                                            | |\ ‾, | ,‾ /| ,‾ / \ ‾ , ‾, |
+                                             ‾  ‾‾ ‾ ‾ ‾‾ | |‾‾   ‾‾‾ ‾‾ ‾
+                                            (‾)           | |
+                                             ‾             ‾
+© 2015-2022 - Red Hat, Inc. - GPLv3+ - Sources: <a href="https://pagure.io/mdapi">https://pagure.io/mdapi</a>
+</body>
+</html>
