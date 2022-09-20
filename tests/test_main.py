@@ -24,10 +24,8 @@ of Red Hat, Inc.
 import json
 
 import pytest
-from click.testing import CliRunner
 
-from mdapi.confdata.standard import DB_FOLDER  # noqa
-from mdapi.main import main
+from mdapi.confdata import standard
 from mdapi.services.main import buildapp
 from tests import LOCATION, databases_presence, populate_test_databases
 
@@ -43,23 +41,10 @@ def setup_environment():
 
 
 @pytest.fixture
-async def testing_application(setup_environment, loop, aiohttp_client):
-    global DB_FOLDER
-    DB_FOLDER = LOCATION
+async def testing_application(setup_environment, event_loop, aiohttp_client):
+    standard.DB_FOLDER = LOCATION
     applobjc = await buildapp()
     return await aiohttp_client(applobjc)
-
-
-def test_cli_application_help_option():
-    rnnrobjc = CliRunner()
-    rsltobjc = rnnrobjc.invoke(main, ["--help"])
-    assert rsltobjc.exit_code == 0
-
-
-def test_cli_application_version_option():
-    rnnrobjc = CliRunner()
-    rsltobjc = rnnrobjc.invoke(main, ["--version"])
-    assert rsltobjc.exit_code == 0
 
 
 async def test_view_index_page(testing_application):
@@ -70,12 +55,16 @@ async def test_view_index_page(testing_application):
     assert botmtext in otptrslt
 
 
+@pytest.mark.skipif(
+    not databases_presence("rawhide") and not databases_presence("koji"),
+    reason="Databases for 'rawhide' and 'koji' repositories could not be fetched",
+)
 async def test_view_branches(testing_application):
     respobjc = await testing_application.get("/branches")
     assert respobjc.status == 200
     otptobjc = await respobjc.text()
-    assert "src_rawhide" in otptobjc
     assert "rawhide" in otptobjc
+    assert "koji" in otptobjc
 
 
 @pytest.mark.skipif(
