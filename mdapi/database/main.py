@@ -37,40 +37,29 @@ from fedora_messaging.api import publish
 from fedora_messaging.exceptions import ConnectionException, PublishReturned
 from mdapi_messages.messages import RepoUpdateV1
 
-from mdapi.confdata.servlogr import logrobjc
-from mdapi.confdata.standard import (
-    CRON_SLEEP,
-    DB_FOLDER,
-    DL_SERVER,
-    DL_VERIFY,
-    KOJI_REPO,
-    PKGDB2_URL,
-    PKGDB2_VERIFY,
-    PUBLISH_CHANGES,
-    repomd_xml_namespace,
-)
+from mdapi.confdata import servlogr, standard
 from mdapi.database.base import compare_databases, index_database
 
 
 def list_branches(status="Active"):
-    urlx = "%s/api/collections?clt_status=%s" % (PKGDB2_URL, status)
-    resp = requests.get(urlx, verify=PKGDB2_VERIFY)
+    urlx = "%s/api/collections?clt_status=%s" % (standard.PKGDB2_URL, status)
+    resp = requests.get(urlx, verify=standard.PKGDB2_VERIFY)
     resp.raise_for_status()
     data = resp.json()
-    logrobjc.info("Branches metadata acquired.")
+    servlogr.logrobjc.info("Branches metadata acquired.")
     return data["collections"]
 
 
 def fetch_database(name, repmdurl, location):
-    logrobjc.info("[%s] Downloading file %s to %s" % (name, repmdurl, location))
-    resp = requests.get(repmdurl, verify=DL_VERIFY)
+    servlogr.logrobjc.info("[%s] Downloading file %s to %s" % (name, repmdurl, location))
+    resp = requests.get(repmdurl, verify=standard.DL_VERIFY)
     resp.raise_for_status()
     with open(location, "wb") as filestrm:
         filestrm.write(resp.content)
 
 
 def extract_database(name, arcvname, location):
-    logrobjc.info("[%s] Extracting %s to %s" % (name, arcvname, location))
+    servlogr.logrobjc.info("[%s] Extracting %s to %s" % (name, arcvname, location))
     if arcvname.endswith(".xz"):
         with lzma.open(arcvname) as inp, open(location, "wb") as otptfile:
             otptfile.write(inp.read())
@@ -84,16 +73,16 @@ def extract_database(name, arcvname, location):
         with bz2.open(arcvname) as inp, open(location, "wb") as otptfile:
             otptfile.write(inp.read())
     else:
-        logrobjc.error("Could not extract %s" % (arcvname))
+        servlogr.logrobjc.error("Could not extract %s" % (arcvname))
         raise NotImplementedError(arcvname)
 
 
 def publish_changes(name, packages, repmdurl):
-    logrobjc.info("[%s] Publishing differences to Fedora Messaging bus" % (name))
+    servlogr.logrobjc.info("[%s] Publishing differences to Fedora Messaging bus" % (name))
 
     modified = bool(packages)
     if not modified:
-        logrobjc.warning(
+        servlogr.logrobjc.warning(
             "[%s] No real changes detected - Skipping publishing on Fedora Messaging bus"
         )
         return
@@ -105,7 +94,7 @@ def publish_changes(name, packages, repmdurl):
     # talking about.
 
     urlx = "/".join(repmdurl.split("/")[4:])
-    logrobjc.info("[%s] URL %s" % (name, urlx))
+    servlogr.logrobjc.info("[%s] URL %s" % (name, urlx))
 
     mesgobjc = RepoUpdateV1(
         body=dict(
@@ -118,13 +107,17 @@ def publish_changes(name, packages, repmdurl):
     try:
         publish(mesgobjc)
     except PublishReturned as excp:
-        logrobjc.error("Fedora Messaging broker rejected message %s - %s" % (mesgobjc.id, excp))
+        servlogr.logrobjc.error(
+            "Fedora Messaging broker rejected message %s - %s" % (mesgobjc.id, excp)
+        )
     except ConnectionException as excp:
-        logrobjc.error("Error occurred while sending message %s - %s" % (mesgobjc.id, excp))
+        servlogr.logrobjc.error(
+            "Error occurred while sending message %s - %s" % (mesgobjc.id, excp)
+        )
 
 
 def install_database(name, srce, dest):
-    logrobjc.info("[%s] Installing %s to %s" % (name, srce, dest))
+    servlogr.logrobjc.info("[%s] Installing %s to %s" % (name, srce, dest))
     shutil.move(srce, dest)
 
 
@@ -157,16 +150,16 @@ def process_repo(repo):
     """
     urlx, name = repo
     repmdurl = "%s/repomd.xml" % urlx
-    response = requests.get(repmdurl, verify=DL_VERIFY)
+    response = requests.get(repmdurl, verify=standard.DL_VERIFY)
     if not response:
-        logrobjc.error("[%s] Failed to obtain %s - %s" % (name, repmdurl, response))
+        servlogr.logrobjc.error("[%s] Failed to obtain %s - %s" % (name, repmdurl, response))
         return
 
     # Parse the XML document and get a list of locations and their SHAsum
     filelist = (
         (
-            node.find("repo:location", repomd_xml_namespace),
-            node.find("repo:open-checksum", repomd_xml_namespace),
+            node.find("repo:location", standard.repomd_xml_namespace),
+            node.find("repo:open-checksum", standard.repomd_xml_namespace),
         )
         for node in ElementTree.fromstring(response.text)
     )
@@ -190,7 +183,7 @@ def process_repo(repo):
     cacA, cacB = {}, {}
 
     if not filelist:
-        logrobjc.warning("No SQLite database could be found in %s" % (urlx))
+        servlogr.logrobjc.warning("No SQLite database could be found in %s" % (urlx))
 
     for filename, hashdata, hashtype in filelist:
         repmdurl = "%s/%s" % (urlx, filename)
@@ -206,9 +199,9 @@ def process_repo(repo):
 
         # Have we downloaded this before?
         # Did it change?
-        destfile = os.path.join(DB_FOLDER, database)
+        destfile = os.path.join(standard.DB_FOLDER, database)
         if not needs_update(destfile, hashdata, hashtype):
-            logrobjc.info("[%s] No change detected from %s" % (name, repmdurl))
+            servlogr.logrobjc.info("[%s] No change detected from %s" % (name, repmdurl))
             continue
 
         # If it has changed, then download it and move it into place
@@ -219,11 +212,11 @@ def process_repo(repo):
             fetch_database(name, repmdurl, archname)
             extract_database(name, archname, tempdtbs)
             index_database(name, tempdtbs)
-            if PUBLISH_CHANGES:
+            if standard.PUBLISH_CHANGES:
                 packages = compare_databases(name, tempdtbs, destfile, cacA, cacB).main()
                 publish_changes(name, packages, repmdurl)
             else:
-                logrobjc.warning(
+                servlogr.logrobjc.warning(
                     "[%s] Not publishing to Fedora Messaging bus - Not comparing databases" % (name)
                 )
             install_database(name, tempdtbs, destfile)
@@ -241,10 +234,10 @@ def index_repositories():
         if versdata == "devel":
             versdata = "rawhide"
         urlx = "%s/pub/fedora/linux/development/%s/Everything/x86_64/os/repodata" % (
-            DL_SERVER,
+            standard.DL_SERVER,
             versdata,
         )
-        logrobjc.info(
+        servlogr.logrobjc.info(
             "Acquired repo for %s/%s of '%s' branch at %s"
             % (rels["koji_name"], versdata, rels["status"], urlx)
         )
@@ -281,13 +274,13 @@ def index_repositories():
                 urli = urli.replace("/x86_64/", "/Everything/x86_64/")
             else:
                 name = repodict["epel"][jndx] % rels["koji_name"]
-            rurl = urli % (DL_SERVER, versdata)
+            rurl = urli % (standard.DL_SERVER, versdata)
             repolist.append((rurl, name))
             rurl = rurl.replace("/x86_64/os", "/source/tree")
             repolist.append((rurl, "src_%s" % name))
 
     # Finish with the koji repo
-    repolist.append(("%s/rawhide/latest/x86_64/repodata" % KOJI_REPO, "koji"))
+    repolist.append(("%s/rawhide/latest/x86_64/repodata" % standard.KOJI_REPO, "koji"))
 
     # In serial
     for repo in repolist:
@@ -302,5 +295,5 @@ def index_repositories():
                 if qant == 4:
                     raise
                 # Most often due to an invalid stream, so let us try again
-                time.sleep(CRON_SLEEP)
+                time.sleep(standard.CRON_SLEEP)
                 process_repo(repo)

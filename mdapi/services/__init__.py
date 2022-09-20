@@ -27,7 +27,7 @@ import re
 import aiosqlite
 from aiohttp.web import HTTPBadRequest, HTTPNotFound
 
-from mdapi.confdata.standard import DB_FOLDER
+from mdapi.confdata import standard
 from mdapi.database.sqlq import (
     GET_CHANGELOGS,
     GET_CO_PACKAGE,
@@ -53,9 +53,9 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
 
     for repotype in ["updates-testing", "updates", "testing", None]:
         if repotype:
-            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (DB_FOLDER, brch, repotype)
+            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (standard.DB_FOLDER, brch, repotype)
         else:
-            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (DB_FOLDER, brch)
+            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (standard.DB_FOLDER, brch)
 
         if not os.path.exists(dtbsfile):
             wrongdbs = True
@@ -115,9 +115,9 @@ async def _expand_package_info(pkgs, brch, repotype):
     for pkgx in pkgs:
         otpt = pkgx.to_json()
         if repotype:
-            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (DB_FOLDER, brch, repotype)
+            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (standard.DB_FOLDER, brch, repotype)
         else:
-            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (DB_FOLDER, brch)
+            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (standard.DB_FOLDER, brch)
 
         async with aiosqlite.connect(dtbsfile) as dtbsobjc:
             """
@@ -168,9 +168,9 @@ async def _get_files(pkid, brch, repotype):
     Return the list of files for the given package in the specified branch.
     """
     if repotype:
-        dtbsfile = "%s/mdapi-%s-%s-filelists.sqlite" % (DB_FOLDER, brch, repotype)
+        dtbsfile = "%s/mdapi-%s-%s-filelists.sqlite" % (standard.DB_FOLDER, brch, repotype)
     else:
-        dtbsfile = "%s/mdapi-%s-filelists.sqlite" % (DB_FOLDER, brch)
+        dtbsfile = "%s/mdapi-%s-filelists.sqlite" % (standard.DB_FOLDER, brch)
 
     if not os.path.exists(dtbsfile):
         raise HTTPBadRequest()
@@ -194,9 +194,9 @@ async def _get_changelog(pkid, brch, repotype):
     Return the changelog for the given packages in the specified branch.
     """
     if repotype:
-        dtbsfile = "%s/mdapi-%s-%s-other.sqlite" % (DB_FOLDER, brch, repotype)
+        dtbsfile = "%s/mdapi-%s-%s-other.sqlite" % (standard.DB_FOLDER, brch, repotype)
     else:
-        dtbsfile = "%s/mdapi-%s-other.sqlite" % (DB_FOLDER, brch)
+        dtbsfile = "%s/mdapi-%s-other.sqlite" % (standard.DB_FOLDER, brch)
 
     if not os.path.exists(dtbsfile):
         raise HTTPBadRequest()

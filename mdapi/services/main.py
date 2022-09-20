@@ -23,18 +23,7 @@ of Red Hat, Inc.
 
 from aiohttp.web import Application, HTTPException, get, middleware
 
-from mdapi.confdata.servlogr import logrobjc
-from mdapi.confdata.standard import (  # noqa
-    CRON_SLEEP,
-    DB_FOLDER,
-    DL_SERVER,
-    DL_VERIFY,
-    KOJI_REPO,
-    PKGDB2_URL,
-    PKGDB2_VERIFY,
-    PUBLISH_CHANGES,
-    repomd_xml_namespace,
-)
+from mdapi.confdata import servlogr
 from mdapi.services.appviews import (
     get_conflicts,
     get_enhances,
@@ -72,7 +61,7 @@ async def buildapp():
     This function creates a web application, configures the routes and returns the application
     object.
     """
-    applobjc = Application(middlewares=[add_cors_headers], logger=logrobjc)
+    applobjc = Application(middlewares=[add_cors_headers], logger=servlogr.logrobjc)
     applobjc.add_routes(
         [
             get("/", index),

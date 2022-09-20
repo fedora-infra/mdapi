@@ -23,12 +23,12 @@ of Red Hat, Inc.
 
 import sqlite3
 
-from mdapi.confdata.servlogr import logrobjc
+from mdapi.confdata import servlogr
 from mdapi.database.sqlq import DEFAULT_QUERY, INDEX_DATABASE, OBTAIN_TABLE_NAMES, queries
 
 
 def index_database(name, tempdtbs):
-    logrobjc.info("[%s] Indexing database %s" % (name, tempdtbs))
+    servlogr.logrobjc.info("[%s] Indexing database %s" % (name, tempdtbs))
     if tempdtbs.endswith("primary.sqlite"):
         # TODO: Try the "with sqlite3.connect(tempdtbs) as connobjc" statement here
         connobjc = sqlite3.connect(tempdtbs)
@@ -85,11 +85,11 @@ class compare_databases:
                 if rowe[0] in cacheobj:
                     yield (cacheobj[rowe[0]], *rowe[1:])
                 else:
-                    logrobjc.warning(
+                    servlogr.logrobjc.warning(
                         "[%s] % does not appear in the %s cache for %s"
                         % (self.name, rowe[0], tableobj, location)
                     )
-                    logrobjc.warning("[%s] Dropping from comparison")
+                    servlogr.logrobjc.warning("[%s] Dropping from comparison")
             else:
                 yield rowe
         connobjc.close()
@@ -108,20 +108,22 @@ class compare_databases:
         return True
 
     def main(self):
-        logrobjc.info("[%s] Comparing %s against %s" % (self.name, self.dbsA, self.dbsB))
+        servlogr.logrobjc.info("[%s] Comparing %s against %s" % (self.name, self.dbsA, self.dbsB))
 
         tablistA = list(self.obtain_table_names(self.dbsA))
         tablistB = list(self.obtain_table_names(self.dbsB))
 
         if not tablistA and not tablistB:
-            logrobjc.error("Something is not right")
+            servlogr.logrobjc.error("Something is not right")
             raise RuntimeError("Something is not right")
 
         if not tablistB:
             # We have never downloaded this before...
             # so we have nothing to compare it against. Just return and say there
             # are "no differences".
-            logrobjc.warning("[%s] Database empty - %s cannot compare" % (self.name, self.dbsB))
+            servlogr.logrobjc.warning(
+                "[%s] Database empty - %s cannot compare" % (self.name, self.dbsB)
+            )
             return set()
 
         assert len(tablistA) == len(tablistB), "Cannot compare disparate databases"
