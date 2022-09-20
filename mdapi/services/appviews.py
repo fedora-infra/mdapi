@@ -25,20 +25,19 @@ import os.path
 
 from aiohttp.web import FileResponse, HTTPBadRequest, json_response
 
-from mdapi.confdata.servlogr import logrobjc
-from mdapi.confdata.standard import DB_FOLDER
+from mdapi.confdata import servlogr, standard
 from mdapi.services import _expand_package_info, _get_changelog, _get_files, _get_package
 
 homepage = os.path.join(os.path.dirname(os.path.abspath(__file__)), "homepage.html")
 
 
 async def index(rqst):
-    logrobjc.info("index %s" % rqst)
+    servlogr.logrobjc.info("index %s" % rqst)
     return FileResponse(homepage)
 
 
 async def get_pkg(rqst):
-    logrobjc.info("get_pkg %s" % rqst)
+    servlogr.logrobjc.info("get_pkg %s" % rqst)
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
@@ -47,7 +46,7 @@ async def get_pkg(rqst):
 
 
 async def get_src_pkg(rqst):
-    logrobjc.info("get_src_pkg %s" % rqst)
+    servlogr.logrobjc.info("get_src_pkg %s" % rqst)
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, srcn=name)
@@ -59,12 +58,12 @@ async def list_branches(rqst):
     """
     Return the list of all branches currently supported by mdapi
     """
-    logrobjc.info("list_branches %s" % rqst)
+    servlogr.logrobjc.info("list_branches %s" % rqst)
     rslt = sorted(
         {
             # Remove the front part `mdapi-` and the end part `-<type>.sqlite` from the filenames
             filename.replace("mdapi-", "").rsplit("-", 2)[0].replace("-updates", "")
-            for filename in os.listdir(DB_FOLDER)
+            for filename in os.listdir(standard.DB_FOLDER)
             if filename.startswith("mdapi") and filename.endswith(".sqlite")
         }
     )
@@ -76,7 +75,7 @@ async def _process_dep(rqst, actn):
     Return the information about the packages having the specified action
     (as in provides, requires, obsoletes etc.)
     """
-    logrobjc.info("process_dep %s %s" % (actn, rqst))
+    servlogr.logrobjc.info("process_dep %s %s" % (actn, rqst))
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
 
@@ -122,7 +121,7 @@ async def get_supplements(rqst):
 
 
 async def get_pkg_files(rqst):
-    logrobjc.info("get_pkg_files %s" % rqst)
+    servlogr.logrobjc.info("get_pkg_files %s" % rqst)
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
@@ -131,7 +130,7 @@ async def get_pkg_files(rqst):
 
 
 async def get_pkg_changelog(rqst):
-    logrobjc.info("get_pkg_changelog %s" % rqst)
+    servlogr.logrobjc.info("get_pkg_changelog %s" % rqst)
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)

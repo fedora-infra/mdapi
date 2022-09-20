@@ -27,7 +27,7 @@ import requests
 from bs4 import BeautifulSoup
 from requests.exceptions import HTTPError
 
-from mdapi.confdata.servlogr import logrobjc
+from mdapi.confdata import servlogr
 from mdapi.database.main import extract_database, fetch_database
 
 """
@@ -92,4 +92,6 @@ def populate_test_databases():
                             extract_database(kndx, arcvloca, fileloca)
                             os.remove(arcvloca)
                         except HTTPError as excp:
-                            logrobjc.warning("[%s] Archive could not be found : %s" % (kndx, excp))
+                            servlogr.logrobjc.warning(
+                                "[%s] Archive could not be found : %s" % (kndx, excp)
+                            )
