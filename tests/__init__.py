@@ -22,6 +22,7 @@ of Red Hat, Inc.
 """
 
 import os.path
+from pathlib import PurePath
 
 import requests
 from bs4 import BeautifulSoup
@@ -59,39 +60,49 @@ def databases_presence(brchname):
     return True
 
 
+def populate_permalinks():
+    """
+    Get a list of permalinks oft the SQLite database archives from the specified branches
+    """
+    linkdict = {}
+    for indx in PROBEURL.keys():
+        linklist = []
+        htmlcont = requests.get(PROBEURL[indx]).text
+        soupobjc = BeautifulSoup(htmlcont, "html.parser")
+        for jndx in soupobjc.find_all("a"):
+            for kndx in KEYWORDS:
+                if kndx in jndx.get("href"):
+                    linklist.append("%s%s" % (PROBEURL[indx], jndx.get("href")))
+        linkdict[indx] = linklist
+    return linkdict
+
+
 def populate_test_databases():
     """
     Create a directory for populating the test database directory
     (That is if it does not exist)
     """
-
-    if not databases_presence("rawhide") or not databases_presence("koji"):
-        if not os.path.exists("/var/tmp/mdapi-tests/"):
-            os.mkdir("/var/tmp/mdapi-tests/")
-
-        """
-        Create a list of links, download and extract them from the specified source
-        """
-        for kndx in PROBEURL.keys():
-            htmlcont = requests.get(PROBEURL[kndx]).text
-            soupobjc = BeautifulSoup(htmlcont, "html.parser")
-            for indx in soupobjc.find_all("a"):
-                for jndx in KEYWORDS:
-                    if jndx in indx.get("href"):
-                        dtbslink = "%s%s" % (PROBEURL[kndx], indx.get("href"))
-                        arcvloca = "%s%s" % (LOCATION, indx.get("href"))
-                        fileloca = "%s%s" % (
-                            LOCATION,
-                            indx.get("href").replace(
-                                indx.get("href").split("-")[0], "mdapi-%s" % kndx
-                            ),
-                        )
-                        fileloca = fileloca.replace(".%s" % indx.get("href").split(".")[-1], "")
-                        try:
-                            fetch_database(kndx, dtbslink, arcvloca)
-                            extract_database(kndx, arcvloca, fileloca)
-                            os.remove(arcvloca)
-                        except HTTPError as excp:
-                            servlogr.logrobjc.warning(
-                                "[%s] Archive could not be found : %s" % (kndx, excp)
-                            )
+    if databases_presence("rawhide") and databases_presence("koji"):
+        pass
+    else:
+        if not os.path.exists(LOCATION):
+            os.mkdir(LOCATION)
+        linkdict = populate_permalinks()
+        for indx in linkdict.keys():
+            for filelink in linkdict[indx]:
+                arcvloca = "%s%s" % (LOCATION, PurePath(filelink).name)
+                fileloca = "%s%s" % (
+                    LOCATION,
+                    PurePath(filelink).name.replace(
+                        PurePath(filelink).name.split("-")[0], "mdapi-%s" % indx
+                    ),
+                )
+                fileloca = fileloca.replace(".%s" % fileloca.split(".")[-1], "")
+                try:
+                    fetch_database(indx, filelink, arcvloca)
+                    extract_database(indx, arcvloca, fileloca)
+                    os.remove(arcvloca)
+                except HTTPError as excp:
+                    servlogr.logrobjc.warning(
+                        "[%s] Archive could not be fetched : %s" % (indx, excp)
+                    )
