@@ -44,19 +44,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Install the base dependencies
-        run: |
-             python3 -m pip install --upgrade poetry
-
-      - name: Check the correctness of the project config
-        run: |
-             poetry check
-
-      - name: Install the project
-        run: |
-             poetry config virtualenvs.create false
-             poetry install      
-
       - name: Set up user for running the testcases
         run: |
              useradd testrunner
