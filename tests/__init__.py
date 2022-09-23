@@ -22,14 +22,9 @@ of Red Hat, Inc.
 """
 
 import os.path
-from pathlib import PurePath
 
 import requests
 from bs4 import BeautifulSoup
-from requests.exceptions import HTTPError
-
-from mdapi.confdata import servlogr
-from mdapi.database.main import extract_database, fetch_database
 
 """
 Standard set of databases to run tests against
@@ -75,34 +70,3 @@ def populate_permalinks():
                     linklist.append("%s%s" % (PROBEURL[indx], jndx.get("href")))
         linkdict[indx] = linklist
     return linkdict
-
-
-def populate_test_databases():
-    """
-    Create a directory for populating the test database directory
-    (That is if it does not exist)
-    """
-    if databases_presence("rawhide") and databases_presence("koji"):
-        pass
-    else:
-        if not os.path.exists(LOCATION):
-            os.mkdir(LOCATION)
-        linkdict = populate_permalinks()
-        for indx in linkdict.keys():
-            for filelink in linkdict[indx]:
-                arcvloca = "%s%s" % (LOCATION, PurePath(filelink).name)
-                fileloca = "%s%s" % (
-                    LOCATION,
-                    PurePath(filelink).name.replace(
-                        PurePath(filelink).name.split("-")[0], "mdapi-%s" % indx
-                    ),
-                )
-                fileloca = fileloca.replace(".%s" % fileloca.split(".")[-1], "")
-                try:
-                    fetch_database(indx, filelink, arcvloca)
-                    extract_database(indx, arcvloca, fileloca)
-                    os.remove(arcvloca)
-                except HTTPError as excp:
-                    servlogr.logrobjc.warning(
-                        "[%s] Archive could not be fetched : %s" % (indx, excp)
-                    )

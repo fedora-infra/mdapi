@@ -27,20 +27,11 @@ import pytest
 
 from mdapi.confdata import standard
 from mdapi.services.main import buildapp
-from tests import LOCATION, databases_presence, populate_test_databases
-
-
-@pytest.fixture(scope="module")
-def setup_environment():
-    """
-    Collect the SQLite databases from the mirror
-    to have some data to test against
-    """
-    populate_test_databases()
-    assert databases_presence("rawhide") and databases_presence("koji")
+from tests import LOCATION, PROBEURL, databases_presence
 
 
 @pytest.fixture
+@pytest.mark.usefixtures("setup_environment")
 async def testing_application(setup_environment, event_loop, aiohttp_client):
     standard.DB_FOLDER = LOCATION
     applobjc = await buildapp()
@@ -55,62 +46,53 @@ async def test_view_index_page(testing_application):
     assert botmtext in otptrslt
 
 
-@pytest.mark.skipif(
-    not databases_presence("rawhide") and not databases_presence("koji"),
-    reason="Databases for 'rawhide' and 'koji' repositories could not be fetched",
-)
 async def test_view_branches(testing_application):
-    respobjc = await testing_application.get("/branches")
-    assert respobjc.status == 200
-    otptobjc = await respobjc.text()
-    assert "rawhide" in otptobjc
-    assert "koji" in otptobjc
+    if False in [databases_presence(indx) for indx in PROBEURL.keys()]:
+        pytest.xfail(reason="Databases are not available locally")
+    else:
+        respobjc = await testing_application.get("/branches")
+        assert respobjc.status == 200
+        otptobjc = await respobjc.text()
+        assert "rawhide" in otptobjc
+        assert "koji" in otptobjc
 
 
-@pytest.mark.skipif(
-    not databases_presence("rawhide"),
-    reason="Databases for 'rawhide' repositories could not be fetched",
-)
 async def test_view_pkg_rawhide(testing_application):
-    respobjc = await testing_application.get("/rawhide/pkg/kernel")
-    assert respobjc.status == 200
-    json.loads(await respobjc.text())
+    if not databases_presence("rawhide"):
+        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/rawhide/pkg/kernel")
+        assert respobjc.status == 200
+        json.loads(await respobjc.text())
 
 
-@pytest.mark.skipif(
-    not databases_presence("rawhide"),
-    reason="Databases for 'rawhide' repositories could not be fetched",
-)
 async def test_view_pkg_rawhide_invalid(testing_application):
-    respobjc = await testing_application.get("/rawhide/pkg/invalidpackagename")
-    assert respobjc.status == 404
-    assert "404: Not Found" == await respobjc.text()
+    if not databases_presence("rawhide"):
+        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/rawhide/pkg/invalidpackagename")
+        assert respobjc.status == 404
+        assert "404: Not Found" == await respobjc.text()
 
 
-@pytest.mark.skipif(
-    not databases_presence("rawhide"),
-    reason="Databases for 'rawhide' repositories could not be fetched",
-)
 async def test_view_pkg_srcpkg_rawhide(testing_application):
-    respobjc = await testing_application.get("/rawhide/srcpkg/python-natsort")
-    assert respobjc.status == 200
-    json.loads(await respobjc.text())
+    if not databases_presence("rawhide"):
+        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/rawhide/srcpkg/python-natsort")
+        assert respobjc.status == 200
+        json.loads(await respobjc.text())
 
 
-@pytest.mark.skipif(
-    not databases_presence("rawhide"),
-    reason="Databases for 'rawhide' repositories could not be fetched",
-)
 async def test_view_changelog_rawhide(testing_application):
-    respobjc = await testing_application.get("/rawhide/changelog/kernel")
-    assert respobjc.status == 200
-    json.loads(await respobjc.text())
+    if not databases_presence("rawhide"):
+        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/rawhide/changelog/kernel")
+        assert respobjc.status == 200
+        json.loads(await respobjc.text())
 
 
-@pytest.mark.skipif(
-    not databases_presence("koji"),
-    reason="Databases for 'koji' repositories could not be fetched",
-)
 @pytest.mark.parametrize(
     "action, package, status_code",
     [
@@ -126,7 +108,10 @@ async def test_view_changelog_rawhide(testing_application):
     ],
 )
 async def test_view_property_koji(testing_application, action, package, status_code):
-    respobjc = await testing_application.get("/koji/%s/%s" % (action, package))
-    assert respobjc.status == status_code
-    if status_code == 200:
-        json.loads(await respobjc.text())
+    if not databases_presence("koji"):
+        pytest.xfail(reason="Databases for 'koji' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/koji/%s/%s" % (action, package))
+        assert respobjc.status == status_code
+        if status_code == 200:
+            json.loads(await respobjc.text())
