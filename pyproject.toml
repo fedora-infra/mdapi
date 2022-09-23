@@ -54,9 +54,10 @@ pytest-isort = "^3.0.0"
 beautifulsoup4 = "^4.11.1"
 tox = "^3.26.0"
 pytest-aiohttp = "^1.0.4"
+pytest-cov = "^3.0.0"
 
 [tool.pytest.ini_options]
-addopts = "--black --isort --flake8"
+addopts = "--black --isort --flake8 --cov=mdapi --cov-report=term --cov-report=xml --cov-report=html"
 flake8-max-line-length = 100
 asyncio_mode = "auto"
 
