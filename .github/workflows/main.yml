@@ -5,34 +5,24 @@ jobs:
   ci-basic:
     strategy:
       fail-fast: false
-      matrix:
-        os: [ubuntu-latest]
-        python-version: ["3.8", "3.9", "3.10"]
-    runs-on: ${{ matrix.os }}
+    runs-on: ubuntu-latest
+    container: fedorapython/fedora-python-tox:latest
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          python-version: ${{ matrix.python-version }}
-
       - name: Install the base dependencies
         run: |
-             python3 -m pip install --upgrade poetry
+             python3 -m pip install --upgrade poetry tox
 
       - name: Check the correctness of the project config
         run: |
              poetry check
 
-      - name: Install the project
-        run: |
-             poetry config virtualenvs.create false
-             poetry install
-
       - name: Check the quality of the code
         run: |
-             tox -e black,flake8,isort
+             tox -e black
+             tox -e flake8
+             tox -e isort
 
   ci-tests:
     strategy:
@@ -43,6 +33,10 @@ jobs:
     container: fedorapython/fedora-python-tox:latest
     steps:
       - uses: actions/checkout@v3
+
+      - name: Install the base dependencies
+        run: |
+             python3 -m pip install --upgrade tox
 
       - name: Set up user for running the testcases
         run: |

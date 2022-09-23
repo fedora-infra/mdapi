@@ -21,12 +21,54 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
-import os
+import os.path
+from pathlib import PurePath
 
 import pytest
+from requests.exceptions import HTTPError
 
+from mdapi.confdata import servlogr
 from mdapi.database import main
-from tests import LOCATION, PROBEURL, databases_presence, populate_test_databases
+from mdapi.database.main import extract_database, fetch_database
+from tests import LOCATION, PROBEURL, databases_presence, populate_permalinks
+
+
+@pytest.fixture
+def setup_environment():
+    """
+    Collect the SQLite databases from the mirror
+    to have some data to test against
+    """
+    if databases_presence("rawhide") and databases_presence("koji"):
+        pass
+    else:
+        if not os.path.exists(LOCATION):
+            os.mkdir(LOCATION)
+        linkdict = populate_permalinks()
+        for indx in linkdict.keys():
+            for filelink in linkdict[indx]:
+                arcvloca = "%s%s" % (LOCATION, PurePath(filelink).name)
+                fileloca = "%s%s" % (
+                    LOCATION,
+                    PurePath(filelink).name.replace(
+                        PurePath(filelink).name.split("-")[0], "mdapi-%s" % indx
+                    ),
+                )
+                fileloca = fileloca.replace(".%s" % fileloca.split(".")[-1], "")
+                try:
+                    fetch_database(indx, filelink, arcvloca)
+                    extract_database(indx, arcvloca, fileloca)
+                    os.remove(arcvloca)
+                except HTTPError as excp:
+                    servlogr.logrobjc.warning(
+                        "[%s] Archive could not be fetched : %s" % (indx, excp)
+                    )
+
+
+def test_fetch_and_extract_database(setup_environment):
+    for indx in PROBEURL.keys():
+        assert databases_presence(indx)
+    assert len(os.listdir(LOCATION)) == 6
 
 
 @pytest.mark.parametrize(
@@ -40,10 +82,3 @@ def test_list_branches(dvlpstat):
     rsltobjc = main.list_branches(dvlpstat)
     assert isinstance(rsltobjc, list)
     assert len(rsltobjc) > 0
-
-
-def test_fetch_and_extract_database():
-    populate_test_databases()
-    for indx in PROBEURL.keys():
-        assert databases_presence(indx)
-    assert len(os.listdir(LOCATION)) == 6
