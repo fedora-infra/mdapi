@@ -55,6 +55,7 @@ beautifulsoup4 = "^4.11.1"
 tox = "^3.26.0"
 pytest-aiohttp = "^1.0.4"
 pytest-cov = "^3.0.0"
+bandit = "^1.7.4"
 
 [tool.pytest.ini_options]
 addopts = "--black --isort --flake8 --cov=mdapi --cov-report=term --cov-report=xml --cov-report=html"

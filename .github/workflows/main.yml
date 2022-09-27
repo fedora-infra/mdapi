@@ -46,3 +46,4 @@ jobs:
       - name: Execute tox
         run: |
              su testrunner -c "tox -e ${{ matrix.tox-env }}"
+             su testrunner -c "tox -e bandit"
