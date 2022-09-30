@@ -21,18 +21,41 @@ License and may only be used or replicated with the express permission
 of Red Hat, Inc.
 """
 
+import os.path
+
 from click.testing import CliRunner
 
+from mdapi import __version__
 from mdapi.main import main
 
 
 def test_cli_application_help_option():
     rnnrobjc = CliRunner()
     rsltobjc = rnnrobjc.invoke(main, ["--help"])
+    assert "A simple API for serving the metadata from the RPM repositories" in rsltobjc.output
     assert rsltobjc.exit_code == 0
 
 
 def test_cli_application_version_option():
     rnnrobjc = CliRunner()
     rsltobjc = rnnrobjc.invoke(main, ["--version"])
+    assert rsltobjc.output == "mdapi, version %s\n" % __version__
     assert rsltobjc.exit_code == 0
+
+
+def test_cli_application_with_wrong_configpath_and_no_command():
+    rnnrobjc = CliRunner()
+    confpath = "/etc/mdapi/myconfig.py"
+    rsltobjc = rnnrobjc.invoke(main, ["--conffile", confpath])
+    assert (
+        "Error: Invalid value for '-c' / '--conffile': Path '%s' does not exist." % confpath
+    ) in rsltobjc.output
+    assert rsltobjc.exit_code == 2
+
+
+def test_cli_application_with_right_configpath_but_no_command():
+    rnnrobjc = CliRunner()
+    confpath = os.path.dirname(__file__).replace("tests", "mdapi/confdata/standard.py")
+    rsltobjc = rnnrobjc.invoke(main, ["--conffile", confpath])
+    assert "Error: Missing command." in rsltobjc.output
+    assert rsltobjc.exit_code == 2
