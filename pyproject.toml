@@ -6,9 +6,9 @@ authors = ["Pierre-Yves Chibon <pingou@pingoured.fr>", "Akashdeep Dhar <akashdee
 license = "GPL-3.0-or-later"
 maintainers = ["Pierre-Yves Chibon <pingou@pingoured.fr>", "Akashdeep Dhar <akashdeep.dhar@gmail.com>"]
 readme = "README.md"
-homepage = "https://github.com/t0xic0der/mdapi"
-repository = "https://github.com/t0xic0der/mdapi"
-documentation = "https://github.com/t0xic0der/mdapi/blob/master/README.md"
+homepage = "https://github.com/fedora-infra/mdapi"
+repository = "https://github.com/fedora-infra/mdapi"
+documentation = "https://github.com/fedora-infra/mdapi/blob/develop/README.md"
 keywords = ["rpm", "centos", "fedora", "metadata", "repositories"]
 classifiers = [
 	"Development Status :: 4 - Beta",

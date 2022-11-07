@@ -12,7 +12,7 @@ A simple and fast API for serving the metadata from the RPM repositories
    ```
 2. Clone the repository to your local storage and make it your present working directory.
    ```
-   $ git clone git@github.com:t0xic0der/mdapi.git
+   $ git clone git@github.com:fedora-infra/mdapi.git
    $ cd mdapi
    ```
 3. Set up and activate a virtual environment within the directory of the cloned repository.
@@ -83,7 +83,7 @@ A simple and fast API for serving the metadata from the RPM repositories
 1. Ensure that
    1. The project directory is the present working directory.
    2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The storage partition on which [test database directory](https://github.com/t0xic0der/mdapi/blob/develop/tests/__init__.py#L38) is located has at least 1.5 GiB of free space.
+   3. The storage partition on which [test database directory](https://github.com/fedora-infra/mdapi/blob/develop/tests/__init__.py#L33) is located has at least 1.5 GiB of free space.
 2. Execute the following command to run the code quality checks and testcases.
    ```
    $ (venv) tox
@@ -107,7 +107,7 @@ A simple and fast API for serving the metadata from the RPM repositories
 1. Ensure that
    1. The project directory is the present working directory.
    2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The storage partition on which [database directory](https://github.com/t0xic0der/mdapi/blob/develop/mdapi/confdata/standard.py#L29) is located has at least 6 GiB of free space.
+   3. The storage partition on which [database directory](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29) is located has at least 6 GiB of free space.
 2. Execute the following command to start fetching the database, while referencing to the modified configuration file.
    ```
    $ (venv) mdapi --conffile myconfig.py database
@@ -133,9 +133,9 @@ A simple and fast API for serving the metadata from the RPM repositories
    1. The project directory is the present working directory.
    2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
    3. The container image is built and available locally.
-   4. The databases are downloaded to the [database directory](https://github.com/t0xic0der/mdapi/blob/develop/mdapi/confdata/standard.py#L29), following the instructions provided in the **[database fetching](#fetching-the-databases)** section.
+   4. The databases are downloaded to the [database directory](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29), following the instructions provided in the **[database fetching](#fetching-the-databases)** section.
 2. Execute the following command to start the serving the application.
    ```
    $ (venv) podman run -v /var/tmp:/var/tmp -p 8080:8080 -ti mdapi:$(poetry version -s)
    ```
-   This command assumes that the database directory is `/var/tmp` (which is the [default](https://github.com/t0xic0der/mdapi/blob/develop/mdapi/confdata/standard.py#L29)) and the service port is `8080` (which is the [default](https://github.com/t0xic0der/mdapi/blob/develop/mdapi/confdata/standard.py#L87)).
+   This command assumes that the database directory is `/var/tmp` (which is the [default](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29)) and the service port is `8080` (which is the [default](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L87)).
