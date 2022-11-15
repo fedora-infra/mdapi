@@ -671,7 +671,7 @@ testing = ["coverage (==6.2)", "mypy (==0.931)"]
 
 [[package]]
 name = "pytest-asyncio"
-version = "0.20.1"
+version = "0.20.2"
 description = "Pytest support for asyncio"
 category = "dev"
 optional = false
@@ -1640,8 +1640,8 @@ pytest-aiohttp = [
     {file = "pytest_aiohttp-1.0.4-py3-none-any.whl", hash = "sha256:1d2dc3a304c2be1fd496c0c2fb6b31ab60cd9fc33984f761f951f8ea1eb4ca95"},
 ]
 pytest-asyncio = [
-    {file = "pytest-asyncio-0.20.1.tar.gz", hash = "sha256:626699de2a747611f3eeb64168b3575f70439b06c3d0206e6ceaeeb956e65519"},
-    {file = "pytest_asyncio-0.20.1-py3-none-any.whl", hash = "sha256:2c85a835df33fda40fe3973b451e0c194ca11bc2c007eabff90bb3d156fc172b"},
+    {file = "pytest-asyncio-0.20.2.tar.gz", hash = "sha256:32a87a9836298a881c0ec637ebcc952cfe23a56436bdc0d09d1511941dd8a812"},
+    {file = "pytest_asyncio-0.20.2-py3-none-any.whl", hash = "sha256:07e0abf9e6e6b95894a39f688a4a875d63c2128f76c02d03d16ccbc35bcc0f8a"},
 ]
 pytest-black = [
     {file = "pytest-black-0.3.12.tar.gz", hash = "sha256:1d339b004f764d6cd0f06e690f6dd748df3d62e6fe1a692d6a5500ac2c5b75a5"},
@@ -1933,7 +1933,6 @@ zope-interface = [
     {file = "zope.interface-5.5.1-cp310-cp310-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:a6f51ffbdcf865f140f55c484001415505f5e68eb0a9eab1d37d0743b503b423"},
     {file = "zope.interface-5.5.1-cp310-cp310-win32.whl", hash = "sha256:8de7bde839d72d96e0c92e8d1fdb4862e89b8fc52514d14b101ca317d9bcf87c"},
     {file = "zope.interface-5.5.1-cp310-cp310-win_amd64.whl", hash = "sha256:90f611d4cdf82fb28837fe15c3940255755572a4edf4c72e2306dbce7dcb3092"},
-    {file = "zope.interface-5.5.1-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:6cf30ac555aacabee24ae316cbe5f0a1e7b40a9fd3dff2d4afe4229de1fc9069"},
     {file = "zope.interface-5.5.1-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:489c4c46fcbd9364f60ff0dcb93ec9026eca64b2f43dc3b05d0724092f205e27"},
     {file = "zope.interface-5.5.1-cp311-cp311-win32.whl", hash = "sha256:9ad58724fabb429d1ebb6f334361f0a3b35f96be0e74bfca6f7de8530688b2df"},
     {file = "zope.interface-5.5.1-cp311-cp311-win_amd64.whl", hash = "sha256:a69f6d8b639f2317ba54278b64fef51d8250ad2c87acac1408b9cc461e4d6bb6"},
