@@ -84,6 +84,21 @@ async def test_view_pkg_srcpkg_rawhide(testing_application):
         json.loads(await respobjc.text())
 
 
+async def test_view_pkg_srcpkg_rawhide_subpackage_version(testing_application):
+    if not databases_presence("rawhide"):
+        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+    else:
+        respobjc = await testing_application.get("/rawhide/pkg/ruby")
+        assert respobjc.status == 200
+        pkgversion = json.loads(await respobjc.text())["version"]
+
+        respobjc = await testing_application.get("/rawhide/srcpkg/ruby")
+        assert respobjc.status == 200
+        srcversion = json.loads(await respobjc.text())["version"]
+
+        assert pkgversion == srcversion
+
+
 async def test_view_changelog_rawhide(testing_application):
     if not databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
