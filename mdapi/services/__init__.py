@@ -77,6 +77,15 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
                 async with dtbsobjc.execute(GET_PACKAGE_BY_SRC, ("%s-%%" % srcn,)) as dbcursor:
                     pkgc = await dbcursor.fetchall()
                 if pkgc:
+                    for pkgx in pkgc:
+                        # Try to match the package with the source name at first
+                        if pkgx[2] == srcn:
+                            pckg = Packages(*pkgx)
+                            break
+
+                    if pckg:
+                        break
+
                     srcn = re.escape(srcn)
                     ptrn = re.compile("%s-[0-9]" % srcn)
                     for pkgx in pkgc:
