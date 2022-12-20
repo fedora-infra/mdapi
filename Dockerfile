@@ -8,7 +8,7 @@ COPY . /code
 WORKDIR /code
 
 ENV PYTHONUNBUFFERED=1
-ENV MDAPI_CONFIG=/code/mdapi/confdata/myconfig.py
+ENV MDAPI_CONFIG=/code/mdapi/confdata/standard.py
 
 RUN rm -rf /code/poetry.lock
 RUN dnf -y install python3-pip poetry && dnf -y clean all
