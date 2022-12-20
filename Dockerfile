@@ -1,6 +1,6 @@
 LABEL maintainer "Akashdeep Dhar <t0xic0der@fedoraproject.org>"
 
-FROM fedora:36
+FROM registry.fedoraproject.org/fedora:36
 
 EXPOSE 8080
 
