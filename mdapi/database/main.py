@@ -204,8 +204,10 @@ def process_repo(repo):
             servlogr.logrobjc.info("[%s] No change detected from %s" % (name, repmdurl))
             continue
 
+        # Creating temporary directories with formatted names to remove them later easily, if needed
+        tempargs = dict(prefix="mdapi-tempdrct-", dir=standard.DB_FOLDER)
+
         # If it has changed, then download it and move it into place
-        tempargs = dict(prefix="mdapi", dir="/var/tmp")
         with tempfile.TemporaryDirectory(**tempargs) as workdrct:
             tempdtbs = os.path.join(workdrct, database)
             archname = os.path.join(workdrct, filename)
