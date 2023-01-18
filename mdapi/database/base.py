@@ -86,7 +86,7 @@ class compare_databases:
                     yield (cacheobj[rowe[0]], *rowe[1:])
                 else:
                     servlogr.logrobjc.warning(
-                        "[%s] % does not appear in the %s cache for %s"
+                        "[%s] %s does not appear in the %s cache for %s"
                         % (self.name, rowe[0], tableobj, location)
                     )
                     servlogr.logrobjc.warning("[%s] Dropping from comparison")
