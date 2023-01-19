@@ -83,7 +83,7 @@ def publish_changes(name, packages, repmdurl):
     modified = bool(packages)
     if not modified:
         servlogr.logrobjc.warning(
-            "[%s] No real changes detected - Skipping publishing on Fedora Messaging bus"
+            "[%s] No real changes detected - Skipping publishing on Fedora Messaging bus" % (name)
         )
         return
 
