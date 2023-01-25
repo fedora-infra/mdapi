@@ -89,7 +89,7 @@ class compare_databases:
                         "[%s] %s does not appear in the %s cache for %s"
                         % (self.name, rowe[0], tableobj, location)
                     )
-                    servlogr.logrobjc.warning("[%s] Dropping from comparison")
+                    servlogr.logrobjc.warning("[%s] Dropping from comparison" % self.name)
             else:
                 yield rowe
         connobjc.close()
