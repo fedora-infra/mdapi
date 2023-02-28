@@ -72,6 +72,10 @@ def extract_database(name, arcvname, location):
     elif arcvname.endswith(".bz2"):
         with bz2.open(arcvname) as inp, open(location, "wb") as otptfile:
             otptfile.write(inp.read())
+    elif arcvname.endswith('.zst'):
+        import pyzstd
+        with open(arcvname, 'rb') as inp, open(location, 'wb') as otptfile:
+            pyzstd.decompress_stream(inp, otptfile)
     else:
         servlogr.logrobjc.error("Could not extract %s" % (arcvname))
         raise NotImplementedError(arcvname)
