@@ -1321,14 +1321,14 @@ files = [
 
 [[package]]
 name = "pytest"
-version = "7.2.1"
+version = "7.2.2"
 description = "pytest: simple powerful testing with Python"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "pytest-7.2.1-py3-none-any.whl", hash = "sha256:c7c6ca206e93355074ae32f7403e8ea12163b1163c976fee7d4d84027c162be5"},
-    {file = "pytest-7.2.1.tar.gz", hash = "sha256:d45e0952f3727241918b8fd0f376f5ff6b301cc0777c6f9a556935c92d8a7d42"},
+    {file = "pytest-7.2.2-py3-none-any.whl", hash = "sha256:130328f552dcfac0b1cec75c12e3f005619dc5f874f0a06e8ff7263f0ee6225e"},
+    {file = "pytest-7.2.2.tar.gz", hash = "sha256:c99ab0c73aceb050f68929bc93af19ab6db0558791c6a0715723abe9d0ade9d4"},
 ]
 
 [package.dependencies]
@@ -1548,6 +1548,14 @@ files = [
     {file = "pyzstd-0.15.4-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:56cb56e24e9d33ef571c23b0157593c44c052ffe5810599a76bc6c60ec77f67a"},
     {file = "pyzstd-0.15.4-cp311-cp311-win32.whl", hash = "sha256:ab55575f1c6c12ca65918dba8196bfb281df86038a9f9e376fb6ac5a501ac724"},
     {file = "pyzstd-0.15.4-cp311-cp311-win_amd64.whl", hash = "sha256:b73b18d8ebf5caba863bfccb6ad422b9322c7a806b50a555bb44f51f16b7af5e"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:df80324759cb74a10818f5ea4dfb0332b6064a31305246f66b043c4f73b37918"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:b4833842d5e6660c1b6cd316f102ffddb95566f12ec1f89c5630d4b511e7e084"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:d9069da3bb94cac8af3fd2d7b622c7a78a248d3295a478587d880553287d56e6"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:9db032965b8fabf0bac13b75706031444ebfa7214794afe80be41799d8a349fb"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-musllinux_1_1_i686.whl", hash = "sha256:16eb2b2b206489bf8a7b690cf3b06b24352a16ee25717cb38c4381aefb3a94ce"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-musllinux_1_1_x86_64.whl", hash = "sha256:821555ce9bc7f50130bf52dc7b7d342913e00435c68a5cac564c5f2e57f33cbf"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-win32.whl", hash = "sha256:4f4a96bdffa773f8820e065ec840c5d3f252b0611951b73567121757388f171c"},
+    {file = "pyzstd-0.15.4-cp36-cp36m-win_amd64.whl", hash = "sha256:3b0d384a48592683edf812c1a3d75a0cf5af253b1629596567ce3a2991d6ccbc"},
     {file = "pyzstd-0.15.4-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:e3b4ee242e00029c68fc5d8cddc3e01f6cdf7ac466d844a1440ebde4ae1f9e79"},
     {file = "pyzstd-0.15.4-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:d62f3e5ca97150ddd32e83275170bcb7ea462f271df03d39de434e8e02889b09"},
     {file = "pyzstd-0.15.4-cp37-cp37m-manylinux_2_17_ppc64le.manylinux2014_ppc64le.whl", hash = "sha256:01e723cafb6e681dccba134524f9f012c5f04078d6cb05e03b2f5d871716e0db"},
