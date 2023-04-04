@@ -38,6 +38,7 @@ from fedora_messaging.exceptions import ConnectionException, PublishReturned
 from mdapi_messages.messages import RepoUpdateV1
 
 from mdapi.confdata import servlogr, standard
+from mdapi.database import check_archive_validity
 from mdapi.database.base import compare_databases, index_database
 
 
@@ -65,16 +66,17 @@ def extract_database(name, arcvname, location):
             otptfile.write(inp.read())
     elif arcvname.endswith(".tar.gz"):
         with tarfile.open(arcvname) as tararchv:
-            tararchv.extractall(path=location)
+            tararchv.extractall(path=location, members=check_archive_validity())
     elif arcvname.endswith(".gz"):
         with gzip.open(arcvname, "rb") as inp, open(location, "wb") as otptfile:
             otptfile.write(inp.read())
     elif arcvname.endswith(".bz2"):
         with bz2.open(arcvname) as inp, open(location, "wb") as otptfile:
             otptfile.write(inp.read())
-    elif arcvname.endswith('.zst'):
+    elif arcvname.endswith(".zst"):
         import pyzstd
-        with open(arcvname, 'rb') as inp, open(location, 'wb') as otptfile:
+
+        with open(arcvname, "rb") as inp, open(location, "wb") as otptfile:
             pyzstd.decompress_stream(inp, otptfile)
     else:
         servlogr.logrobjc.error("Could not extract %s" % (arcvname))
