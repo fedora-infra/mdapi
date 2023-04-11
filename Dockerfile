@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:36
+FROM registry.fedoraproject.org/fedora:39
 
 LABEL maintainer "Akashdeep Dhar <t0xic0der@fedoraproject.org>"
 
