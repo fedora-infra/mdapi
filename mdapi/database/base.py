@@ -85,11 +85,11 @@ class compare_databases:
                 if rowe[0] in cacheobj:
                     yield (cacheobj[rowe[0]], *rowe[1:])
                 else:
-                    servlogr.logrobjc.warning(
+                    servlogr.logrobjc.debug(
                         "[%s] %s does not appear in the %s cache for %s"
                         % (self.name, rowe[0], tableobj, location)
                     )
-                    servlogr.logrobjc.warning("[%s] Dropping from comparison" % self.name)
+                    servlogr.logrobjc.debug("[%s] Dropping from comparison" % self.name)
             else:
                 yield rowe
         connobjc.close()
