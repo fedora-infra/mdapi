@@ -280,6 +280,9 @@ def index_repositories():
             elif rels["name"] == "Fedora EPEL" and versdata == "8":
                 name = repodict["epel"][jndx] % rels["koji_name"]
                 urli = urli.replace("/x86_64/", "/Everything/x86_64/")
+            elif rels["name"] == "Fedora EPEL" and versdata == "9":
+                name = repodict["epel"][jndx] % rels["koji_name"]
+                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
             else:
                 name = repodict["epel"][jndx] % rels["koji_name"]
             rurl = urli % (standard.DL_SERVER, versdata)
