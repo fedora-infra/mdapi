@@ -114,7 +114,7 @@ async def test_view_changelog_rawhide(testing_application):
         ("requires", "R", 200),
         ("provides", "perl(SetupLog)", 400),
         ("provides", "R", 200),
-        ("obsoletes", "cabal2spec", 200),
+        ("obsoletes", "cabal2spec", 400),
         ("conflicts", "mariadb", 200),
         ("enhances", "httpd", 200),
         ("recommends", "flac", 200),
