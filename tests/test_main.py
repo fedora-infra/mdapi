@@ -25,89 +25,97 @@ import json
 
 import pytest
 
+import tests
 from mdapi.confdata import standard
 from mdapi.services.main import buildapp
-from tests import LOCATION, PROBEURL, databases_presence
 
 
 @pytest.fixture
 @pytest.mark.usefixtures("setup_environment")
 async def testing_application(setup_environment, event_loop, aiohttp_client):
-    standard.DB_FOLDER = LOCATION
+    standard.DB_FOLDER = tests.LOCATION
     applobjc = await buildapp()
     return await aiohttp_client(applobjc)
 
 
+@pytest.mark.download_required
 async def test_view_index_page(testing_application):
     respobjc = await testing_application.get("/")
-    assert respobjc.status == 200
+    assert respobjc.status == 200  # noqa : S101
     botmtext = "2015-2022 - Red Hat, Inc. - GPLv3+ - Sources:"
     otptrslt = await respobjc.text()
-    assert botmtext in otptrslt
+    assert botmtext in otptrslt  # noqa : S101
 
 
+@pytest.mark.download_required
 async def test_view_branches(testing_application):
-    if False in [databases_presence(indx) for indx in PROBEURL.keys()]:
+    if False in [tests.databases_presence(indx) for indx in tests.PROBEURL.keys()]:
         pytest.xfail(reason="Databases are not available locally")
     else:
         respobjc = await testing_application.get("/branches")
-        assert respobjc.status == 200
+        assert respobjc.status == 200  # noqa : S101
         otptobjc = await respobjc.text()
-        assert "rawhide" in otptobjc
-        assert "koji" in otptobjc
+        assert "rawhide" in otptobjc  # noqa : S101
+        assert "koji" in otptobjc  # noqa : S101
 
 
+@pytest.mark.download_required
 async def test_view_pkg_rawhide(testing_application):
-    if not databases_presence("rawhide"):
+    if not tests.databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
     else:
         respobjc = await testing_application.get("/rawhide/pkg/kernel")
-        assert respobjc.status == 200
+        assert respobjc.status == 200  # noqa : S101
         json.loads(await respobjc.text())
 
 
+@pytest.mark.download_required
 async def test_view_pkg_rawhide_invalid(testing_application):
-    if not databases_presence("rawhide"):
+    if not tests.databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
     else:
         respobjc = await testing_application.get("/rawhide/pkg/invalidpackagename")
-        assert respobjc.status == 404
-        assert "404: Not Found" == await respobjc.text()
+        assert respobjc.status == 404  # noqa : S101
+        assert "404: Not Found" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_required
 async def test_view_pkg_srcpkg_rawhide(testing_application):
-    if not databases_presence("rawhide"):
+    if not tests.databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
     else:
         respobjc = await testing_application.get("/rawhide/srcpkg/python-natsort")
-        assert respobjc.status == 200
-        json.loads(await respobjc.text())
+        assert respobjc.status == 200  # noqa : S101
+        json.loads(await respobjc.text())  # noqa : S101
 
 
+@pytest.mark.download_required
 async def test_view_pkg_srcpkg_rawhide_subpackage_version(testing_application):
-    if not databases_presence("rawhide"):
+    if not tests.databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
     else:
         respobjc = await testing_application.get("/rawhide/pkg/ruby")
-        assert respobjc.status == 200
+        assert respobjc.status == 200  # noqa : S101
         pkgversion = json.loads(await respobjc.text())["version"]
 
         respobjc = await testing_application.get("/rawhide/srcpkg/ruby")
-        assert respobjc.status == 200
+        assert respobjc.status == 200  # noqa : S101
         srcversion = json.loads(await respobjc.text())["version"]
 
-        assert pkgversion == srcversion
+        assert pkgversion == srcversion  # noqa : S101
 
 
+@pytest.mark.download_required
 async def test_view_changelog_rawhide(testing_application):
-    if not databases_presence("rawhide"):
+    if not tests.databases_presence("rawhide"):
         pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
     else:
         respobjc = await testing_application.get("/rawhide/changelog/kernel")
-        assert respobjc.status == 200
+        assert respobjc.status == 200  # noqa : S101
         json.loads(await respobjc.text())
 
 
+@pytest.mark.download_required
 @pytest.mark.parametrize(
     "action, package, status_code",
     [
@@ -123,10 +131,10 @@ async def test_view_changelog_rawhide(testing_application):
     ],
 )
 async def test_view_property_koji(testing_application, action, package, status_code):
-    if not databases_presence("koji"):
+    if not tests.databases_presence("koji"):
         pytest.xfail(reason="Databases for 'koji' repositories are not available locally")
     else:
-        respobjc = await testing_application.get("/koji/%s/%s" % (action, package))
-        assert respobjc.status == status_code
+        respobjc = await testing_application.get(f"/koji/{action}/{package}")
+        assert respobjc.status == status_code  # noqa : S101
         if status_code == 200:
-            json.loads(await respobjc.text())
+            json.loads(await respobjc.text())  # noqa : S101

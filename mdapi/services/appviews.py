@@ -32,12 +32,12 @@ homepage = os.path.join(os.path.dirname(os.path.abspath(__file__)), "homepage.ht
 
 
 async def index(rqst):
-    servlogr.logrobjc.info("index %s" % rqst)
+    servlogr.logrobjc.info(f"index {rqst}")
     return FileResponse(homepage)
 
 
 async def get_pkg(rqst):
-    servlogr.logrobjc.info("get_pkg %s" % rqst)
+    servlogr.logrobjc.info(f"get_pkg {rqst}")
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
@@ -46,7 +46,7 @@ async def get_pkg(rqst):
 
 
 async def get_src_pkg(rqst):
-    servlogr.logrobjc.info("get_src_pkg %s" % rqst)
+    servlogr.logrobjc.info(f"get_src_pkg {rqst}")
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, srcn=name)
@@ -58,7 +58,7 @@ async def list_branches(rqst):
     """
     Return the list of all branches currently supported by mdapi
     """
-    servlogr.logrobjc.info("list_branches %s" % rqst)
+    servlogr.logrobjc.info(f"list_branches {rqst}")
     rslt = sorted(
         {
             # Remove the front part `mdapi-` and the end part `-<type>.sqlite` from the filenames
@@ -75,14 +75,14 @@ async def _process_dep(rqst, actn):
     Return the information about the packages having the specified action
     (as in provides, requires, obsoletes etc.)
     """
-    servlogr.logrobjc.info("process_dep %s %s" % (actn, rqst))
+    servlogr.logrobjc.info(f"process_dep {actn} {rqst}")
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
 
     try:
         pckg, repotype = await _get_package(brch, name, actn=actn)
     except:  # noqa
-        raise HTTPBadRequest
+        raise HTTPBadRequest  # noqa : B904
 
     rslt = await _expand_package_info(pckg, brch, repotype)
     return json_response(rslt)
@@ -121,7 +121,7 @@ async def get_supplements(rqst):
 
 
 async def get_pkg_files(rqst):
-    servlogr.logrobjc.info("get_pkg_files %s" % rqst)
+    servlogr.logrobjc.info(f"get_pkg_files {rqst}")
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)
@@ -130,7 +130,7 @@ async def get_pkg_files(rqst):
 
 
 async def get_pkg_changelog(rqst):
-    servlogr.logrobjc.info("get_pkg_changelog %s" % rqst)
+    servlogr.logrobjc.info(f"get_pkg_changelog {rqst}")
     brch = rqst.match_info.get("brch")
     name = rqst.match_info.get("name")
     pckg, repotype = await _get_package(brch, name)

@@ -31,53 +31,61 @@ from mdapi.services.main import buildapp
 async def testing_application_nodb(event_loop, aiohttp_client):
     standard.DB_FOLDER = "."
     applobjc = await buildapp()
-    return await aiohttp_client(applobjc)
+    return await aiohttp_client(applobjc)  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_index_page(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/")
-    assert respobjc.status == 200
+    assert respobjc.status == 200  # noqa : S101
     botmtext = "2015-2022 - Red Hat, Inc. - GPLv3+ - Sources:"
     otptrslt = await respobjc.text()
-    assert botmtext in otptrslt
+    assert botmtext in otptrslt  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_branches(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/branches")
-    assert respobjc.status == 200
-    assert "[]" == await respobjc.text()
+    assert respobjc.status == 200  # noqa : S101
+    assert "[]" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_pkg_rawhide(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/rawhide/pkg/kernel")
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_pkg_rawhide_invalid(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/rawhide/pkg/invalidpackagename")
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_srcpkg_rawhide(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/rawhide/srcpkg/python-natsort")
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_filelist_rawhide(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/rawhide/files/kernel-core")
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 async def test_view_changelog_rawhide(testing_application_nodb):
     respobjc = await testing_application_nodb.get("/rawhide/changelog/kernel")
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101
 
 
+@pytest.mark.download_needless
 @pytest.mark.parametrize(
     "action",
     [
@@ -93,5 +101,5 @@ async def test_view_changelog_rawhide(testing_application_nodb):
 )
 async def test_view_property_koji(testing_application_nodb, action):
     respobjc = await testing_application_nodb.get("/koji/%s/R" % (action))
-    assert respobjc.status == 400
-    assert "400: Bad Request" == await respobjc.text()
+    assert respobjc.status == 400  # noqa : S101
+    assert "400: Bad Request" == await respobjc.text()  # noqa : S101

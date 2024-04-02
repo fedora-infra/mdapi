@@ -47,8 +47,8 @@ def main(conffile=None):
     if conffile is not None:
         # Load the configuration file to use
         CONFIG = {}
-        with open(conffile, "r") as confobjc:
-            exec(compile(confobjc.read(), conffile, "exec"), CONFIG)
+        with open(conffile) as confobjc:
+            exec(compile(confobjc.read(), conffile, "exec"), CONFIG)  # noqa : S102
         compile_configuration(CONFIG)
 
 
@@ -70,7 +70,7 @@ def serveapp():
                 APPSERVE["logging"]["level"],
             )
         )
-        subprocess.run(startcmd.split())
+        subprocess.run(startcmd.split())  # noqa : S603
     except KeyError:
         print("Invalid configuration detected")
         return 1
