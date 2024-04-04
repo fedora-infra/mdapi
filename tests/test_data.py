@@ -27,10 +27,10 @@ from pathlib import PurePath
 import pytest
 from requests.exceptions import HTTPError
 
+import tests
 from mdapi.confdata import servlogr
 from mdapi.database import main
 from mdapi.database.main import extract_database, fetch_database
-from tests import LOCATION, PROBEURL, databases_presence, populate_permalinks
 
 
 @pytest.fixture
@@ -39,38 +39,33 @@ def setup_environment():
     Collect the SQLite databases from the mirror
     to have some data to test against
     """
-    if databases_presence("rawhide") and databases_presence("koji"):
+    if tests.databases_presence("rawhide") and tests.databases_presence("koji"):
         pass
     else:
-        if not os.path.exists(LOCATION):
-            os.mkdir(LOCATION)
-        linkdict = populate_permalinks()
+        if not os.path.exists(tests.LOCATION):
+            os.mkdir(tests.LOCATION)
+        linkdict = tests.populate_permalinks()
         for indx in linkdict.keys():
             for filelink in linkdict[indx]:
-                arcvloca = "%s%s" % (LOCATION, PurePath(filelink).name)
-                fileloca = "%s%s" % (
-                    LOCATION,
-                    PurePath(filelink).name.replace(
-                        PurePath(filelink).name.split("-")[0], "mdapi-%s" % indx
-                    ),
-                )
-                fileloca = fileloca.replace(".%s" % fileloca.split(".")[-1], "")
+                arcvloca = f"{tests.LOCATION}{PurePath(filelink).name}"
+                fileloca = f"{tests.LOCATION}{PurePath(filelink).name.replace(PurePath(filelink).name.split('-')[0], f'mdapi-{indx}')}"  # noqa: E501
+                fileloca = fileloca.replace(f".{fileloca.split('.')[-1]}", "")
                 try:
                     fetch_database(indx, filelink, arcvloca)
                     extract_database(indx, arcvloca, fileloca)
                     os.remove(arcvloca)
                 except HTTPError as excp:
-                    servlogr.logrobjc.warning(
-                        "[%s] Archive could not be fetched : %s" % (indx, excp)
-                    )
+                    servlogr.logrobjc.warning(f"[{indx}] Archive could not be fetched : {excp}")
 
 
+@pytest.mark.download_required
 def test_fetch_and_extract_database(setup_environment):
-    for indx in PROBEURL.keys():
-        assert databases_presence(indx)
-    assert len(os.listdir(LOCATION)) == 6
+    for indx in tests.PROBEURL.keys():
+        assert tests.databases_presence(indx)  # noqa : S101
+    assert len(os.listdir(tests.LOCATION)) == 6  # noqa : S101
 
 
+@pytest.mark.download_required
 @pytest.mark.parametrize(
     "dvlpstat",
     [
@@ -80,5 +75,5 @@ def test_fetch_and_extract_database(setup_environment):
 )
 def test_list_branches(dvlpstat):
     rsltobjc = main.list_branches(dvlpstat)
-    assert isinstance(rsltobjc, list)
-    assert len(rsltobjc) > 0
+    assert isinstance(rsltobjc, list)  # noqa : S101
+    assert len(rsltobjc) > 0  # noqa : S101

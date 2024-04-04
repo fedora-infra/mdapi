@@ -26,7 +26,7 @@ mdapi default configuration.
 """
 
 # url to the database server:
-DB_FOLDER = "/var/tmp"
+DB_FOLDER = "/var/tmp"  # noqa : S108
 
 LOGGING = {
     "version": 1,

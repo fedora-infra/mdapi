@@ -22,20 +22,24 @@ of Red Hat, Inc.
 """
 
 import os.path
+from tempfile import TemporaryDirectory
 
 import requests
 from bs4 import BeautifulSoup
+
+from mdapi.confdata import standard
 
 """
 Standard set of databases to run tests against
 """
 
-LOCATION = "/var/tmp/mdapi-tests/"
+tempargs = dict(prefix="mdapi-tests-", dir=standard.DB_FOLDER)
+LOCATION = f"{TemporaryDirectory(**tempargs).name}/"
+
 BRCHNAME = "rawhide"
 PROBEURL = {
-    "koji": "https://kojipkgs.fedoraproject.org/repos/%s/latest/x86_64/repodata/" % BRCHNAME,
-    "rawhide": "https://dl.fedoraproject.org/pub/fedora/linux/development/%s/Everything/x86_64/os/repodata/"  # noqa
-    % BRCHNAME,
+    "koji": f"https://kojipkgs.fedoraproject.org/repos/{BRCHNAME}/latest/x86_64/repodata/",
+    "rawhide": f"https://dl.fedoraproject.org/pub/fedora/linux/development/{BRCHNAME}/Everything/x86_64/os/repodata/",
 }
 KEYWORDS = [
     "-filelists.sqlite",
@@ -50,23 +54,23 @@ def databases_presence(brchname):
     Return true if the databases are present of the given branch, else false
     """
     for indx in KEYWORDS:
-        if not os.path.exists("%smdapi-%s%s" % (LOCATION, brchname, indx)):
+        if not os.path.exists(f"{LOCATION}mdapi-{brchname}{indx}"):
             return False
     return True
 
 
 def populate_permalinks():
     """
-    Get a list of permalinks oft the SQLite database archives from the specified branches
+    Get a list of permalinks off the SQLite database archives from the specified branches
     """
     linkdict = {}
     for indx in PROBEURL.keys():
         linklist = []
-        htmlcont = requests.get(PROBEURL[indx]).text
+        htmlcont = requests.get(PROBEURL[indx]).text  # noqa : S113
         soupobjc = BeautifulSoup(htmlcont, "html.parser")
         for jndx in soupobjc.find_all("a"):
             for kndx in KEYWORDS:
                 if kndx in jndx.get("href"):
-                    linklist.append("%s%s" % (PROBEURL[indx], jndx.get("href")))
+                    linklist.append(f"{PROBEURL[indx]}{jndx.get('href')}")
         linkdict[indx] = linklist
     return linkdict

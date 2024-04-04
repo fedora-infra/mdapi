@@ -28,7 +28,7 @@ from mdapi.database.sqlq import DEFAULT_QUERY, INDEX_DATABASE, OBTAIN_TABLE_NAME
 
 
 def index_database(name, tempdtbs):
-    servlogr.logrobjc.info("[%s] Indexing database %s" % (name, tempdtbs))
+    servlogr.logrobjc.info(f"[{name}] Indexing database {tempdtbs}")
     if tempdtbs.endswith("primary.sqlite"):
         # TODO: Try the "with sqlite3.connect(tempdtbs) as connobjc" statement here
         connobjc = sqlite3.connect(tempdtbs)
@@ -80,16 +80,13 @@ class compare_databases:
     def obtain_all_rows(self, location, tableobj, cacheobj):
         connobjc = sqlite3.connect(location)
         sqlquery = queries.get(tableobj, DEFAULT_QUERY).format(table=tableobj)
-        for indx, rowe in enumerate(connobjc.execute(sqlquery)):
+        for indx, rowe in enumerate(connobjc.execute(sqlquery)):  # noqa : B007
             if tableobj in self.cache_dependent_tables:
                 if rowe[0] in cacheobj:
                     yield (cacheobj[rowe[0]], *rowe[1:])
                 else:
-                    servlogr.logrobjc.debug(
-                        "[%s] %s does not appear in the %s cache for %s"
-                        % (self.name, rowe[0], tableobj, location)
-                    )
-                    servlogr.logrobjc.debug("[%s] Dropping from comparison" % self.name)
+                    servlogr.logrobjc.debug(f"[{self.name}] {rowe[0]} does not appear in the {tableobj} cache for {location}")  # noqa : E501
+                    servlogr.logrobjc.debug(f"[{self.name}] Dropping from comparison")
             else:
                 yield rowe
         connobjc.close()
@@ -97,7 +94,7 @@ class compare_databases:
     def build_cache(self, location, tableobj, cacheobjc):
         connobjc = sqlite3.connect(location)
         sqlquery = queries.get(tableobj, DEFAULT_QUERY).format(table=tableobj)
-        for pkgId, pkgname, *args in connobjc.execute(sqlquery):
+        for pkgId, pkgname, *args in connobjc.execute(sqlquery):  # noqa : B007
             cacheobjc[pkgId] = pkgname
         connobjc.close()
 
@@ -108,7 +105,7 @@ class compare_databases:
         return True
 
     def main(self):
-        servlogr.logrobjc.info("[%s] Comparing %s against %s" % (self.name, self.dbsA, self.dbsB))
+        servlogr.logrobjc.info(f"[{self.name}] Comparing {self.dbsA} against {self.dbsB}")
 
         tablistA = list(self.obtain_table_names(self.dbsA))
         tablistB = list(self.obtain_table_names(self.dbsB))
@@ -121,14 +118,14 @@ class compare_databases:
             # We have never downloaded this before...
             # so we have nothing to compare it against. Just return and say there
             # are "no differences".
-            servlogr.logrobjc.warning(
-                "[%s] Database empty - %s cannot compare" % (self.name, self.dbsB)
-            )
+            servlogr.logrobjc.warning(f"[{self.name}] Database empty - {self.dbsB} cannot compare")
             return set()
 
-        assert len(tablistA) == len(tablistB), "Cannot compare disparate databases"
+        if len(tablistA) != len(tablistB):
+            raise ValueError("Cannot compare disparate databases")
+
         # These should be the same
-        tblelist = tablistA = tablistB
+        tblelist = tablistA
 
         tblelist = [tableobj for tableobj in tblelist if self.should_compare(tableobj)]
 
