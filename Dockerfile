@@ -7,7 +7,7 @@ EXPOSE 8080
 ENV PYTHONUNBUFFERED=1
 
 RUN dnf -y install python3-pip && dnf -y clean all
-RUN pip install --upgrade mdapi==3.1.4
+RUN pip install --upgrade mdapi==3.1.5
 
 # Uncomment the following MDAPI_CONFIG and comment the other MDAPI_CONFIG for local development builds
 # ENV MDAPI_CONFIG=/code/mdapi/confdata/standard.py
