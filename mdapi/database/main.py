@@ -264,7 +264,7 @@ def index_repositories():
         versdata = rels["version"]
         for jndx, urli in enumerate(urls[rels["name"]]):
             if rels["name"] in ("Fedora Linux", "Fedora"):
-                name = repodict["fedora"][jndx].format(ridx = rels["koji_name"])
+                name = repodict["fedora"][jndx].format(rlid = rels["koji_name"])
             elif rels["name"] == "Fedora EPEL" and versdata == "8":
                 name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
                 urli = urli.replace("/x86_64/", "/Everything/x86_64/")
