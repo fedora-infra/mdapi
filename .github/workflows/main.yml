@@ -20,15 +20,13 @@ jobs:
 
       - name: Check the quality of the code
         run: |
-             tox -e black
-             tox -e flake8
-             tox -e isort
+             tox -e cleaning
 
-  ci-tests:
+  ci-tests-download-required:
     strategy:
       fail-fast: false
       matrix:
-        tox-env: ["py38", "py39", "py310"]
+        tox-env: ["py38_download_required", "py39_download_required", "py310_download_required", "py311_download_required", "py312_download_required"]
     runs-on: ubuntu-latest
     container: fedorapython/fedora-python-tox:latest
     steps:
@@ -46,4 +44,26 @@ jobs:
       - name: Execute tox
         run: |
              su testrunner -c "tox -e ${{ matrix.tox-env }}"
-             su testrunner -c "tox -e bandit"
+
+  ci-tests-download-needless:
+    strategy:
+      fail-fast: false
+      matrix:
+        tox-env: ["py38_download_needless", "py39_download_needless", "py310_download_needless", "py311_download_needless", "py312_download_needless"]
+    runs-on: ubuntu-latest
+    container: fedorapython/fedora-python-tox:latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install the base dependencies
+        run: |
+             python3 -m pip install --upgrade tox
+
+      - name: Set up user for running the testcases
+        run: |
+             useradd testrunner
+             chown -R testrunner .
+
+      - name: Execute tox
+        run: |
+             su testrunner -c "tox -e ${{ matrix.tox-env }}"

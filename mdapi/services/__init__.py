@@ -53,9 +53,9 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
 
     for repotype in ["updates-testing", "updates", "testing", None]:
         if repotype:
-            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (standard.DB_FOLDER, brch, repotype)
+            dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-{repotype}-primary.sqlite"
         else:
-            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (standard.DB_FOLDER, brch)
+            dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-primary.sqlite"
 
         if not os.path.exists(dtbsfile):
             wrongdbs = True
@@ -74,7 +74,7 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
                     pckg = [Packages(*item) for item in pkgc]
                     break
             elif srcn:
-                async with dtbsobjc.execute(GET_PACKAGE_BY_SRC, ("%s-%%" % srcn,)) as dbcursor:
+                async with dtbsobjc.execute(GET_PACKAGE_BY_SRC, (f"{srcn}-%",)) as dbcursor:
                     pkgc = await dbcursor.fetchall()
                 if pkgc:
                     for pkgx in pkgc:
@@ -87,7 +87,7 @@ async def _get_package(brch, name=None, actn=None, srcn=None):
                         break
 
                     srcn = re.escape(srcn)
-                    ptrn = re.compile("%s-[0-9]" % srcn)
+                    ptrn = re.compile(f"{srcn}-[0-9]")
                     for pkgx in pkgc:
                         if ptrn.match(pkgx[3]):
                             pckg = Packages(*pkgx)
@@ -124,9 +124,9 @@ async def _expand_package_info(pkgs, brch, repotype):
     for pkgx in pkgs:
         otpt = pkgx.to_json()
         if repotype:
-            dtbsfile = "%s/mdapi-%s-%s-primary.sqlite" % (standard.DB_FOLDER, brch, repotype)
+            dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-{repotype}-primary.sqlite"
         else:
-            dtbsfile = "%s/mdapi-%s-primary.sqlite" % (standard.DB_FOLDER, brch)
+            dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-primary.sqlite"
 
         async with aiosqlite.connect(dtbsfile) as dtbsobjc:
             """
@@ -177,9 +177,9 @@ async def _get_files(pkid, brch, repotype):
     Return the list of files for the given package in the specified branch.
     """
     if repotype:
-        dtbsfile = "%s/mdapi-%s-%s-filelists.sqlite" % (standard.DB_FOLDER, brch, repotype)
+        dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-{repotype}-filelists.sqlite"
     else:
-        dtbsfile = "%s/mdapi-%s-filelists.sqlite" % (standard.DB_FOLDER, brch)
+        dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-filelists.sqlite"
 
     if not os.path.exists(dtbsfile):
         raise HTTPBadRequest()
@@ -203,9 +203,9 @@ async def _get_changelog(pkid, brch, repotype):
     Return the changelog for the given packages in the specified branch.
     """
     if repotype:
-        dtbsfile = "%s/mdapi-%s-%s-other.sqlite" % (standard.DB_FOLDER, brch, repotype)
+        dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-{repotype}-other.sqlite"
     else:
-        dtbsfile = "%s/mdapi-%s-other.sqlite" % (standard.DB_FOLDER, brch)
+        dtbsfile = f"{standard.DB_FOLDER}/mdapi-{brch}-other.sqlite"
 
     if not os.path.exists(dtbsfile):
         raise HTTPBadRequest()
