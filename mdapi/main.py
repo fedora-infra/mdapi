@@ -63,12 +63,7 @@ def database():
 def serveapp():
     try:
         startcmd = (
-            "gunicorn mdapi.services.main:buildapp --bind %s --worker-class %s --log-level %s"  # noqa
-            % (
-                APPSERVE["bind"],
-                APPSERVE["worker_class"],
-                APPSERVE["logging"]["level"],
-            )
+            f"gunicorn mdapi.services.main:buildapp --bind {APPSERVE['bind']} --worker-class {APPSERVE['worker_class']} --log-level {APPSERVE['logging']['level']}"  # noqa
         )
         subprocess.run(startcmd.split())  # noqa : S603
     except KeyError:

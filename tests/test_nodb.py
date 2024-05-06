@@ -100,6 +100,6 @@ async def test_view_changelog_rawhide(testing_application_nodb):
     ],
 )
 async def test_view_property_koji(testing_application_nodb, action):
-    respobjc = await testing_application_nodb.get("/koji/%s/R" % (action))
+    respobjc = await testing_application_nodb.get(f"/koji/{action}/R")
     assert respobjc.status == 400  # noqa : S101
     assert "400: Bad Request" == await respobjc.text()  # noqa : S101
