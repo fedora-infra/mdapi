@@ -244,8 +244,8 @@ def index_repositories():
             "{dlserver}/pub/fedora/linux/updates/testing/{versname}/Everything/x86_64/repodata",
         ],
         "Fedora EPEL": [
-            "{dlserver}/pub/epel/{versname}/x86_64/repodata/",
-            "{dlserver}/pub/epel/testing/{versname}/x86_64/repodata",
+            "{dlserver}/pub/epel/{versname}/Everything/x86_64/repodata/",
+            "{dlserver}/pub/epel/testing/{versname}/Everything/x86_64/repodata",
         ],
     }
 
@@ -265,13 +265,10 @@ def index_repositories():
         for jndx, urli in enumerate(urls[rels["name"]]):
             if rels["name"] in ("Fedora Linux", "Fedora"):
                 name = repodict["fedora"][jndx].format(rlid = rels["koji_name"])
-            elif rels["name"] == "Fedora EPEL" and versdata == "8":
+            elif rels["name"] == "Fedora EPEL":
                 name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
-                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
-            elif rels["name"] == "Fedora EPEL" and versdata == "9":
-                name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
-                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
             else:
+                # TODO: Do we need to have the the above elif with this else case?
                 name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
             rurl = urli.format(dlserver = standard.DL_SERVER, versname = versdata)
             repolist.append((rurl, name))
