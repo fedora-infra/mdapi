@@ -27,8 +27,6 @@ from importlib import metadata
 from logging import getLogger
 from logging.config import dictConfig
 
-from requests.packages.urllib3 import disable_warnings
-
 from mdapi.confdata import servlogr, standard
 
 __version__ = metadata.version("mdapi")
@@ -36,11 +34,9 @@ __version__ = metadata.version("mdapi")
 
 def compile_configuration(confobjc):
     standard.DB_FOLDER = confobjc.get("DB_FOLDER", standard.DB_FOLDER)
-    standard.PKGDB2_URL = confobjc.get("PKGDB2_URL", standard.PKGDB2_URL)
+    standard.BODHI_URL = confobjc.get("BODHI_URL", standard.BODHI_URL)
     standard.KOJI_REPO = confobjc.get("KOJI_REPO", standard.KOJI_REPO)
     standard.DL_SERVER = confobjc.get("DL_SERVER", standard.DL_SERVER)
-    standard.PKGDB2_VERIFY = confobjc.get("PKGDB2_VERIFY", standard.PKGDB2_VERIFY)
-    standard.DL_VERIFY = confobjc.get("DL_VERIFY", standard.DL_VERIFY)
     standard.PUBLISH_CHANGES = confobjc.get("PUBLISH_CHANGES", standard.PUBLISH_CHANGES)
     standard.CRON_SLEEP = confobjc.get("CRON_SLEEP", standard.CRON_SLEEP)
     standard.LOGGING = confobjc.get("LOGGING", standard.LOGGING)
@@ -53,10 +49,6 @@ def compile_configuration(confobjc):
         # Cannot pull/push data from/into directory that does not exist
         print("Database directory not found")
         sys.exit(1)
-
-    if not standard.DL_VERIFY or not standard.PKGDB2_VERIFY:
-        # Suppress urllib3's warnings about insecure requests
-        disable_warnings()
 
     dictConfig(standard.LOGGING)
     servlogr.logrobjc = getLogger(__name__)

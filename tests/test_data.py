@@ -69,8 +69,9 @@ def test_fetch_and_extract_database(setup_environment):
 @pytest.mark.parametrize(
     "dvlpstat",
     [
-        "Active",
-        "Under Development",
+        "current",
+        "pending",
+        "frozen",
     ],
 )
 def test_list_branches(dvlpstat):
