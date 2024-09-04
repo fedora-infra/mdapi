@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdapi"
-version = "3.1.6a4"
+version = "3.1.6a5"
 description = "A simple API for serving the metadata from the RPM repositories"
 authors = ["Pierre-Yves Chibon <pingou@pingoured.fr>", "Akashdeep Dhar <akashdeep.dhar@gmail.com>"]
 license = "GPL-3.0-or-later"
@@ -19,10 +19,11 @@ classifiers = [
 	"License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
 	"Natural Language :: English",
 	"Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
 	"Operating System :: POSIX :: Linux",
 	"Topic :: Database",
 	"Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
