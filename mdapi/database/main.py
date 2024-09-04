@@ -242,7 +242,7 @@ def index_repositories():
         elif rels == "rawhide":
             versdata = "rawhide"
         urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata/"  # noqa : E501
-        servlogr.logrobjc.info(f"Acquired repo for {rels['koji_name']}/{versdata} of '{rels['status']}' branch at {urlx}")  # noqa : E501
+        servlogr.logrobjc.info(f"Acquired repo for {rels}/{versdata} branch at {urlx}")  # noqa : E501
         repolist.append((urlx, rels))
         urlx = urlx.replace("/x86_64/os/", "/source/tree/")
         repolist.append((urlx, f"src_{rels}"))
