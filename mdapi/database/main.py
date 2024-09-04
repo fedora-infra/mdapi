@@ -237,7 +237,7 @@ def index_repositories():
 
     # Obtain the development repos (rawhide + eventually Fn+1 branched)
     for rels in ["rawhide", *list_branches("frozen")]:
-        if re.search(r"f[0-9]+", rels):
+        if re.search(r"f\d+", rels):
             versdata = re.search(r"\d+", rels).group()
         elif rels == "rawhide":
             versdata = "rawhide"
@@ -271,16 +271,16 @@ def index_repositories():
 
     # Obtain the stable repos
     for rels in list_branches(status="current"):
-        if not re.search(r"f[0-9]+", rels) or not re.search(r"epel[0-9]+", rels) or not re.search(r"epel[0-9]+-next", rels):  # noqa : E501
+        if not re.search(r"f\d+", rels) or not re.search(r"epel\d+(?:\.\d+)?", rels) or not re.search(r"epel\d-next", rels):  # noqa : E501
             continue
-        versdata = re.search(r"\d+", rels).group()
+        versdata = re.search(r"\d+(?:\.\d+)?", rels).group()
         linklist, idenlist = [], []
 
-        if re.search(r"f[0-9]+", rels):
+        if re.search(r"f\d+", rels):
             linklist, idenlist = urls["Fedora Linux"], repodict["fedora"]
-        elif re.search(r"epel[0-9]+", rels):
+        elif re.search(r"epel\d+(?:\.\d+)?", rels):
             linklist, idenlist = urls["Fedora EPEL"], repodict["epel"]
-        elif re.search(r"epel[0-9]+-next", rels):
+        elif re.search(r"epel\d-next", rels):
             linklist, idenlist = urls["Fedora EPEL Next"], repodict["epel-next"]
 
         for jndx, urli in enumerate(linklist):
