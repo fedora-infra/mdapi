@@ -50,7 +50,7 @@ def list_branches(status="current"):
     list_branches("pending") returns ['eln', 'f41', 'f42', 'rawhide']
     list_branches("frozen")  returns ['f41']
     """
-    urlx = f"{standard.BODHI_URL}/releases"
+    urlx = f"{standard.BODHI_URL}/releases/"
     resp = requests.get(urlx, params={"state": status})  # noqa : S113
     resp.raise_for_status()
     data = list(set([item["branch"] for item in resp.json()["releases"]]))
@@ -237,7 +237,7 @@ def index_repositories():
             versdata = re.search(r"\d+", rels).group()
         elif rels == "rawhide":
             versdata = "rawhide"
-        urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata"  # noqa : E501
+        urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata/"  # noqa : E501
         servlogr.logrobjc.info(f"Acquired repo for {rels['koji_name']}/{versdata} of '{rels['status']}' branch at {urlx}")  # noqa : E501
         repolist.append((urlx, rels))
         urlx = urlx.replace("/x86_64/os/", "/source/tree/")
@@ -245,17 +245,17 @@ def index_repositories():
 
     urls = {
         "Fedora Linux": [
-            "{dlserver}/pub/fedora/linux/releases/{versname}/Everything/x86_64/os/repodata",
-            "{dlserver}/pub/fedora/linux/updates/{versname}/Everything/x86_64/repodata",
-            "{dlserver}/pub/fedora/linux/updates/testing/{versname}/Everything/x86_64/repodata",
+            "{dlserver}/pub/fedora/linux/releases/{versname}/Everything/x86_64/os/repodata/",
+            "{dlserver}/pub/fedora/linux/updates/{versname}/Everything/x86_64/repodata/",
+            "{dlserver}/pub/fedora/linux/updates/testing/{versname}/Everything/x86_64/repodata/",
         ],
         "Fedora EPEL": [
             "{dlserver}/pub/epel/{versname}/Everything/x86_64/repodata/",
-            "{dlserver}/pub/epel/testing/{versname}/Everything/x86_64/repodata",
+            "{dlserver}/pub/epel/testing/{versname}/Everything/x86_64/repodata/",
         ],
         "Fedora EPEL Next": [
             "{dlserver}/pub/epel/next/{versname}/Everything/x86_64/repodata/",
-            "{dlserver}/pub/epel/next/testing/{versname}/Everything/x86_64/repodata",
+            "{dlserver}/pub/epel/next/testing/{versname}/Everything/x86_64/repodata/",
         ],
     }
 
@@ -287,7 +287,7 @@ def index_repositories():
             repolist.append((rurl, f"src_{name}"))
 
     # Finish with the koji repo
-    repolist.append((f"{standard.KOJI_REPO}/rawhide/latest/x86_64/repodata", "koji"))
+    repolist.append((f"{standard.KOJI_REPO}/rawhide/latest/x86_64/repodata/", "koji"))
 
     # In serial
     for repo in repolist:
