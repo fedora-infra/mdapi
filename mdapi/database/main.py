@@ -47,13 +47,17 @@ def list_branches(status="current"):
     """
     As of 03rd September 2024,
     list_branches("current") returns ['epel10', 'epel8', 'epel9', 'epel9-next', 'f39', 'f40']
-    list_branches("pending") returns ['eln', 'f41', 'f42', 'rawhide']
+    list_branches("pending") returns ['eln', 'rawhide']
     list_branches("frozen")  returns ['f41']
     """
     urlx = f"{standard.BODHI_URL}/releases/"
     resp = requests.get(urlx, params={"state": status})  # noqa : S113
     resp.raise_for_status()
-    data = list(set([item["branch"] for item in resp.json()["releases"]]))
+    data = [
+        item["branch"]
+        for item in resp.json()["releases"]
+        if item["id_prefix"] in ("FEDORA", "FEDORA-EPEL", "FEDORA-EPEL-NEXT")
+    ]
     data.sort()
     servlogr.logrobjc.info("Branches metadata acquired.")
     return data
