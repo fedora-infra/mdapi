@@ -271,8 +271,6 @@ def index_repositories():
 
     # Obtain the stable repos
     for rels in list_branches(status="current"):
-        if not re.search(r"f\d+", rels) or not re.search(r"epel\d+(?:\.\d+)?", rels) or not re.search(r"epel\d-next", rels):  # noqa : E501
-            continue
         versdata = re.search(r"\d+(?:\.\d+)?", rels).group()
         linklist, idenlist = [], []
 
