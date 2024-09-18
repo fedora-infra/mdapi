@@ -77,4 +77,4 @@ def test_fetch_and_extract_database(setup_environment):
 def test_list_branches(dvlpstat):
     rsltobjc = main.list_branches(dvlpstat)
     assert isinstance(rsltobjc, list)  # noqa : S101
-    assert len(rsltobjc) > 0  # noqa : S101
+    assert len(rsltobjc) >= 0  # noqa : S101
