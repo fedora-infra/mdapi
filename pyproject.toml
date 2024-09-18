@@ -1,10 +1,10 @@
 [tool.poetry]
 name = "mdapi"
-version = "3.1.6a1"
+version = "3.1.6"
 description = "A simple API for serving the metadata from the RPM repositories"
-authors = ["Pierre-Yves Chibon <pingou@pingoured.fr>", "Akashdeep Dhar <akashdeep.dhar@gmail.com>"]
+authors = ["Akashdeep Dhar <akashdeep.dhar@gmail.com>", "Pierre-Yves Chibon <pingou@pingoured.fr>"]
 license = "GPL-3.0-or-later"
-maintainers = ["Pierre-Yves Chibon <pingou@pingoured.fr>", "Akashdeep Dhar <akashdeep.dhar@gmail.com>"]
+maintainers = ["Akashdeep Dhar <akashdeep.dhar@gmail.com>", "Pierre-Yves Chibon <pingou@pingoured.fr>"]
 readme = "README.md"
 homepage = "https://github.com/fedora-infra/mdapi"
 repository = "https://github.com/fedora-infra/mdapi"
@@ -19,10 +19,11 @@ classifiers = [
 	"License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)",
 	"Natural Language :: English",
 	"Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.8",
-    "Programming Language :: Python :: 3.9",
-    "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.8",
+	"Programming Language :: Python :: 3.9",
+	"Programming Language :: Python :: 3.10",
+	"Programming Language :: Python :: 3.11",
+	"Programming Language :: Python :: 3.12",
 	"Operating System :: POSIX :: Linux",
 	"Topic :: Database",
 	"Topic :: Internet :: WWW/HTTP :: WSGI :: Application",
@@ -37,18 +38,18 @@ aiohttp = "^3.8.1"
 aiosqlite = "^0.18.0 || ^0.19.0 || ^0.20.0"
 fedora-messaging = "^3.0.2"
 requests = "^2.28.1"
-uvloop = "^0.17.0 || ^0.18.0 || ^0.19.0"
+uvloop = "^0.17.0 || ^0.18.0 || ^0.19.0 || ^0.20.0"
 gunicorn = "^20.1.0 || ^21.0.0 || ^22.0.0"
 mdapi-messages = "^1.0.0"
 click = "^8.1.3"
-pyzstd = "^0.15.0"
+pyzstd = "^0.15.0 || ^0.16.0"
 setuptools = "*"
 
 [tool.poetry.dev-dependencies]
 tox = "^4.0.0"
 pytest = "^7.1.3 || ^8.0.0"
 pytest-cov = "^4.1.0 || ^5.0.0"
-ruff = "^0.2.0 || ^0.3.0 || ^0.4.0"
+ruff = "^0.2.0 || ^0.3.0 || ^0.4.0 || ^0.5.0 || ^0.6.0"
 beautifulsoup4 = "^4.11.1"
 pytest-aiohttp = "^1.0.4"
 

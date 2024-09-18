@@ -58,14 +58,8 @@ Database fetching configuration
 """
 
 KOJI_REPO = "https://kojipkgs.fedoraproject.org/repos"
-PKGDB2_URL = "https://admin.fedoraproject.org/pkgdb"
+BODHI_URL = "https://bodhi.fedoraproject.org"
 DL_SERVER = "https://dl.fedoraproject.org"
-
-# Enforce, or not, checking the SSL certs
-PKGDB2_VERIFY = True
-
-# Valid for both koji and the download server
-DL_VERIFY = True
 
 # Whether to publish to Fedora Messaging
 PUBLISH_CHANGES = False

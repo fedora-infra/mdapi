@@ -42,7 +42,7 @@ def test_cli_application_help_option():
 def test_cli_application_version_option():
     rnnrobjc = CliRunner()
     rsltobjc = rnnrobjc.invoke(main, ["--version"])
-    assert rsltobjc.output == "mdapi, version %s\n" % __version__  # noqa : S101
+    assert rsltobjc.output == f"mdapi, version {__version__}\n"  # noqa : S101
     assert rsltobjc.exit_code == 0  # noqa : S101
 
 
@@ -51,7 +51,7 @@ def test_cli_application_with_wrong_configpath_and_no_command():
     rnnrobjc = CliRunner()
     confpath = "/etc/mdapi/myconfig.py"
     rsltobjc = rnnrobjc.invoke(main, ["--conffile", confpath])
-    assert "Error: Invalid value for '-c' / '--conffile': Path '%s' does not exist." % confpath in rsltobjc.output  # noqa : S101
+    assert f"Error: Invalid value for '-c' / '--conffile': Path '{confpath}' does not exist." in rsltobjc.output  # noqa : S101
     assert rsltobjc.exit_code == 2  # noqa : S101
 
 

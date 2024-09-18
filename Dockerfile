@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora:41
+FROM registry.fedoraproject.org/fedora:40
 
 LABEL maintainer "Akashdeep Dhar <t0xic0der@fedoraproject.org>"
 
@@ -7,7 +7,7 @@ EXPOSE 8080
 ENV PYTHONUNBUFFERED=1
 
 RUN dnf -y install python3-pip && dnf -y clean all
-RUN pip install --upgrade mdapi==3.1.6a1
+RUN pip install --upgrade mdapi==3.1.6
 
 # Uncomment the following MDAPI_CONFIG and comment the other MDAPI_CONFIG for local development builds
 # ENV MDAPI_CONFIG=/code/mdapi/confdata/standard.py

@@ -26,6 +26,7 @@ import gzip
 import hashlib
 import lzma
 import os.path
+import re
 import shutil
 import tarfile
 import tempfile
@@ -42,18 +43,29 @@ from mdapi.confdata import servlogr, standard
 from mdapi.database.base import compare_databases, index_database
 
 
-def list_branches(status="Active"):
-    urlx = f"{standard.PKGDB2_URL}/api/collections?clt_status={status}"
-    resp = requests.get(urlx, verify=standard.PKGDB2_VERIFY)  # noqa : S113
+def list_branches(status="current"):
+    """
+    As of 03rd September 2024,
+    list_branches("current") returns ['epel10', 'epel8', 'epel9', 'epel9-next', 'f39', 'f40']
+    list_branches("pending") returns ['eln', 'rawhide']
+    list_branches("frozen")  returns ['f41']
+    """
+    urlx = f"{standard.BODHI_URL}/releases/"
+    resp = requests.get(urlx, params={"state": status})  # noqa : S113
     resp.raise_for_status()
-    data = resp.json()
+    data = [
+        item["branch"]
+        for item in resp.json()["releases"]
+        if item["id_prefix"] in ("FEDORA", "FEDORA-EPEL", "FEDORA-EPEL-NEXT")
+    ]
+    data.sort()
     servlogr.logrobjc.info("Branches metadata acquired.")
-    return data["collections"]
+    return data
 
 
 def fetch_database(name, repmdurl, location):
     servlogr.logrobjc.info(f"[{name}] Downloading file {repmdurl} to {location}")
-    resp = requests.get(repmdurl, verify=standard.DL_VERIFY)  # noqa : S113
+    resp = requests.get(repmdurl, verify=True)  # noqa : S113
     resp.raise_for_status()
     with open(location, "wb") as filestrm:
         filestrm.write(resp.content)
@@ -148,7 +160,7 @@ def process_repo(repo):
     """
     urlx, name = repo
     repmdurl = f"{urlx}/repomd.xml"
-    response = requests.get(repmdurl, verify=standard.DL_VERIFY)  # noqa : S113
+    response = requests.get(repmdurl, verify=True)  # noqa : S113
     if not response:
         servlogr.logrobjc.error(f"[{name}] Failed to obtain {repmdurl} - {response}")
         return
@@ -224,62 +236,60 @@ def index_repositories():
     repolist = []
 
     # Obtain the development repos (rawhide + eventually Fn+1 branched)
-    dev_releases = list_branches(status="Under Development")
-    for rels in dev_releases:
-        if rels["status"] != "Under Development":
-            continue
-        versdata = rels["version"]
-        if versdata == "devel":
+    for rels in ["rawhide", *list_branches("frozen")]:
+        if re.search(r"f\d+", rels):
+            versdata = re.search(r"\d+", rels).group()
+        elif rels == "rawhide":
             versdata = "rawhide"
-        urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata"  # noqa : E501
-        servlogr.logrobjc.info(f"Acquired repo for {rels['koji_name']}/{versdata} of '{rels['status']}' branch at {urlx}")  # noqa : E501
-        repolist.append((urlx, rels["koji_name"]))
+        urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata/"  # noqa : E501
+        servlogr.logrobjc.info(f"Acquired repo for {rels}/{versdata} branch at {urlx}")  # noqa : E501
+        repolist.append((urlx, rels))
         urlx = urlx.replace("/x86_64/os/", "/source/tree/")
-        repolist.append((urlx, f"src_{rels['koji_name']}"))
+        repolist.append((urlx, f"src_{rels}"))
 
     urls = {
         "Fedora Linux": [
-            "{dlserver}/pub/fedora/linux/releases/{versname}/Everything/x86_64/os/repodata",
-            "{dlserver}/pub/fedora/linux/updates/{versname}/Everything/x86_64/repodata",
-            "{dlserver}/pub/fedora/linux/updates/testing/{versname}/Everything/x86_64/repodata",
+            "{dlserver}/pub/fedora/linux/releases/{versname}/Everything/x86_64/os/repodata/",
+            "{dlserver}/pub/fedora/linux/updates/{versname}/Everything/x86_64/repodata/",
+            "{dlserver}/pub/fedora/linux/updates/testing/{versname}/Everything/x86_64/repodata/",
         ],
         "Fedora EPEL": [
-            "{dlserver}/pub/epel/{versname}/x86_64/repodata/",
-            "{dlserver}/pub/epel/testing/{versname}/x86_64/repodata",
+            "{dlserver}/pub/epel/{versname}/Everything/x86_64/repodata/",
+            "{dlserver}/pub/epel/testing/{versname}/Everything/x86_64/repodata/",
+        ],
+        "Fedora EPEL Next": [
+            "{dlserver}/pub/epel/next/{versname}/Everything/x86_64/repodata/",
+            "{dlserver}/pub/epel/next/testing/{versname}/Everything/x86_64/repodata/",
         ],
     }
-
-    urls["Fedora"] = urls["Fedora Linux"]
 
     repodict = {
         "fedora": ["{rlid}", "{rlid}-updates", "{rlid}-updates-testing"],
-        "epel": ["{rlid}", "{rlid}-testing"]
+        "epel": ["{rlid}", "{rlid}-testing"],
+        "epel-next": ["{rlid}", "{rlid}-testing"],
     }
 
     # Obtain the stable repos
-    stable_releases = list_branches(status="Active")
-    for rels in stable_releases:
-        if rels["status"] != "Active":
-            continue
-        versdata = rels["version"]
-        for jndx, urli in enumerate(urls[rels["name"]]):
-            if rels["name"] in ("Fedora Linux", "Fedora"):
-                name = repodict["fedora"][jndx].format(rlid = rels["koji_name"])
-            elif rels["name"] == "Fedora EPEL" and versdata == "8":
-                name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
-                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
-            elif rels["name"] == "Fedora EPEL" and versdata == "9":
-                name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
-                urli = urli.replace("/x86_64/", "/Everything/x86_64/")
-            else:
-                name = repodict["epel"][jndx].format(rlid = rels["koji_name"])
-            rurl = urli.format(dlserver = standard.DL_SERVER, versname = versdata)
+    for rels in list_branches(status="current"):
+        versdata = re.search(r"\d+(?:\.\d+)?", rels).group()
+        linklist, idenlist = [], []
+
+        if re.search(r"f\d+", rels):
+            linklist, idenlist = urls["Fedora Linux"], repodict["fedora"]
+        elif re.search(r"epel\d+(?:\.\d+)?", rels):
+            linklist, idenlist = urls["Fedora EPEL"], repodict["epel"]
+        elif re.search(r"epel\d-next", rels):
+            linklist, idenlist = urls["Fedora EPEL Next"], repodict["epel-next"]
+
+        for jndx, urli in enumerate(linklist):
+            name = idenlist[jndx].format(rlid = rels)
+            rurl = urli.format(dlserver=standard.DL_SERVER, versname=versdata)
             repolist.append((rurl, name))
             rurl = rurl.replace("/x86_64/os", "/source/tree")
             repolist.append((rurl, f"src_{name}"))
 
     # Finish with the koji repo
-    repolist.append((f"{standard.KOJI_REPO}/rawhide/latest/x86_64/repodata", "koji"))
+    repolist.append((f"{standard.KOJI_REPO}/rawhide/latest/x86_64/repodata/", "koji"))
 
     # In serial
     for repo in repolist:
