@@ -56,6 +56,7 @@ async def test_view_branches(testing_application):
         assert respobjc.status == 200  # noqa : S101
         otptobjc = await respobjc.text()
         assert "rawhide" in otptobjc  # noqa : S101
+        assert "koji" in otptobjc  # noqa : S101
 
 
 @pytest.mark.download_required
@@ -129,11 +130,11 @@ async def test_view_changelog_rawhide(testing_application):
         ("supplements", "(hunspell and langpacks-fr)", 200),
     ],
 )
-async def test_view_property_rawhide(testing_application, action, package, status_code):
-    if not tests.databases_presence("rawhide"):
-        pytest.xfail(reason="Databases for 'rawhide' repositories are not available locally")
+async def test_view_property_koji(testing_application, action, package, status_code):
+    if not tests.databases_presence("koji"):
+        pytest.xfail(reason="Databases for 'koji' repositories are not available locally")
     else:
-        respobjc = await testing_application.get(f"/rawhide/{action}/{package}")
+        respobjc = await testing_application.get(f"/koji/{action}/{package}")
         assert respobjc.status == status_code  # noqa : S101
         if status_code == 200:
             json.loads(await respobjc.text())  # noqa : S101
