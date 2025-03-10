@@ -39,7 +39,7 @@ def setup_environment():
     Collect the SQLite databases from the mirror
     to have some data to test against
     """
-    if tests.databases_presence("rawhide") and tests.databases_presence("koji"):
+    if tests.databases_presence("rawhide"):
         pass
     else:
         if not os.path.exists(tests.LOCATION):
@@ -62,7 +62,7 @@ def setup_environment():
 def test_fetch_and_extract_database(setup_environment):
     for indx in tests.PROBEURL.keys():
         assert tests.databases_presence(indx)  # noqa : S101
-    assert len(os.listdir(tests.LOCATION)) == 6  # noqa : S101
+    assert len(os.listdir(tests.LOCATION)) == 3  # noqa : S101
 
 
 @pytest.mark.download_required

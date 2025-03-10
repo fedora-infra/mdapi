@@ -38,8 +38,7 @@ LOCATION = f"{TemporaryDirectory(**tempargs).name}/"
 
 BRCHNAME = "rawhide"
 PROBEURL = {
-    "koji": f"https://kojipkgs.fedoraproject.org/repos/{BRCHNAME}/latest/x86_64/repodata/",
-    "rawhide": f"https://dl.fedoraproject.org/pub/fedora/linux/development/{BRCHNAME}/Everything/x86_64/os/repodata/",
+    "rawhide": f"https://kojipkgs.fedoraproject.org/repos/{BRCHNAME}/latest/x86_64/repodata/",
 }
 KEYWORDS = [
     "-filelists.sqlite",
