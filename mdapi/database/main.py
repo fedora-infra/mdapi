@@ -236,16 +236,20 @@ def index_repositories():
     repolist = []
 
     # Obtain the development repos (rawhide + eventually Fn+1 branched)
-    for rels in ["rawhide", *list_branches("frozen")]:
+    for rels in list_branches("frozen"):
         if re.search(r"f\d+", rels):
             versdata = re.search(r"\d+", rels).group()
-        elif rels == "rawhide":
-            versdata = "rawhide"
         urlx = f"{standard.DL_SERVER}/pub/fedora/linux/development/{versdata}/Everything/x86_64/os/repodata/"  # noqa : E501
         servlogr.logrobjc.info(f"Acquired repo for {rels}/{versdata} branch at {urlx}")  # noqa : E501
         repolist.append((urlx, rels))
         urlx = urlx.replace("/x86_64/os/", "/source/tree/")
         repolist.append((urlx, f"src_{rels}"))
+
+    for rels in ["rawhide"]:
+        versdata = rels
+        urlx = f"{standard.KOJI_REPO}/{rels}/latest/x86_64/repodata/"
+        servlogr.logrobjc.info(f"Acquired repo for {rels}/{versdata} branch at {urlx}")  # noqa : E501
+        repolist.append((urlx, rels))
 
     urls = {
         "Fedora Linux": [
