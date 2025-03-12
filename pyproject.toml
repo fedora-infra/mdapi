@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mdapi"
-version = "3.1.6"
+version = "3.1.7"
 description = "A simple API for serving the metadata from the RPM repositories"
 authors = ["Akashdeep Dhar <akashdeep.dhar@gmail.com>", "Pierre-Yves Chibon <pingou@pingoured.fr>"]
 license = "GPL-3.0-or-later"
