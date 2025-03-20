@@ -51,7 +51,7 @@ def test_cli_application_with_wrong_configpath_and_no_command():
     rnnrobjc = CliRunner()
     confpath = "/etc/mdapi/myconfig.py"
     rsltobjc = rnnrobjc.invoke(main, ["--conffile", confpath])
-    assert f"Error: Invalid value for '-c' / '--conffile': Path '{confpath}' does not exist." in rsltobjc.output  # noqa : S101
+    assert f"Error: Invalid value for '-c' / '--conffile': Path '{confpath}' does not exist." in rsltobjc.output  # noqa : S101, E501
     assert rsltobjc.exit_code == 2  # noqa : S101
 
 
