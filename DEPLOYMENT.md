@@ -134,6 +134,23 @@
     sh-5.2$ mdapi --version
     mdapi, version 3.1.3
     ```
+12. Manually trigger the builds if the nothing happens after running the playbook.
+    ```
+    oc -n mdapi start-build mdapi-build
+    ```
+    Example output
+    ```
+    build.build.openshift.io/mdapi-build-1 started
+    ```
+13. Check if the scheduled cronjobs for populating the repositories metadata.
+    ```
+    oc -n mdapi get cronjobs
+    ```
+    Example output
+    ```
+    NAME    SCHEDULE     TIMEZONE   SUSPEND   ACTIVE   LAST SCHEDULE   AGE
+    mdapi   20 * * * *   <none>     False     0        22m             24d
+    ```
 
 ## Troubleshooting
 
