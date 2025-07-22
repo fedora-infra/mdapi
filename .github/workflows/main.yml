@@ -50,7 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        tox-env: ["py38_download_needless", "py39_download_needless", "py310_download_needless", "py311_download_needless", "py312_download_needless", "py313_download_needless"]
+        tox-env: ["py38_download_needless", "py39_download_needless", "py310_download_needless", "py311_download_needless", "py312_download_needless", "py313_download_needless"] 
     runs-on: ubuntu-latest
     container: fedorapython/fedora-python-tox:latest
     steps:
