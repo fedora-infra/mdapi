@@ -116,3 +116,11 @@ var OBTAIN_PACKAGE_BY string = "SELECT p.pkgKey, p.pkgId, p.name, p.rpm_sourcerp
 var OBTAIN_FILEUNIT string = "SELECT f.pkgKey, f.dirname, f.filenames, f.filetypes FROM filelist f JOIN packages p ON p.pkgId = ? WHERE f.pkgKey = p.pkgKey ORDER BY f.filenames"
 
 var OBTAIN_CHANGELOGS string = "SELECT c.pkgKey, c.author, c.changelog, c.date FROM changelog c JOIN packages p ON p.pkgId = ? WHERE c.pkgKey = p.pkgKey ORDER BY c.date DESC"
+
+var HOSTNAME string = "mdapi.fedoraproject.org"
+
+var PROTOCOL string = "https"
+
+var SERVNAME string = "MetaSource"
+
+var VERSDATA string = "v4.0.0"

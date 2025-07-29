@@ -9,12 +9,21 @@ ooo. .oo.  .oo.    .ooooo.  .o888oo  .oooo.    .oooo.o  .ooooo.  oooo  oooo  ooo
  888   888   888  888    .o   888 . d8(  888  o.  )88b 888   888  888   888   888     888   .o8 888    .o
 o888o o888o o888o `Y8bod8P'   "888" `Y888""8o 8""888P' `Y8bod8P'  `V88V"V8P' d888b    `Y8bod8P' `Y8bod8P'
 
-Performant source for RPM repositories metadata                                                    v0.1.0
+Performant source for RPM repositories metadata                                              MDAPI v4.x.x
 ```
 
-MetaSource is a performant source for RPM repositories metadata which has an access to the metadata of the different Fedora Linux package repositories and will serve you the most recent information available. It will parse through the "updates-testing" repository before moving onto the likes of "updates" and "releases" repository if no information is found in the previous repository.
+MetaSource is a performant source for RPM repositories metadata which has an 
+access to the metadata of the different Fedora Linux package repositories and 
+will serve you the most recent information available. It will parse through 
+the "updates-testing" repository before moving onto the likes of "updates" and 
+"releases" repository if no information is found in the previous repository.
 
-Utilize the fast lookup interface to acquaint yourself with the API endpoints and expected outputs. Press `ENTER` after typing the name to execute a lookup in a new window. If you query for a non-existent branch - it will return an **HTTP 400** error. If you query for a non-existent package - it will return an **HTTP 404** error. Please report persistent **HTTP 500** errors to the [Fedora Infrastructure](https://pagure.io/fedora-infrastructure/issues) team.
+Utilize the fast lookup interface to acquaint yourself with the API endpoints 
+and expected outputs. Press `ENTER` after typing the name to execute a lookup 
+in a new window. If you query for a non-existent branch - it will return an 
+**HTTP 400** error. If you query for a non-existent package - it will return 
+an **HTTP 404** error. Please report persistent **HTTP 500** errors to the 
+[Fedora Infrastructure](https://pagure.io/fedora-infrastructure/issues) team.
 
 ## Deployment
 
