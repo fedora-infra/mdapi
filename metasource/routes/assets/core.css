@@ -1,0 +1,105 @@
+@font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/assets/sans_rlar.ttf");
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    font-style: italic;
+    src: url("/assets/sans_rlit.ttf");
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/assets/sans_bold.ttf");
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 700;
+    font-style: italic;
+    src: url("/assets/sans_bdit.ttf");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-weight: 400;
+    font-style: normal;
+    src: url("/assets/mono_rlar.ttf");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-weight: 400;
+    font-style: italic;
+    src: url("/assets/mono_rlit.ttf");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-weight: 700;
+    font-style: normal;
+    src: url("/assets/mono_bold.ttf");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-weight: 700;
+    font-style: italic;
+    src: url("/assets/mono_bdit.ttf");
+}
+
+body {
+    font-family: "Inter", sans-serif;
+}
+
+.fing {
+    cursor: pointer;
+}
+
+.mono {
+    font-family: "JetBrains Mono", monospace;
+}
+
+.tltp {
+    font-family: "Inter", sans-serif;
+}
+
+.headelem {
+    font-family: "Inter", sans-serif;
+    font-weight: 700;
+}
+
+.logo {
+    filter: invert(73%) sepia(10%) saturate(5496%) hue-rotate(176deg) brightness(86%) contrast(99%);
+}
+
+.head {
+    color: #51a2da;
+    scroll-margin: 60px;
+}
+
+.srce {
+    width: 75%;
+    text-align: start;
+}
+
+.side {
+    top: 60px;
+    overflow-y: auto;
+    max-height: calc(100vh - 50px);
+    scrollbar-width: none;
+}
+
+.active {
+    color: #51a2da !important;
+    background: var(--bs-tertiary-bg) !important;
+    border-top-color: var(--bs-secondary-border-subtle) !important;
+    border-bottom-color: var(--bs-secondary-border-subtle) !important;
+    font-weight: 700;
+}

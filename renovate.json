@@ -1,0 +1,51 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    "group:allNonMajor",
+    "schedule:weekdays",
+    ":maintainLockFilesWeekly",
+    ":separateMultipleMajorReleases",
+    ":automergeMinor",
+    ":gitSignOff",
+    ":enableVulnerabilityAlertsWithLabel(security)"
+  ],
+  "lockFileMaintenance": {
+    "enabled": true,
+    "automerge": true,
+    "extends": [
+      "group:allNonMajor"
+    ],
+    "commitMessageAction": "Automated dependency updates for Expo"
+  },
+  "automergeStrategy": "rebase",
+  "rangeStrategy": "widen",
+  "stabilityDays": 4,
+  "labels": ["dependencies"],
+  "packageRules": [
+    {
+      "matchLanguages": ["go"],
+      "addLabels": ["go"]
+    },
+    {
+      "matchLanguages": ["go"],
+      "matchPackageNames": [
+        "golang.org/x/crypto",
+        "golang.org/x/net"
+      ],
+      "automerge": true
+    },
+    {
+      "extends": [
+        "packages:linters"
+      ],
+      "matchPackageNames": [
+        "golangci-lint",
+        "revive",
+        "staticcheck",
+        "gosec"
+      ],
+      "automerge": true
+    }
+  ]
+}

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ .Name }} {{ .Vers }}</title>
+  <link href="/assets/bs.css" rel="stylesheet" crossorigin="anonymous">
+  <link href="/assets/core.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+<nav class="navbar navbar-expand-lg bg-body-secondary shadow-sm p-0 sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center flex-grow-1" href="#">
+      <img src="https://logdetective.com/img/fedora.svg" id="logo" class="logo" width="30" height="30">
+    </a>
+    <span>{{ .Name }} {{ .Vers }}</span>
+  </div>
+</nav>
+  <div class="container">
+    <div class="row g-3">
+      <div class="col-12 col-lg-2 pt-3">
+        <div class="sticky-md-top side">
+          <div class="list-group list-group-flush mb-3" id="side_main">
+            <a class="list-group-item list-group-item-action small" href="#">About</a>
+            <a class="list-group-item list-group-item-action small" href="#part_branches">Branches</a>
+            <a class="list-group-item list-group-item-action small" href="https://pagure.io/fedora-infrastructure/issues" target="_blank">Report</a>
+            <a class="list-group-item list-group-item-action small" href="https://github.com/gridhead/metasource" target="_blank">Source</a>
+          </div>
+          <div class="list-group list-group-flush mb-3" id="side_brch">
+            {{ $base := . }}
+            {{ range $bidx, $brch := $base.Dict }}
+              <a class="list-group-item list-group-item-action small" href="#part_{{ $brch.Safe }}">{{ $bidx }}</a>
+            {{ end }}
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-lg-10 pt-3">
+        <div data-bs-spy="scroll" data-bs-smooth-scroll="true" data-bs-target="#side_brch" tabindex="0">
+          <h2 id="part_info" class="headelem mb-3 head">MetaSource</h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <p style="text-align: justify" class="small mb-0">MetaSource is a performant source for RPM repositories metadata which has an access to the metadata of the different Fedora Linux package repositories and will serve you the most recent information available. It will parse through the "updates-testing" repository before moving onto the likes of "updates" and "releases" repository if no information is found in the previous repository.</p>
+            </div>
+            <div class="col-12 col-md-6">
+              <p style="text-align: justify" class="small mb-0">Utilize the fast lookup interface to acquaint yourself with the API endpoints and expected outputs. Press ENTER after typing the name to execute a lookup in a new window. If you query for a non-existent branch - it will return an HTTP 400 error. If you query for a non-existent package - it will return an HTTP 404 error. Please report persistent HTTP 500 errors to the Fedora Infrastructure team.</p>
+            </div>
+          </div>
+          <hr/>
+          <h2 id="part_branches" class="headelem mb-3 head d-flex">
+            <span class="flex-grow-1">Branches</span>
+            <span>
+              <a href="#part_branches" class="text-decoration-none mono" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="LINK">[L]</a>
+              <a href="#" class="text-decoration-none mono" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="BACK">[B]</a>
+            </span>
+          </h2>
+          <div class="row g-3">
+            <div class="col-12 col-md-6">
+              <div class="card" id="card_branches">
+                <div class="card-header p-2 bg-body-secondary d-flex small">
+                  <span class="flex-grow-1">Branches</span>
+                  <span>
+                    <a class="text-decoration-none mono fing" onclick="copylink('srce_branches', 'name_branches')">[COPY]</a>
+                    <a href="#part_branches" class="text-decoration-none mono fing">[BACK]</a>
+                  </span>
+                </div>
+                <div class="card-body p-2">
+                  <p class="card-text small">You can retrieve the information about available branches by querying the following request.</p>
+                  <form class="input-group input-group-sm" onsubmit="navigate(event, 'srce_branches', 'name_branches')">
+                    <span class="input-group-text srce d-block text-truncate" id="srce_branches">{{ $base.Conn }}://{{ $base.Host }}/</span>
+                    <input type="text" class="form-control" placeholder="Name" aria-label="Name" id="name_branches" value="branches" />
+                    <button type="submit" hidden></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+          <hr/>
+          {{ range $bidx, $brch := $base.Dict }}
+          <h2 id="part_{{ $brch.Safe }}" class="headelem mb-3 head d-flex">
+            <span class="flex-grow-1">{{ $bidx }}</span>
+            <span>
+              <a href="#part_{{ $brch.Safe }}" class="text-decoration-none mono" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="LINK">[L]</a>
+              <a href="#" class="text-decoration-none mono" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="BACK">[B]</a>
+            </span>
+          </h2>
+          <div class="small mb-3">
+            <span class="headelem">Primary metadata</span> was previously updated <a class="text-decoration-none fing" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $brch.Primary.When }}">{{ $brch.Primary.Past }}</a>.<br/>
+            <span class="headelem">Changelog metadata</span> was previously updated <a class="text-decoration-none fing" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $brch.Changelog.When }}">{{ $brch.Changelog.Past }}</a>.<br/>
+            <span class="headelem">Filelists metadata</span> was previously updated <a class="text-decoration-none fing" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="{{ $brch.Filelists.When }}">{{ $brch.Filelists.Past }}</a>.
+          </div>
+          <div class="row g-3">
+            {{ range $cidx, $card := $base.Park }}
+              <div class="col-12 col-md-6">
+                <div class="card" id="card_{{ $brch.Safe }}_{{ $card.Iden }}">
+                  <div class="card-header p-2 bg-body-secondary d-flex small">
+                    <span class="flex-grow-1 headelem">{{ $card.Head }}</span>
+                    <span>
+                      <a class="text-decoration-none mono fing" onclick="copylink('srce_{{ $brch.Safe }}_{{ $card.Iden }}', 'name_{{ $brch.Safe }}_{{ $card.Iden }}')">[COPY]</a>
+                      <a href="#part_{{ $brch.Safe }}" class="text-decoration-none mono fing">[BACK]</a>
+                    </span>
+                  </div>
+                  <div class="card-body p-2">
+                    <p class="card-text small">{{ $card.Desc }}</p>
+                    <form class="input-group input-group-sm" onsubmit="navigate(event, 'srce_{{ $brch.Safe }}_{{ $card.Iden }}', 'name_{{ $brch.Safe }}_{{ $card.Iden }}')">
+                      <span class="input-group-text srce d-block text-truncate" id="srce_{{ $brch.Safe }}_{{ $card.Iden }}">{{ $base.Conn }}://{{ $base.Host }}/{{ $bidx }}/{{ $card.Path }}/</span>
+                      <input type="text" class="form-control" placeholder="Name" aria-label="Name" id="name_{{ $brch.Safe }}_{{ $card.Iden }}" />
+                      <button type="submit" hidden></button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            {{ end }}
+          </div>
+          <hr/>
+          {{ else }}
+          <h2 id="part_flaw" class="headelem mb-3 head">No branches found</h2>
+          <p class="small">Please ensure that the database directory has been configured properly and the scheduled downloads have been functioning correctly.</p>
+          {{ end }}
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+    <div id="copydone" class="toast align-items-center bg-body-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body text-center small">Resource clipboard copying succeeded</div>
+    </div>
+  </div>
+  <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x p-3">
+    <div id="copyfail" class="toast align-items-center bg-body-secondary border-0" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-body text-center small">Resource clipboard copying failed</div>
+    </div>
+  </div>
+</body>
+<script src="/assets/bs.js" crossorigin="anonymous"></script>
+<script src="/assets/core.js" crossorigin="anonymous"></script>
+</html>

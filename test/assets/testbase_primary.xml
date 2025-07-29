@@ -1,0 +1,2053 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata xmlns="http://linux.duke.edu/metadata/common" xmlns:rpm="http://linux.duke.edu/metadata/rpm" packages="28">
+<package type="rpm">
+  <name>systemd</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">28d3c752b8f7f78aae51fb4afee36d5bfdee295df85b3fdacb4bc0357f614784</checksum>
+  <summary>System and Service Manager</summary>
+  <description>systemd is a system and service manager that runs as PID 1 and starts the rest
+of the system. It provides aggressive parallelization capabilities, uses socket
+and D-Bus activation for starting services, offers on-demand starting of
+daemons, keeps track of processes using Linux control groups, maintains mount
+and automount points, and implements an elaborate transactional dependency-based
+service control logic. systemd supports SysV and LSB init scripts and works as a
+replacement for sysvinit. Other parts of this package are a logging daemon,
+utilities to control basic system configuration like the hostname, date, locale,
+maintain a list of logged-in users, system accounts, runtime directories and
+settings, and a logging daemons.
+
+This package was built from the v257-stable branch of systemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726328" build="1746710889"/>
+  <size package="4263979" installed="12088192" archive="12236516"/>
+  <location href="Packages/s/systemd-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="111344" end="312329"/>
+    <rpm:provides>
+      <rpm:entry name="/bin/systemctl"/>
+      <rpm:entry name="/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/halt"/>
+      <rpm:entry name="/usr/sbin/init"/>
+      <rpm:entry name="/usr/sbin/poweroff"/>
+      <rpm:entry name="/usr/sbin/reboot"/>
+      <rpm:entry name="/usr/sbin/runlevel"/>
+      <rpm:entry name="/usr/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/telinit"/>
+      <rpm:entry name="config(systemd)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-journal)" flags="EQ" epoch="0" ver="ZyBzeXN0ZW1kLWpvdXJuYWwgMTkwIC0A"/>
+      <rpm:entry name="group(systemd-oom)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="pkgconfig(systemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(udev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="syslog"/>
+      <rpm:entry name="system-setup-keyboard" flags="EQ" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysv" flags="EQ" epoch="0" ver="206"/>
+      <rpm:entry name="systemd-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-units" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-oom)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLW9vbSAtICJzeXN0ZW1kIFVzZXJzcGFjZSBPT00gS2lsbGVyIgAA"/>
+    </rpm:provides>
+    <rpm:enhances>
+      <rpm:entry name="/bin/systemctl"/>
+      <rpm:entry name="/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/halt"/>
+      <rpm:entry name="/usr/sbin/init"/>
+      <rpm:entry name="/usr/sbin/poweroff"/>
+      <rpm:entry name="/usr/sbin/reboot"/>
+      <rpm:entry name="/usr/sbin/runlevel"/>
+      <rpm:entry name="/usr/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/telinit"/>
+      <rpm:entry name="config(systemd)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-journal)" flags="EQ" epoch="0" ver="ZyBzeXN0ZW1kLWpvdXJuYWwgMTkwIC0A"/>
+      <rpm:entry name="group(systemd-oom)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="pkgconfig(systemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(udev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="syslog"/>
+      <rpm:entry name="system-setup-keyboard" flags="EQ" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysv" flags="EQ" epoch="0" ver="206"/>
+      <rpm:entry name="systemd-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-units" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-oom)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLW9vbSAtICJzeXN0ZW1kIFVzZXJzcGFjZSBPT00gS2lsbGVyIgAA"/>
+    </rpm:enhances>
+    <rpm:supplements>
+      <rpm:entry name="/bin/systemctl"/>
+      <rpm:entry name="/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/halt"/>
+      <rpm:entry name="/usr/sbin/init"/>
+      <rpm:entry name="/usr/sbin/poweroff"/>
+      <rpm:entry name="/usr/sbin/reboot"/>
+      <rpm:entry name="/usr/sbin/runlevel"/>
+      <rpm:entry name="/usr/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/telinit"/>
+      <rpm:entry name="config(systemd)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-journal)" flags="EQ" epoch="0" ver="ZyBzeXN0ZW1kLWpvdXJuYWwgMTkwIC0A"/>
+      <rpm:entry name="group(systemd-oom)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="pkgconfig(systemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(udev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="syslog"/>
+      <rpm:entry name="system-setup-keyboard" flags="EQ" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysv" flags="EQ" epoch="0" ver="206"/>
+      <rpm:entry name="systemd-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-units" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-oom)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLW9vbSAtICJzeXN0ZW1kIFVzZXJzcGFjZSBPT00gS2lsbGVyIgAA"/>
+    </rpm:supplements>
+    <rpm:requires>
+      <rpm:entry name="(libbpf &gt;= 2:1.4.7 if libbpf)"/>
+      <rpm:entry name="(systemd-rpm-macros = 257.5-6.fc42 if rpm-build)"/>
+      <rpm:entry name="(util-linux-core or util-linux)"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/usr/bin/bash"/>
+      <rpm:entry name="/usr/bin/sh"/>
+      <rpm:entry name="/usr/bin/systemd-sysusers"/>
+      <rpm:entry name="coreutils" pre="1"/>
+      <rpm:entry name="dbus" flags="GE" epoch="0" ver="1.9.18"/>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="grep" pre="1"/>
+      <rpm:entry name="libacl.so.1"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)"/>
+      <rpm:entry name="libaudit.so.1"/>
+      <rpm:entry name="libblkid.so.1"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.30)"/>
+      <rpm:entry name="libcap.so.2"/>
+      <rpm:entry name="libcrypto.so.3"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)"/>
+      <rpm:entry name="libfdisk.so.1"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.26)"/>
+      <rpm:entry name="libgcc_s.so.1"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)"/>
+      <rpm:entry name="libm.so.6"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.0)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.1)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.29)"/>
+      <rpm:entry name="libmount.so.1"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.20)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.22)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.23)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.26)"/>
+      <rpm:entry name="libpam.so.0"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)"/>
+      <rpm:entry name="libseccomp.so.2"/>
+      <rpm:entry name="libselinux.so.1"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="openssl-libs" pre="1"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd-libs(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shared(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.41)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="dracut" flags="LT" epoch="0" ver="060" rel="2"/>
+      <rpm:entry name="fedora-release" flags="LT" epoch="0" ver="23" rel="0.12"/>
+      <rpm:entry name="initscripts" flags="LT" epoch="0" ver="9.56.1"/>
+      <rpm:entry name="selinux-policy-any" flags="LT" epoch="0" ver="41.3"/>
+      <rpm:entry name="setup" flags="LT" epoch="0" ver="2.15.0" rel="3"/>
+      <rpm:entry name="systemd-standalone-shutdown"/>
+      <rpm:entry name="systemd-standalone-tmpfiles"/>
+    </rpm:conflicts>
+    <rpm:obsoletes>
+      <rpm:entry name="system-setup-keyboard" flags="LT" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd-sysv" flags="LT" epoch="0" ver="206"/>
+    </rpm:obsoletes>
+    <rpm:recommends>
+      <rpm:entry name="diffutils"/>
+      <rpm:entry name="libarchive.so.13"/>
+      <rpm:entry name="libbpf.so.1"/>
+      <rpm:entry name="libbpf.so.1(LIBBPF_0.4.0)"/>
+      <rpm:entry name="libcryptsetup.so.12"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.4)"/>
+      <rpm:entry name="libdw.so.1"/>
+      <rpm:entry name="libdw.so.1(ELFUTILS_0.186)"/>
+      <rpm:entry name="libelf.so.1"/>
+      <rpm:entry name="libelf.so.1(ELFUTILS_1.7)"/>
+      <rpm:entry name="libidn2.so.0"/>
+      <rpm:entry name="libidn2.so.0(IDN2_0.0.0)"/>
+      <rpm:entry name="libkmod.so.2"/>
+      <rpm:entry name="libkmod.so.2(LIBKMOD_5)"/>
+      <rpm:entry name="libpcre2-8.so.0"/>
+      <rpm:entry name="libpwquality.so.1"/>
+      <rpm:entry name="libpwquality.so.1(LIBPWQUALITY_1.0)"/>
+      <rpm:entry name="libqrencode.so.4"/>
+      <rpm:entry name="libxkbcommon.so.0"/>
+      <rpm:entry name="systemd-networkd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-resolved" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysusers(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:recommends>
+    <rpm:suggests>
+      <rpm:entry name="diffutils"/>
+      <rpm:entry name="libarchive.so.13"/>
+      <rpm:entry name="libbpf.so.1"/>
+      <rpm:entry name="libbpf.so.1(LIBBPF_0.4.0)"/>
+      <rpm:entry name="libcryptsetup.so.12"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.4)"/>
+      <rpm:entry name="libdw.so.1"/>
+      <rpm:entry name="libdw.so.1(ELFUTILS_0.186)"/>
+      <rpm:entry name="libelf.so.1"/>
+      <rpm:entry name="libelf.so.1(ELFUTILS_1.7)"/>
+      <rpm:entry name="libidn2.so.0"/>
+      <rpm:entry name="libidn2.so.0(IDN2_0.0.0)"/>
+      <rpm:entry name="libkmod.so.2"/>
+      <rpm:entry name="libkmod.so.2(LIBKMOD_5)"/>
+      <rpm:entry name="libpcre2-8.so.0"/>
+      <rpm:entry name="libpwquality.so.1"/>
+      <rpm:entry name="libpwquality.so.1(LIBPWQUALITY_1.0)"/>
+      <rpm:entry name="libqrencode.so.4"/>
+      <rpm:entry name="libxkbcommon.so.0"/>
+      <rpm:entry name="systemd-networkd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-resolved" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysusers(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:suggests>
+    <file>/etc/X11/xinit/xinitrc.d/50-systemd-user.sh</file>
+    <file type="ghost">/etc/X11/xorg.conf.d/00-keyboard.conf</file>
+    <file type="dir">/etc/credstore</file>
+    <file type="dir">/etc/credstore.encrypted</file>
+    <file>/etc/dnf/protected.d/systemd.conf</file>
+    <file type="ghost">/etc/hostname</file>
+    <file>/etc/inittab</file>
+    <file type="ghost">/etc/locale.conf</file>
+    <file type="ghost">/etc/localtime</file>
+    <file type="ghost">/etc/machine-id</file>
+    <file type="ghost">/etc/machine-info</file>
+    <file type="dir">/etc/profile.d</file>
+    <file>/etc/profile.d/70-systemd-shell-extra.sh</file>
+    <file type="dir">/etc/rc.d</file>
+    <file type="dir">/etc/rc.d/init.d</file>
+    <file>/etc/rc.d/init.d/README</file>
+    <file type="dir">/etc/ssh</file>
+    <file type="dir">/etc/ssh/ssh_config.d</file>
+    <file>/etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf</file>
+    <file type="dir">/etc/ssh/sshd_config.d</file>
+    <file type="dir">/etc/systemd</file>
+    <file type="ghost">/etc/systemd/journald.conf</file>
+    <file type="ghost">/etc/systemd/logind.conf</file>
+    <file type="dir">/etc/systemd/network</file>
+    <file type="dir">/etc/systemd/system</file>
+    <file type="ghost">/etc/systemd/system.conf</file>
+    <file type="dir">/etc/systemd/system/basic.target.wants</file>
+    <file type="dir">/etc/systemd/system/bluetooth.target.wants</file>
+    <file type="dir">/etc/systemd/system/default.target.wants</file>
+    <file type="dir">/etc/systemd/system/getty.target.wants</file>
+    <file type="dir">/etc/systemd/system/graphical.target.wants</file>
+    <file type="dir">/etc/systemd/system/local-fs.target.wants</file>
+    <file type="dir">/etc/systemd/system/machines.target.wants</file>
+    <file type="dir">/etc/systemd/system/multi-user.target.wants</file>
+    <file type="dir">/etc/systemd/system/network-online.target.wants</file>
+    <file type="dir">/etc/systemd/system/printer.target.wants</file>
+    <file type="dir">/etc/systemd/system/remote-fs.target.wants</file>
+    <file type="dir">/etc/systemd/system/sockets.target.wants</file>
+    <file type="dir">/etc/systemd/system/sysinit.target.wants</file>
+    <file type="dir">/etc/systemd/system/system-update.target.wants</file>
+    <file type="dir">/etc/systemd/system/timers.target.wants</file>
+    <file type="dir">/etc/systemd/user</file>
+    <file type="ghost">/etc/systemd/user.conf</file>
+    <file type="dir">/etc/tmpfiles.d</file>
+    <file type="dir">/etc/xdg/systemd</file>
+    <file type="ghost">/etc/xdg/systemd/user</file>
+    <file>/usr/bin/busctl</file>
+    <file>/usr/bin/halt</file>
+    <file>/usr/bin/homectl</file>
+    <file>/usr/bin/hostnamectl</file>
+    <file>/usr/bin/init</file>
+    <file>/usr/bin/journalctl</file>
+    <file>/usr/bin/localectl</file>
+    <file>/usr/bin/loginctl</file>
+    <file>/usr/bin/oomctl</file>
+    <file>/usr/bin/poweroff</file>
+    <file>/usr/bin/reboot</file>
+    <file>/usr/bin/resolvectl</file>
+    <file>/usr/bin/run0</file>
+    <file>/usr/bin/runlevel</file>
+    <file>/usr/bin/shutdown</file>
+    <file>/usr/bin/systemctl</file>
+    <file>/usr/bin/systemd-analyze</file>
+    <file>/usr/bin/systemd-ask-password</file>
+    <file>/usr/bin/systemd-cat</file>
+    <file>/usr/bin/systemd-cgls</file>
+    <file>/usr/bin/systemd-cgtop</file>
+    <file>/usr/bin/systemd-confext</file>
+    <file>/usr/bin/systemd-creds</file>
+    <file>/usr/bin/systemd-delta</file>
+    <file>/usr/bin/systemd-detect-virt</file>
+    <file>/usr/bin/systemd-escape</file>
+    <file>/usr/bin/systemd-firstboot</file>
+    <file>/usr/bin/systemd-home-fallback-shell</file>
+    <file>/usr/bin/systemd-id128</file>
+    <file>/usr/bin/systemd-inhibit</file>
+    <file>/usr/bin/systemd-machine-id-setup</file>
+    <file>/usr/bin/systemd-mount</file>
+    <file>/usr/bin/systemd-notify</file>
+    <file>/usr/bin/systemd-path</file>
+    <file>/usr/bin/systemd-run</file>
+    <file>/usr/bin/systemd-socket-activate</file>
+    <file>/usr/bin/systemd-stdio-bridge</file>
+    <file>/usr/bin/systemd-sysext</file>
+    <file>/usr/bin/systemd-tmpfiles</file>
+    <file>/usr/bin/systemd-tty-ask-password-agent</file>
+    <file>/usr/bin/systemd-umount</file>
+    <file>/usr/bin/systemd-vpick</file>
+    <file>/usr/bin/telinit</file>
+    <file>/usr/bin/timedatectl</file>
+    <file>/usr/bin/userdbctl</file>
+    <file>/usr/bin/varlinkctl</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">4c79f1b47e88ccffa0152fe5d14b7ea50985b9f00ca0a58af1b8f16730289ebd</checksum>
+  <summary>System and Service Manager</summary>
+  <description>systemd is a system and service manager that runs as PID 1 and starts the rest
+of the system. It provides aggressive parallelization capabilities, uses socket
+and D-Bus activation for starting services, offers on-demand starting of
+daemons, keeps track of processes using Linux control groups, maintains mount
+and automount points, and implements an elaborate transactional dependency-based
+service control logic. systemd supports SysV and LSB init scripts and works as a
+replacement for sysvinit. Other parts of this package are a logging daemon,
+utilities to control basic system configuration like the hostname, date, locale,
+maintain a list of logged-in users, system accounts, runtime directories and
+settings, and a logging daemons.
+
+This package was built from the v257-stable branch of systemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="4213925" installed="12668574" archive="12817036"/>
+  <location href="Packages/s/systemd-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="111344" end="312873"/>
+    <rpm:provides>
+      <rpm:entry name="/bin/systemctl"/>
+      <rpm:entry name="/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/halt"/>
+      <rpm:entry name="/usr/sbin/init"/>
+      <rpm:entry name="/usr/sbin/poweroff"/>
+      <rpm:entry name="/usr/sbin/reboot"/>
+      <rpm:entry name="/usr/sbin/runlevel"/>
+      <rpm:entry name="/usr/sbin/shutdown"/>
+      <rpm:entry name="/usr/sbin/telinit"/>
+      <rpm:entry name="config(systemd)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-journal)" flags="EQ" epoch="0" ver="ZyBzeXN0ZW1kLWpvdXJuYWwgMTkwIC0A"/>
+      <rpm:entry name="group(systemd-oom)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="pkgconfig(systemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(udev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="syslog"/>
+      <rpm:entry name="system-setup-keyboard" flags="EQ" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysv" flags="EQ" epoch="0" ver="206"/>
+      <rpm:entry name="systemd-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-units" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-oom)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLW9vbSAtICJzeXN0ZW1kIFVzZXJzcGFjZSBPT00gS2lsbGVyIgAA"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="(libbpf &gt;= 2:1.4.7 if libbpf)"/>
+      <rpm:entry name="(systemd-rpm-macros = 257.5-6.fc42 if rpm-build)"/>
+      <rpm:entry name="(util-linux-core or util-linux)"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/usr/bin/bash"/>
+      <rpm:entry name="/usr/bin/sh"/>
+      <rpm:entry name="/usr/bin/systemd-sysusers"/>
+      <rpm:entry name="coreutils" pre="1"/>
+      <rpm:entry name="dbus" flags="GE" epoch="0" ver="1.9.18"/>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="grep" pre="1"/>
+      <rpm:entry name="libacl.so.1()(64bit)"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)(64bit)"/>
+      <rpm:entry name="libaudit.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.30)(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libfdisk.so.1()(64bit)"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.26)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.2.5)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.29)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libmount.so.1()(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.20)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.22)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.23)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.26)(64bit)"/>
+      <rpm:entry name="libpam.so.0()(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)(64bit)"/>
+      <rpm:entry name="libseccomp.so.2()(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="openssl-libs" pre="1"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd-libs(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shared(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.41)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="dracut" flags="LT" epoch="0" ver="060" rel="2"/>
+      <rpm:entry name="fedora-release" flags="LT" epoch="0" ver="23" rel="0.12"/>
+      <rpm:entry name="initscripts" flags="LT" epoch="0" ver="9.56.1"/>
+      <rpm:entry name="selinux-policy-any" flags="LT" epoch="0" ver="41.3"/>
+      <rpm:entry name="setup" flags="LT" epoch="0" ver="2.15.0" rel="3"/>
+      <rpm:entry name="systemd-standalone-shutdown"/>
+      <rpm:entry name="systemd-standalone-tmpfiles"/>
+    </rpm:conflicts>
+    <rpm:obsoletes>
+      <rpm:entry name="system-setup-keyboard" flags="LT" epoch="0" ver="0.9"/>
+      <rpm:entry name="systemd-sysv" flags="LT" epoch="0" ver="206"/>
+    </rpm:obsoletes>
+    <rpm:recommends>
+      <rpm:entry name="diffutils"/>
+      <rpm:entry name="libarchive.so.13()(64bit)"/>
+      <rpm:entry name="libbpf.so.1()(64bit)"/>
+      <rpm:entry name="libbpf.so.1(LIBBPF_0.4.0)(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12()(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.4)(64bit)"/>
+      <rpm:entry name="libdw.so.1()(64bit)"/>
+      <rpm:entry name="libdw.so.1(ELFUTILS_0.186)(64bit)"/>
+      <rpm:entry name="libelf.so.1()(64bit)"/>
+      <rpm:entry name="libelf.so.1(ELFUTILS_1.7)(64bit)"/>
+      <rpm:entry name="libidn2.so.0()(64bit)"/>
+      <rpm:entry name="libidn2.so.0(IDN2_0.0.0)(64bit)"/>
+      <rpm:entry name="libkmod.so.2()(64bit)"/>
+      <rpm:entry name="libkmod.so.2(LIBKMOD_5)(64bit)"/>
+      <rpm:entry name="libpcre2-8.so.0()(64bit)"/>
+      <rpm:entry name="libpwquality.so.1()(64bit)"/>
+      <rpm:entry name="libpwquality.so.1(LIBPWQUALITY_1.0)(64bit)"/>
+      <rpm:entry name="libqrencode.so.4()(64bit)"/>
+      <rpm:entry name="libxkbcommon.so.0()(64bit)"/>
+      <rpm:entry name="systemd-networkd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-resolved" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysusers(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:recommends>
+    <file>/etc/X11/xinit/xinitrc.d/50-systemd-user.sh</file>
+    <file type="ghost">/etc/X11/xorg.conf.d/00-keyboard.conf</file>
+    <file type="dir">/etc/credstore</file>
+    <file type="dir">/etc/credstore.encrypted</file>
+    <file>/etc/dnf/protected.d/systemd.conf</file>
+    <file type="ghost">/etc/hostname</file>
+    <file>/etc/inittab</file>
+    <file type="ghost">/etc/locale.conf</file>
+    <file type="ghost">/etc/localtime</file>
+    <file type="ghost">/etc/machine-id</file>
+    <file type="ghost">/etc/machine-info</file>
+    <file type="dir">/etc/profile.d</file>
+    <file>/etc/profile.d/70-systemd-shell-extra.sh</file>
+    <file type="dir">/etc/rc.d</file>
+    <file type="dir">/etc/rc.d/init.d</file>
+    <file>/etc/rc.d/init.d/README</file>
+    <file type="dir">/etc/ssh</file>
+    <file type="dir">/etc/ssh/ssh_config.d</file>
+    <file>/etc/ssh/ssh_config.d/20-systemd-ssh-proxy.conf</file>
+    <file type="dir">/etc/ssh/sshd_config.d</file>
+    <file type="dir">/etc/systemd</file>
+    <file type="ghost">/etc/systemd/journald.conf</file>
+    <file type="ghost">/etc/systemd/logind.conf</file>
+    <file type="dir">/etc/systemd/network</file>
+    <file type="dir">/etc/systemd/system</file>
+    <file type="ghost">/etc/systemd/system.conf</file>
+    <file type="dir">/etc/systemd/system/basic.target.wants</file>
+    <file type="dir">/etc/systemd/system/bluetooth.target.wants</file>
+    <file type="dir">/etc/systemd/system/default.target.wants</file>
+    <file type="dir">/etc/systemd/system/getty.target.wants</file>
+    <file type="dir">/etc/systemd/system/graphical.target.wants</file>
+    <file type="dir">/etc/systemd/system/local-fs.target.wants</file>
+    <file type="dir">/etc/systemd/system/machines.target.wants</file>
+    <file type="dir">/etc/systemd/system/multi-user.target.wants</file>
+    <file type="dir">/etc/systemd/system/network-online.target.wants</file>
+    <file type="dir">/etc/systemd/system/printer.target.wants</file>
+    <file type="dir">/etc/systemd/system/remote-fs.target.wants</file>
+    <file type="dir">/etc/systemd/system/sockets.target.wants</file>
+    <file type="dir">/etc/systemd/system/sysinit.target.wants</file>
+    <file type="dir">/etc/systemd/system/system-update.target.wants</file>
+    <file type="dir">/etc/systemd/system/timers.target.wants</file>
+    <file type="dir">/etc/systemd/user</file>
+    <file type="ghost">/etc/systemd/user.conf</file>
+    <file type="dir">/etc/tmpfiles.d</file>
+    <file type="dir">/etc/xdg/systemd</file>
+    <file type="ghost">/etc/xdg/systemd/user</file>
+    <file>/usr/bin/busctl</file>
+    <file>/usr/bin/halt</file>
+    <file>/usr/bin/homectl</file>
+    <file>/usr/bin/hostnamectl</file>
+    <file>/usr/bin/init</file>
+    <file>/usr/bin/journalctl</file>
+    <file>/usr/bin/localectl</file>
+    <file>/usr/bin/loginctl</file>
+    <file>/usr/bin/oomctl</file>
+    <file>/usr/bin/poweroff</file>
+    <file>/usr/bin/reboot</file>
+    <file>/usr/bin/resolvectl</file>
+    <file>/usr/bin/run0</file>
+    <file>/usr/bin/runlevel</file>
+    <file>/usr/bin/shutdown</file>
+    <file>/usr/bin/systemctl</file>
+    <file>/usr/bin/systemd-analyze</file>
+    <file>/usr/bin/systemd-ask-password</file>
+    <file>/usr/bin/systemd-cat</file>
+    <file>/usr/bin/systemd-cgls</file>
+    <file>/usr/bin/systemd-cgtop</file>
+    <file>/usr/bin/systemd-confext</file>
+    <file>/usr/bin/systemd-creds</file>
+    <file>/usr/bin/systemd-delta</file>
+    <file>/usr/bin/systemd-detect-virt</file>
+    <file>/usr/bin/systemd-escape</file>
+    <file>/usr/bin/systemd-firstboot</file>
+    <file>/usr/bin/systemd-home-fallback-shell</file>
+    <file>/usr/bin/systemd-id128</file>
+    <file>/usr/bin/systemd-inhibit</file>
+    <file>/usr/bin/systemd-machine-id-setup</file>
+    <file>/usr/bin/systemd-mount</file>
+    <file>/usr/bin/systemd-notify</file>
+    <file>/usr/bin/systemd-path</file>
+    <file>/usr/bin/systemd-run</file>
+    <file>/usr/bin/systemd-socket-activate</file>
+    <file>/usr/bin/systemd-stdio-bridge</file>
+    <file>/usr/bin/systemd-sysext</file>
+    <file>/usr/bin/systemd-tmpfiles</file>
+    <file>/usr/bin/systemd-tty-ask-password-agent</file>
+    <file>/usr/bin/systemd-umount</file>
+    <file>/usr/bin/systemd-vpick</file>
+    <file>/usr/bin/telinit</file>
+    <file>/usr/bin/timedatectl</file>
+    <file>/usr/bin/userdbctl</file>
+    <file>/usr/bin/varlinkctl</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-boot-unsigned</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">a1fccd6e28f4bbeec18413fd2745eee333fd87570add11799d48999206627b4f</checksum>
+  <summary>UEFI boot manager (unsigned version)</summary>
+  <description>systemd-boot (short: sd-boot) is a simple UEFI boot manager. It provides a
+graphical menu to select the entry to boot and an editor for the kernel command
+line. systemd-boot supports systems with UEFI firmware only.
+
+This package contains the unsigned version. Install systemd-boot instead to get
+the version that works with Secure Boot.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710918"/>
+  <size package="125052" installed="228081" archive="229264"/>
+  <location href="Packages/s/systemd-boot-unsigned-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-boot-unsigned-sourcepack-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="33865"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-boot" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-boot(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-boot-unsigned" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-boot-unsigned(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-boot-unsigned-x64" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="version(systemd-boot-unsigned)" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="version(systemd-boot-unsigned)(x86-64)" flags="EQ" epoch="0" ver="257.5"/>
+    </rpm:provides>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-container</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">0b3b966e055d8b782da7a956b68852c9f4c6d419769398142e377af80ed2d1bf</checksum>
+  <summary>Tools for containers and VMs</summary>
+  <description>Systemd tools to spawn and manage containers and virtual machines.
+
+This package contains systemd-nspawn, systemd-vmspawn, machinectl,
+systemd-machined, and systemd-importd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726328" build="1746710889"/>
+  <size package="894563" installed="2091679" archive="2108744"/>
+  <location href="Packages/s/systemd-container-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="16752" end="68405"/>
+    <rpm:provides>
+      <rpm:entry name="libnss_mymachines.so.2"/>
+      <rpm:entry name="systemd-container" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-container(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="ld-linux.so.2"/>
+      <rpm:entry name="ld-linux.so.2(GLIBC_2.3)"/>
+      <rpm:entry name="libacl.so.1"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)"/>
+      <rpm:entry name="libbz2.so.1"/>
+      <rpm:entry name="libcap.so.2"/>
+      <rpm:entry name="libcrypto.so.3"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)"/>
+      <rpm:entry name="libcurl.so.4"/>
+      <rpm:entry name="libgcc_s.so.1"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)"/>
+      <rpm:entry name="liblzma.so.5"/>
+      <rpm:entry name="liblzma.so.5(XZ_5.0)"/>
+      <rpm:entry name="libseccomp.so.2"/>
+      <rpm:entry name="libselinux.so.1"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="libz.so.1"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42" pre="1"/>
+      <rpm:entry name="systemd(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)"/>
+    </rpm:requires>
+    <rpm:suggests>
+      <rpm:entry name="libcurl-minimal"/>
+    </rpm:suggests>
+    <rpm:recommends>
+      <rpm:entry name="qemu-device-display-virtio-gpu"/>
+      <rpm:entry name="qemu-device-display-virtio-vga"/>
+      <rpm:entry name="qemu-kvm-core"/>
+    </rpm:recommends>
+    <file>/usr/bin/importctl</file>
+    <file>/usr/bin/machinectl</file>
+    <file>/usr/bin/mount.ddi</file>
+    <file>/usr/bin/portablectl</file>
+    <file>/usr/bin/systemd-dissect</file>
+    <file>/usr/bin/systemd-nspawn</file>
+    <file>/usr/bin/systemd-vmspawn</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-container</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">49646910e9609c9c0f2cddd3bc456e1784ab68be1c6cd1c8a783f3ab7d47c9e5</checksum>
+  <summary>Tools for containers and VMs</summary>
+  <description>Systemd tools to spawn and manage containers and virtual machines.
+
+This package contains systemd-nspawn, systemd-vmspawn, machinectl,
+systemd-machined, and systemd-importd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="898347" installed="2277893" archive="2295232"/>
+  <location href="Packages/s/systemd-container-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="16776" end="68753"/>
+    <rpm:provides>
+      <rpm:entry name="libnss_mymachines.so.2()(64bit)"/>
+      <rpm:entry name="systemd-container" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-container(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="libacl.so.1()(64bit)"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)(64bit)"/>
+      <rpm:entry name="libbz2.so.1()(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libcurl.so.4()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="liblzma.so.5()(64bit)"/>
+      <rpm:entry name="liblzma.so.5(XZ_5.0)(64bit)"/>
+      <rpm:entry name="libseccomp.so.2()(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="libz.so.1()(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42" pre="1"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:suggests>
+      <rpm:entry name="libcurl-minimal"/>
+    </rpm:suggests>
+    <rpm:recommends>
+      <rpm:entry name="qemu-device-display-virtio-gpu"/>
+      <rpm:entry name="qemu-device-display-virtio-vga"/>
+      <rpm:entry name="qemu-kvm-core"/>
+    </rpm:recommends>
+    <file>/usr/bin/importctl</file>
+    <file>/usr/bin/machinectl</file>
+    <file>/usr/bin/mount.ddi</file>
+    <file>/usr/bin/portablectl</file>
+    <file>/usr/bin/systemd-dissect</file>
+    <file>/usr/bin/systemd-nspawn</file>
+    <file>/usr/bin/systemd-vmspawn</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-devel</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">fc282592b9eac0d51aa24fd4ac9ac78f577b80c9ec655f18e5607b6109e51045</checksum>
+  <summary>Development headers for systemd</summary>
+  <description>Development headers and auxiliary files for developing applications linking
+to libudev or libsystemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710889"/>
+  <size package="693378" installed="625244" archive="759488"/>
+  <location href="Packages/s/systemd-devel-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="137104" end="299361"/>
+    <rpm:provides>
+      <rpm:entry name="libudev-devel" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="libudev-devel(x86-32)" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="pkgconfig(libsystemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(libudev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="systemd-devel" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-devel(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="(systemd-rpm-macros = 257.5-6.fc42 if rpm-build)"/>
+      <rpm:entry name="libsystemd.so.0"/>
+      <rpm:entry name="libudev.so.1"/>
+      <rpm:entry name="systemd-libs(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-devel</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">aa3edb0b9d28beb6d62c42e60eea530e7a7a5a1cbb679b65bdfd23361d96b911</checksum>
+  <summary>Development headers for systemd</summary>
+  <description>Development headers and auxiliary files for developing applications linking
+to libudev or libsystemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="693514" installed="625248" archive="759500"/>
+  <location href="Packages/s/systemd-devel-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="137160" end="299501"/>
+    <rpm:provides>
+      <rpm:entry name="libudev-devel" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="libudev-devel(x86-64)" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="pkgconfig(libsystemd)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="pkgconfig(libudev)" flags="EQ" epoch="0" ver="257"/>
+      <rpm:entry name="systemd-devel" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-devel(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="(systemd-rpm-macros = 257.5-6.fc42 if rpm-build)"/>
+      <rpm:entry name="libsystemd.so.0()(64bit)"/>
+      <rpm:entry name="libudev.so.1()(64bit)"/>
+      <rpm:entry name="systemd-libs(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-journal-remote</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">4315d70145631e1903bf24f1ade3e099dcff82f6b2b9c65f29311d1f942a25ac</checksum>
+  <summary>Tools to send journal events over the network</summary>
+  <description>Programs to forward journal entries over the network, using encrypted HTTP, and
+to write journal files from serialized journal contents.
+
+This package contains systemd-journal-gatewayd, systemd-journal-remote, and
+systemd-journal-upload.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="119559" installed="209696" archive="215220"/>
+  <location href="Packages/s/systemd-journal-remote-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="9312" end="46873"/>
+    <rpm:provides>
+      <rpm:entry name="config(systemd-journal-remote)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-journal-remote)"/>
+      <rpm:entry name="systemd-journal-gateway" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-journal-gateway(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-journal-remote" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-journal-remote(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-journal-remote)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLWpvdXJuYWwtcmVtb3RlIC0gInN5c3RlbWQgSm91cm5hbCBSZW1vdGUi"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="firewalld-filesystem"/>
+      <rpm:entry name="libcurl.so.4()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libgnutls.so.30()(64bit)"/>
+      <rpm:entry name="libgnutls.so.30(GNUTLS_3_4)(64bit)"/>
+      <rpm:entry name="libmicrohttpd.so.12()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.34)(64bit)"/>
+    </rpm:requires>
+    <rpm:suggests>
+      <rpm:entry name="libcurl-minimal"/>
+    </rpm:suggests>
+    <file type="ghost">/etc/systemd/journal-remote.conf</file>
+    <file type="ghost">/etc/systemd/journal-upload.conf</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-libs</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">1e0dee757a405a6d4bd3dc8d67e830c7dc278bbacfe97a515d3c71d3f37e4c41</checksum>
+  <summary>systemd libraries</summary>
+  <description>Libraries for systemd and udev.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726328" build="1746710889"/>
+  <size package="877735" installed="2332184" archive="2335472"/>
+  <location href="Packages/s/systemd-libs-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="39649"/>
+    <rpm:provides>
+      <rpm:entry name="libnss_myhostname.so.2"/>
+      <rpm:entry name="libnss_resolve.so.2"/>
+      <rpm:entry name="libnss_systemd.so.2"/>
+      <rpm:entry name="libsystemd.so.0"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_209)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_211)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_213)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_214)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_216)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_217)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_219)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_220)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_221)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_222)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_226)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_227)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_229)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_230)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_231)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_232)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_233)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_234)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_236)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_237)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_238)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_239)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_240)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_241)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_243)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_245)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_246)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_247)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_248)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_249)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_250)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_251)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_252)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_253)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_254)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_255)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_256)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_257)"/>
+      <rpm:entry name="libudev.so.1"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_183)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_189)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_196)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_199)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_215)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_247)"/>
+      <rpm:entry name="nss-myhostname" flags="EQ" epoch="0" ver="0.4"/>
+      <rpm:entry name="nss-myhostname(x86-32)" flags="EQ" epoch="0" ver="0.4"/>
+      <rpm:entry name="systemd-libs" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-libs(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="ld-linux.so.2"/>
+      <rpm:entry name="ld-linux.so.2(GLIBC_2.3)"/>
+      <rpm:entry name="libcap.so.2"/>
+      <rpm:entry name="libgcc_s.so.1"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)"/>
+      <rpm:entry name="libm.so.6"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.1)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-libs</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">6affa1e2106951f2c8f2dfa1f709d483523eb74d08a6918ec5de661ccc810251</checksum>
+  <summary>systemd libraries</summary>
+  <description>Libraries for systemd and udev.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="831504" installed="2336962" archive="2340404"/>
+  <location href="Packages/s/systemd-libs-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="39965"/>
+    <rpm:provides>
+      <rpm:entry name="libnss_myhostname.so.2()(64bit)"/>
+      <rpm:entry name="libnss_resolve.so.2()(64bit)"/>
+      <rpm:entry name="libnss_systemd.so.2()(64bit)"/>
+      <rpm:entry name="libsystemd.so.0()(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_209)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_211)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_213)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_214)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_216)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_217)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_219)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_220)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_221)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_222)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_226)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_227)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_229)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_230)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_231)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_232)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_233)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_234)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_236)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_237)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_238)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_239)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_240)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_241)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_243)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_245)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_246)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_247)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_248)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_249)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_250)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_251)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_252)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_253)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_254)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_255)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_256)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_257)(64bit)"/>
+      <rpm:entry name="libudev.so.1()(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_183)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_189)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_196)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_199)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_215)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_247)(64bit)"/>
+      <rpm:entry name="nss-myhostname" flags="EQ" epoch="0" ver="0.4"/>
+      <rpm:entry name="nss-myhostname(x86-64)" flags="EQ" epoch="0" ver="0.4"/>
+      <rpm:entry name="systemd-libs" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-libs(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-networkd</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">e78e37d968e0870d08535d12aef92997979572ccf927045bf51db07dc23ce0e5</checksum>
+  <summary>System daemon that manages network configurations</summary>
+  <description>systemd-networkd is a system service that manages networks. It detects and
+configures network devices as they appear, as well as creating virtual network
+devices.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710918"/>
+  <size package="790254" installed="2301003" archive="2310668"/>
+  <location href="Packages/s/systemd-networkd-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="13344" end="54973"/>
+    <rpm:provides>
+      <rpm:entry name="config(systemd-networkd)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-network)"/>
+      <rpm:entry name="systemd-networkd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-networkd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-network)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLW5ldHdvcmsgMTkyICJzeXN0ZW1kIE5ldHdvcmsgTWFuYWdlbWVudCIA"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:recommends>
+      <rpm:entry name="systemd-udev" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:recommends>
+    <file type="ghost">/etc/systemd/networkd.conf</file>
+    <file>/usr/bin/networkctl</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-networkd-defaults</name>
+  <arch>noarch</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">1c9178bf097eb606c165ddec750762470466fa773252fc4c5b41f11c165d47cb</checksum>
+  <summary>Configure network interfaces with networkd by default</summary>
+  <description>This package contains a set of config files for systemd-networkd that cause it
+to configure network interfaces by default. Note that systemd-networkd needs to
+enabled for this to have any effect.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710889"/>
+  <size package="33599" installed="2621" archive="3384"/>
+  <location href="Packages/s/systemd-networkd-defaults-257.5-6.fc42.noarch.rpm"/>
+  <format>
+    <rpm:license>MIT-0</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="32845"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-networkd-defaults" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="systemd-networkd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-oomd-defaults</name>
+  <arch>noarch</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">303a51d552e766ad48aeddbe41a34614f7c54995a3a7ab955f051b7b8dbf96df</checksum>
+  <summary>Configuration files for systemd-oomd</summary>
+  <description>A set of drop-in files for systemd units to enable action from systemd-oomd,
+a userspace out-of-memory (OOM) killer.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710889"/>
+  <size package="33033" installed="187" archive="976"/>
+  <location href="Packages/s/systemd-oomd-defaults-257.5-6.fc42.noarch.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="32797"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-oomd-defaults" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="systemd-udev" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-pam</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">ecd20e14c2558da5a11781987c609396a15126dd3de732fd54623c91237cd05d</checksum>
+  <summary>systemd PAM module</summary>
+  <description>Systemd PAM module registers the session with systemd-logind.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726328" build="1746710889"/>
+  <size package="445466" installed="1175805" archive="1177900"/>
+  <location href="Packages/s/systemd-pam-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="36257"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-pam" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:supplements>
+      <rpm:entry name="systemd-pam" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:supplements>
+    <rpm:enhances>
+      <rpm:entry name="systemd-pam" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:enhances>
+    <rpm:suggests>
+      <rpm:entry name="systemd-pam" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:suggests>
+    <rpm:conflicts>
+      <rpm:entry name="systemd-map" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-map(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:conflicts>
+    <rpm:obsoletes>
+      <rpm:entry name="systemd-map" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-map(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:obsoletes>
+    <rpm:requires>
+      <rpm:entry name="ld-linux.so.2"/>
+      <rpm:entry name="ld-linux.so.2(GLIBC_2.3)"/>
+      <rpm:entry name="libcap.so.2"/>
+      <rpm:entry name="libgcc_s.so.1"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)"/>
+      <rpm:entry name="libm.so.6"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.1)"/>
+      <rpm:entry name="libpam.so.0"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.0)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.1.1)"/>
+      <rpm:entry name="libpam_misc.so.0"/>
+      <rpm:entry name="libpam_misc.so.0(LIBPAM_MISC_1.0)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-pam</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">b28677c1dba775c86117befd7ccca94dc38a79ca836480845ade84660f1349b7</checksum>
+  <summary>systemd PAM module</summary>
+  <description>Systemd PAM module registers the session with systemd-logind.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="423306" installed="1152355" archive="1154464"/>
+  <location href="Packages/s/systemd-pam-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="36321"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-pam" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-pam(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libpam.so.0()(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.0)(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.1.1)(64bit)"/>
+      <rpm:entry name="libpam_misc.so.0()(64bit)"/>
+      <rpm:entry name="libpam_misc.so.0(LIBPAM_MISC_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-resolved</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">baeaa5ac2fc24e709fbe3eec193ccc243c59335e44daa03d896da1a41853aff9</checksum>
+  <summary>Network Name Resolution manager</summary>
+  <description>systemd-resolved is a system service that provides network name resolution to
+local applications. It implements a caching and validating DNS/DNSSEC stub
+resolver, as well as an LLMNR and MulticastDNS resolver and responder.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="321807" installed="686003" archive="689964"/>
+  <location href="Packages/s/systemd-resolved-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="41309"/>
+    <rpm:provides>
+      <rpm:entry name="config(systemd-resolved)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-resolve)"/>
+      <rpm:entry name="systemd-resolved" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-resolved(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="user(systemd-resolve)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLXJlc29sdmUgMTkzICJzeXN0ZW1kIFJlc29sdmVyIgAA"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="grep" pre="1"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libidn2.so.0()(64bit)"/>
+      <rpm:entry name="libidn2.so.0(IDN2_0.0.0)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libssl.so.3()(64bit)"/>
+      <rpm:entry name="libssl.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.34)(64bit)"/>
+    </rpm:requires>
+    <file type="ghost">/etc/systemd/resolved.conf</file>
+    <file>/usr/bin/resolvconf</file>
+    <file>/usr/bin/systemd-resolve</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-rpm-macros</name>
+  <arch>noarch</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">04d4b99040cd3f33e9a6320deb53d3f4a94412dfd670d7ba2a01f8a374d23b90</checksum>
+  <summary>Macros that define paths and scriptlets related to systemd</summary>
+  <description>Just the definitions of rpm macros.
+
+See
+https://docs.fedoraproject.org/en-US/packaging-guidelines/Scriptlets/#_systemd
+for information how to use those macros.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710889"/>
+  <size package="37236" installed="10943" archive="11524"/>
+  <location href="Packages/s/systemd-rpm-macros-257.5-6.fc42.noarch.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="34809"/>
+    <rpm:provides>
+      <rpm:entry name="rpm_macro(_binfmtdir)"/>
+      <rpm:entry name="rpm_macro(_environmentdir)"/>
+      <rpm:entry name="rpm_macro(_journalcatalogdir)"/>
+      <rpm:entry name="rpm_macro(_kernel_install_dir)"/>
+      <rpm:entry name="rpm_macro(_modprobedir)"/>
+      <rpm:entry name="rpm_macro(_modulesloaddir)"/>
+      <rpm:entry name="rpm_macro(_presetdir)"/>
+      <rpm:entry name="rpm_macro(_sysctldir)"/>
+      <rpm:entry name="rpm_macro(_systemd_system_env_generator_dir)"/>
+      <rpm:entry name="rpm_macro(_systemd_user_env_generator_dir)"/>
+      <rpm:entry name="rpm_macro(_systemd_util_dir)"/>
+      <rpm:entry name="rpm_macro(_systemdgeneratordir)"/>
+      <rpm:entry name="rpm_macro(_systemdusergeneratordir)"/>
+      <rpm:entry name="rpm_macro(_sysusersdir)"/>
+      <rpm:entry name="rpm_macro(_tmpfilesdir)"/>
+      <rpm:entry name="rpm_macro(_udevhwdbdir)"/>
+      <rpm:entry name="rpm_macro(_udevrulesdir)"/>
+      <rpm:entry name="rpm_macro(_unitdir)"/>
+      <rpm:entry name="rpm_macro(_user_tmpfilesdir)"/>
+      <rpm:entry name="rpm_macro(_userpresetdir)"/>
+      <rpm:entry name="rpm_macro(_userunitdir)"/>
+      <rpm:entry name="rpm_macro(binfmt_apply)"/>
+      <rpm:entry name="rpm_macro(journal_catalog_update)"/>
+      <rpm:entry name="rpm_macro(sysctl_apply)"/>
+      <rpm:entry name="rpm_macro(systemd_ordering)"/>
+      <rpm:entry name="rpm_macro(systemd_post)"/>
+      <rpm:entry name="rpm_macro(systemd_posttrans_with_reload)"/>
+      <rpm:entry name="rpm_macro(systemd_posttrans_with_restart)"/>
+      <rpm:entry name="rpm_macro(systemd_postun)"/>
+      <rpm:entry name="rpm_macro(systemd_postun_with_reload)"/>
+      <rpm:entry name="rpm_macro(systemd_postun_with_restart)"/>
+      <rpm:entry name="rpm_macro(systemd_preun)"/>
+      <rpm:entry name="rpm_macro(systemd_requires)"/>
+      <rpm:entry name="rpm_macro(systemd_user_daemon_reexec)"/>
+      <rpm:entry name="rpm_macro(systemd_user_post)"/>
+      <rpm:entry name="rpm_macro(systemd_user_posttrans_with_reload)"/>
+      <rpm:entry name="rpm_macro(systemd_user_posttrans_with_restart)"/>
+      <rpm:entry name="rpm_macro(systemd_user_postun)"/>
+      <rpm:entry name="rpm_macro(systemd_user_postun_with_reload)"/>
+      <rpm:entry name="rpm_macro(systemd_user_postun_with_restart)"/>
+      <rpm:entry name="rpm_macro(systemd_user_preun)"/>
+      <rpm:entry name="rpm_macro(sysusers_create)"/>
+      <rpm:entry name="rpm_macro(sysusers_create_compat)"/>
+      <rpm:entry name="rpm_macro(sysusers_create_inline)"/>
+      <rpm:entry name="rpm_macro(sysusers_create_package)"/>
+      <rpm:entry name="rpm_macro(sysusers_requires_compat)"/>
+      <rpm:entry name="rpm_macro(tmpfiles_create)"/>
+      <rpm:entry name="rpm_macro(tmpfiles_create_package)"/>
+      <rpm:entry name="rpm_macro(udev_hwdb_update)"/>
+      <rpm:entry name="rpm_macro(udev_rules_update)"/>
+      <rpm:entry name="systemd-rpm-macros" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="/usr/bin/bash"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-shared</name>
+  <arch>i686</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">64380ae4e2dac5c39b703c3e496e5475cb254c26a8bf133058c30ceaaace7390</checksum>
+  <summary>Internal systemd shared library</summary>
+  <description>Internal libraries used by various systemd binaries.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726328" build="1746710889"/>
+  <size package="1946738" installed="4971197" archive="4972376"/>
+  <location href="Packages/s/systemd-shared-257.5-6.fc42.i686.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="35513"/>
+    <rpm:provides>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)"/>
+      <rpm:entry name="systemd-shared" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shared(x86-32)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="ld-linux.so.2"/>
+      <rpm:entry name="ld-linux.so.2(GLIBC_2.3)"/>
+      <rpm:entry name="libacl.so.1"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)"/>
+      <rpm:entry name="libblkid.so.1"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.30)"/>
+      <rpm:entry name="libcap.so.2"/>
+      <rpm:entry name="libcrypt.so.2"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_2.0)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_4.4)"/>
+      <rpm:entry name="libcrypto.so.3"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)"/>
+      <rpm:entry name="libgcc_s.so.1"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)"/>
+      <rpm:entry name="libm.so.6"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.0)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.1)"/>
+      <rpm:entry name="libmount.so.1"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.20)"/>
+      <rpm:entry name="libpam.so.0"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.0)"/>
+      <rpm:entry name="libseccomp.so.2"/>
+      <rpm:entry name="libselinux.so.1"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.39)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-shared</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">f38180ac3467442d2ecbbb58e45e648318c3bf78de8e5134a5bd7e21dd922dea</checksum>
+  <summary>Internal systemd shared library</summary>
+  <description>Internal libraries used by various systemd binaries.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="1852763" installed="4854823" archive="4855864"/>
+  <location href="Packages/s/systemd-shared-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="35645"/>
+    <rpm:provides>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="systemd-shared" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-shared(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libacl.so.1()(64bit)"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)(64bit)"/>
+      <rpm:entry name="libblkid.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.30)(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_2.0)(64bit)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_4.4)(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.2.5)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.38)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libmount.so.1()(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.20)(64bit)"/>
+      <rpm:entry name="libpam.so.0()(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_1.0)(64bit)"/>
+      <rpm:entry name="libpam.so.0(LIBPAM_EXTENSION_1.0)(64bit)"/>
+      <rpm:entry name="libseccomp.so.2()(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.39)(64bit)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-standalone-repart</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">1261303a23e84d27156639163eca9d7e29a703e3cf31c8daa5ae8a283d550b46</checksum>
+  <summary>Standalone systemd-repart binary for use on systems without systemd</summary>
+  <description>Standalone systemd-repart binary with no dependencies on the systemd-shared
+library or other libraries from systemd-libs. This package conflicts with the
+main systemd package and is meant for use on systems without systemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726331" build="1746710918"/>
+  <size package="515586" installed="1155253" archive="1155820"/>
+  <location href="Packages/s/systemd-standalone-repart-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="35121"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-repart" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-repart" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-repart(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libblkid.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.21)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.30)(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libfdisk.so.1()(64bit)"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.26)(64bit)"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.31)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libmount.so.1()(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="systemd-udev"/>
+    </rpm:conflicts>
+    <rpm:suggests>
+      <rpm:entry name="coreutils-single"/>
+    </rpm:suggests>
+    <file>/usr/bin/systemd-repart</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-standalone-shutdown</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">1606bce96d1281478d0dd878083b38a0a2d034f2eaa532e4e2c29f3db764a1fd</checksum>
+  <summary>Standalone systemd-shutdown binary for use in exitrds</summary>
+  <description>Standalone systemd-shutdown binary with no dependencies on the systemd-shared
+library or other libraries from systemd-libs. This package conflicts with the
+main systemd package and is meant for use in exitrds.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="208104" installed="424567" archive="425144"/>
+  <location href="Packages/s/systemd-standalone-shutdown-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="34545"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-shutdown" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-shutdown(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libmount.so.1()(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.22)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.23)(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="systemd"/>
+    </rpm:conflicts>
+    <rpm:suggests>
+      <rpm:entry name="coreutils-single"/>
+    </rpm:suggests>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-standalone-sysusers</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">8890af1d8da0a8d2adbc55782275a8b4f8913246bb758f84c3e556826b56a7d3</checksum>
+  <summary>Standalone systemd-sysusers binary for use on systems without systemd</summary>
+  <description>Standalone systemd-sysusers binary with no dependencies on the systemd-shared
+library or other libraries from systemd-libs. This package conflicts with the
+main systemd package and is meant for use on systems without systemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="160885" installed="283911" archive="284480"/>
+  <location href="Packages/s/systemd-standalone-sysusers-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="34489"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-standalone-sysusers" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-sysusers(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysusers" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libaudit.so.1()(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_2.0)(64bit)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_4.4)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:suggests>
+      <rpm:entry name="coreutils-single"/>
+    </rpm:suggests>
+    <file>/usr/bin/systemd-sysusers</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-standalone-tmpfiles</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">f79a3f454eba5282c75c12c22cc37519ee053c65cd75a711bf67e5725786e906</checksum>
+  <summary>Standalone systemd-tmpfiles binary for use on systems without systemd</summary>
+  <description>Standalone systemd-tmpfiles binary with no dependencies on the systemd-shared
+library or other libraries from systemd-libs. This package conflicts with the
+main systemd package and is meant for use on systems without systemd.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="212201" installed="404239" archive="404808"/>
+  <location href="Packages/s/systemd-standalone-tmpfiles-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="34433"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-standalone-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-standalone-tmpfiles(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-tmpfiles" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libacl.so.1()(64bit)"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="systemd"/>
+    </rpm:conflicts>
+    <rpm:suggests>
+      <rpm:entry name="coreutils-single"/>
+    </rpm:suggests>
+    <file>/usr/bin/systemd-tmpfiles</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-sysusers</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">d143c322d67d6589d877265789479b3ea59a75ea55b555ecb9b6251ed1c0a138</checksum>
+  <summary>systemd-sysusers program</summary>
+  <description>This package contains the systemd-sysusers program.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="71601" installed="85793" archive="86936"/>
+  <location href="Packages/s/systemd-sysusers-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="34325"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-sysusers" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-sysusers(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="libaudit.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd-shared(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.34)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="systemd-standalone-sysusers"/>
+    </rpm:conflicts>
+    <file>/usr/bin/systemd-sysusers</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-tests</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">8bbfc73f05e0c206f6df440537c60ad0294c62e61f284d9b0fb76003eff72fd2</checksum>
+  <summary>Internal unit tests for systemd</summary>
+  <description>Systemd unit tests used to test the internal implementation after a build.
+Different binaries test different parts of the codebase.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="6962959" installed="24159294" archive="24598820"/>
+  <location href="Packages/s/systemd-tests-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="281480" end="758661"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-tests" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-tests(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="/usr/bin/bash"/>
+      <rpm:entry name="/usr/bin/python3"/>
+      <rpm:entry name="/usr/bin/sh"/>
+      <rpm:entry name="libacl.so.1()(64bit)"/>
+      <rpm:entry name="libacl.so.1(ACL_1.0)(64bit)"/>
+      <rpm:entry name="libblkid.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2_37)(64bit)"/>
+      <rpm:entry name="libcap.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2()(64bit)"/>
+      <rpm:entry name="libcrypt.so.2(XCRYPT_4.4)(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libdbus-1.so.3()(64bit)"/>
+      <rpm:entry name="libdbus-1.so.3(LIBDBUS_1_3)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libgio-2.0.so.0()(64bit)"/>
+      <rpm:entry name="libglib-2.0.so.0()(64bit)"/>
+      <rpm:entry name="libgobject-2.0.so.0()(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.2.5)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.29)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.39)(64bit)"/>
+      <rpm:entry name="libmount.so.1()(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.19)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.22)(64bit)"/>
+      <rpm:entry name="libmount.so.1(MOUNT_2.23)(64bit)"/>
+      <rpm:entry name="libseccomp.so.2()(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="libssl.so.3()(64bit)"/>
+      <rpm:entry name="libssl.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-core-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0()(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_209)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_211)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_213)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_214)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_216)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_217)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_219)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_220)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_221)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_222)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_226)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_227)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_229)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_230)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_231)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_232)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_233)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_234)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_236)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_237)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_238)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_239)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_240)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_241)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_243)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_245)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_246)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_247)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_248)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_249)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_250)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_251)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_252)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_253)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_254)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_255)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_256)(64bit)"/>
+      <rpm:entry name="libsystemd.so.0(LIBSYSTEMD_257)(64bit)"/>
+      <rpm:entry name="libudev.so.1()(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_183)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_189)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_196)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_199)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_215)(64bit)"/>
+      <rpm:entry name="libudev.so.1(LIBUDEV_247)(64bit)"/>
+      <rpm:entry name="libz.so.1()(64bit)"/>
+      <rpm:entry name="python3dist(psutil)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-libs(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-udev</name>
+  <arch>x86_64</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">88ac85a7b4d7f8ecf5a7750d6c9a5fd26b9c9fd5561ba42f89bf3570f78f3d82</checksum>
+  <summary>Rule-based device node and kernel event manager</summary>
+  <description>This package contains systemd-udev and the rules and hardware database needed to
+manage device nodes. This package is necessary on physical machines and in
+virtual machines, but not in containers.
+
+This package also provides systemd-timesyncd, a network time protocol daemon.
+
+It also contains tools to manage encrypted home areas and secrets bound to the
+machine, and to create or grow partitions and make file systems automatically.</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726330" build="1746710918"/>
+  <size package="2500057" installed="12469199" archive="12560600"/>
+  <location href="Packages/s/systemd-udev-257.5-6.fc42.x86_64.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-06.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="71784" end="210781"/>
+    <rpm:provides>
+      <rpm:entry name="/usr/sbin/udevadm"/>
+      <rpm:entry name="config(systemd-udev)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="group(systemd-coredump)"/>
+      <rpm:entry name="group(systemd-timesync)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-fido2.so()(64bit)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-fido2.so(CRYPTSETUP_TOKEN_1.0)(64bit)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-pkcs11.so()(64bit)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-pkcs11.so(CRYPTSETUP_TOKEN_1.0)(64bit)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-tpm2.so()(64bit)"/>
+      <rpm:entry name="libcryptsetup-token-systemd-tpm2.so(CRYPTSETUP_TOKEN_1.0)(64bit)"/>
+      <rpm:entry name="systemd-repart" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-udev" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd-udev(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="u2f-hidraw-policy" flags="EQ" epoch="0" ver="1.0.2" rel="40"/>
+      <rpm:entry name="udev" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="udev(x86-64)" flags="EQ" epoch="0" ver="257.5"/>
+      <rpm:entry name="user(systemd-coredump)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLWNvcmVkdW1wIC0gInN5c3RlbWQgQ29yZSBEdW1wZXIi"/>
+      <rpm:entry name="user(systemd-timesync)" flags="EQ" epoch="0" ver="dSBzeXN0ZW1kLXRpbWVzeW5jIC0gInN5c3RlbWQgVGltZSBTeW5jaHJvbml6YXRpb24i"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="(grubby &gt; 8.40-72 if grubby)"/>
+      <rpm:entry name="(sdubby &gt; 1.0-3 if sdubby)"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="/bin/sh" pre="1"/>
+      <rpm:entry name="/bin/sh"/>
+      <rpm:entry name="/usr/bin/sh"/>
+      <rpm:entry name="filesystem(unmerged-sbin-symlinks)"/>
+      <rpm:entry name="grep" pre="1"/>
+      <rpm:entry name="kbd"/>
+      <rpm:entry name="kmod" flags="GE" epoch="0" ver="18" rel="4"/>
+      <rpm:entry name="libblkid.so.1()(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.15)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.17)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.18)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2.21)(64bit)"/>
+      <rpm:entry name="libblkid.so.1(BLKID_2_37)(64bit)"/>
+      <rpm:entry name="libcrypto.so.3()(64bit)"/>
+      <rpm:entry name="libcrypto.so.3(OPENSSL_3.0.0)(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12()(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.0)(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.4)(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.7)(64bit)"/>
+      <rpm:entry name="libfdisk.so.1()(64bit)"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.26)(64bit)"/>
+      <rpm:entry name="libfdisk.so.1(FDISK_2.31)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1()(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.0)(64bit)"/>
+      <rpm:entry name="libgcc_s.so.1(GCC_3.3.1)(64bit)"/>
+      <rpm:entry name="libkmod.so.2()(64bit)"/>
+      <rpm:entry name="libkmod.so.2(LIBKMOD_5)(64bit)"/>
+      <rpm:entry name="libm.so.6()(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.2.5)(64bit)"/>
+      <rpm:entry name="libm.so.6(GLIBC_2.29)(64bit)"/>
+      <rpm:entry name="libselinux.so.1()(64bit)"/>
+      <rpm:entry name="libselinux.so.1(LIBSELINUX_1.0)(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so()(64bit)"/>
+      <rpm:entry name="libsystemd-shared-257.5-6.fc42.so(SD_SHARED)(64bit)"/>
+      <rpm:entry name="rtld(GNU_HASH)"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42" pre="1"/>
+      <rpm:entry name="systemd(x86-64)" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+      <rpm:entry name="libc.so.6(GLIBC_2.38)(64bit)"/>
+    </rpm:requires>
+    <rpm:conflicts>
+      <rpm:entry name="systemd-standalone-repart"/>
+    </rpm:conflicts>
+    <rpm:obsoletes>
+      <rpm:entry name="u2f-hidraw-policy" flags="LT" epoch="0" ver="1.0.2" rel="40"/>
+    </rpm:obsoletes>
+    <rpm:suggests>
+      <rpm:entry name="systemd-bootchart"/>
+    </rpm:suggests>
+    <rpm:recommends>
+      <rpm:entry name="libcryptsetup.so.12()(64bit)"/>
+      <rpm:entry name="libcryptsetup.so.12(CRYPTSETUP_2.4)(64bit)"/>
+      <rpm:entry name="libdw.so.1()(64bit)"/>
+      <rpm:entry name="libdw.so.1(ELFUTILS_0.186)(64bit)"/>
+      <rpm:entry name="libelf.so.1()(64bit)"/>
+      <rpm:entry name="libelf.so.1(ELFUTILS_1.7)(64bit)"/>
+      <rpm:entry name="libfido2.so.1()(64bit)"/>
+      <rpm:entry name="libp11-kit.so.0()(64bit)"/>
+      <rpm:entry name="libtss2-esys.so.0()(64bit)"/>
+      <rpm:entry name="libtss2-mu.so.0()(64bit)"/>
+      <rpm:entry name="libtss2-rc.so.0()(64bit)"/>
+    </rpm:recommends>
+    <file type="dir">/etc/binfmt.d</file>
+    <file type="ghost">/etc/crypttab</file>
+    <file type="dir">/etc/kernel</file>
+    <file type="dir">/etc/kernel/install.d</file>
+    <file type="dir">/etc/modules-load.d</file>
+    <file>/etc/sysctl.conf</file>
+    <file type="dir">/etc/sysctl.d</file>
+    <file>/etc/sysctl.d/99-sysctl.conf</file>
+    <file type="ghost">/etc/systemd/coredump.conf</file>
+    <file type="ghost">/etc/systemd/homed.conf</file>
+    <file type="ghost">/etc/systemd/oomd.conf</file>
+    <file type="ghost">/etc/systemd/pstore.conf</file>
+    <file type="ghost">/etc/systemd/sleep.conf</file>
+    <file type="ghost">/etc/systemd/timesyncd.conf</file>
+    <file type="dir">/etc/udev</file>
+    <file type="ghost">/etc/udev/hwdb.bin</file>
+    <file type="dir">/etc/udev/hwdb.d</file>
+    <file type="ghost">/etc/udev/iocost.conf</file>
+    <file type="dir">/etc/udev/rules.d</file>
+    <file type="ghost">/etc/udev/udev.conf</file>
+    <file type="ghost">/etc/vconsole.conf</file>
+    <file>/usr/bin/bootctl</file>
+    <file>/usr/bin/coredumpctl</file>
+    <file>/usr/bin/installkernel</file>
+    <file>/usr/bin/kernel-install</file>
+    <file>/usr/bin/systemd-ac-power</file>
+    <file>/usr/bin/systemd-cryptenroll</file>
+    <file>/usr/bin/systemd-cryptsetup</file>
+    <file>/usr/bin/systemd-hwdb</file>
+    <file>/usr/bin/systemd-repart</file>
+    <file>/usr/bin/udevadm</file>
+  </format>
+</package>
+<package type="rpm">
+  <name>systemd-ukify</name>
+  <arch>noarch</arch>
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <checksum type="sha256" pkgid="YES">9fede8d2693a7490ffbfcc7284866f3baafb1d68f0e47c5c5fac1748dbb77df6</checksum>
+  <summary>Tool to build Unified Kernel Images</summary>
+  <description>This package provides ukify, a script that combines a kernel image, an initrd,
+with a command line, and possibly PCR measurements and other metadata, into a
+Unified Kernel Image (UKI).</description>
+  <packager>Fedora Project</packager>
+  <url>https://systemd.io</url>
+  <time file="1746726329" build="1746710889"/>
+  <size package="62809" installed="92502" archive="93196"/>
+  <location href="Packages/s/systemd-ukify-257.5-6.fc42.noarch.rpm"/>
+  <format>
+    <rpm:license>LGPL-2.1-or-later AND MIT AND GPL-2.0-or-later</rpm:license>
+    <rpm:vendor>Fedora Project</rpm:vendor>
+    <rpm:group>Unspecified</rpm:group>
+    <rpm:buildhost>buildhw-x86-16.iad2.fedoraproject.org</rpm:buildhost>
+    <rpm:sourcerpm>systemd-257.5-6.fc42.src.rpm</rpm:sourcerpm>
+    <rpm:header-range start="4504" end="33349"/>
+    <rpm:provides>
+      <rpm:entry name="systemd-ukify" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:provides>
+    <rpm:requires>
+      <rpm:entry name="(systemd-boot if (filesystem(x86-32) or filesystem(x86-64) or filesystem(aarch64) or filesystem(riscv64)))"/>
+      <rpm:entry name="/usr/bin/python3"/>
+      <rpm:entry name="python3dist(cryptography)"/>
+      <rpm:entry name="python3dist(pefile)"/>
+      <rpm:entry name="python3dist(zstandard)"/>
+      <rpm:entry name="systemd" flags="EQ" epoch="0" ver="257.5" rel="6.fc42"/>
+    </rpm:requires>
+    <rpm:recommends>
+      <rpm:entry name="python3dist(pillow)"/>
+    </rpm:recommends>
+    <file>/usr/bin/ukify</file>
+  </format>
+</package>
+</metadata>
