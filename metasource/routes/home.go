@@ -162,10 +162,10 @@ func RetrieveHome(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := page.Page{
-		Name: "MetaSource",
-		Vers: "v0.1.0",
-		Host: "metasource.gridhead.net",
-		Conn: "https",
+		Name: config.SERVNAME,
+		Vers: config.VERSDATA,
+		Host: config.HOSTNAME,
+		Conn: config.PROTOCOL,
 		Dict: LastModified(list),
 		Park: park,
 	}
