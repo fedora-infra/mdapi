@@ -12,17 +12,17 @@ o888o o888o o888o `Y8bod8P'   "888" `Y888""8o 8""888P' `Y8bod8P'  `V88V"V8P' d88
 Performant source for RPM repositories metadata                                              MDAPI v4.x.x
 ```
 
-MetaSource is a performant source for RPM repositories metadata which has an 
-access to the metadata of the different Fedora Linux package repositories and 
-will serve you the most recent information available. It will parse through 
-the "updates-testing" repository before moving onto the likes of "updates" and 
+MetaSource is a performant source for RPM repositories metadata which has an
+access to the metadata of the different Fedora Linux package repositories and
+will serve you the most recent information available. It will parse through
+the "updates-testing" repository before moving onto the likes of "updates" and
 "releases" repository if no information is found in the previous repository.
 
-Utilize the fast lookup interface to acquaint yourself with the API endpoints 
-and expected outputs. Press `ENTER` after typing the name to execute a lookup 
-in a new window. If you query for a non-existent branch - it will return an 
-**HTTP 400** error. If you query for a non-existent package - it will return 
-an **HTTP 404** error. Please report persistent **HTTP 500** errors to the 
+Utilize the fast lookup interface to acquaint yourself with the API endpoints
+and expected outputs. Press `ENTER` after typing the name to execute a lookup
+in a new window. If you query for a non-existent branch - it will return an
+**HTTP 400** error. If you query for a non-existent package - it will return
+an **HTTP 404** error. Please report persistent **HTTP 500** errors to the
 [Fedora Infrastructure](https://pagure.io/fedora-infrastructure/issues) team.
 
 ## Deployment
@@ -35,7 +35,7 @@ https://metasource.gridhead.net/
 
 1.  Ensure the most recent version of `go`, `createrepo_c-devel` and `git` installed.
     ```
-    $ sudo dnf install go createrepo_c-devel git --setopt=install_weak_deps=False
+    $ sudo dnf install go createrepo_c-devel git pre-commit --setopt=install_weak_deps=False
     ```
 2.  Clone the repository contents to your local projects directory.
     ```
@@ -45,11 +45,15 @@ https://metasource.gridhead.net/
     ```
     $ cd metasource
     ```
-4.  Build the executable binary using the following command.
+4.  Install the git hook scripts
+    ```
+    $ pre-commit install
+    ```
+5.  Build the executable binary using the following command.
     ```
     $ go build -o meta main.go
     ```
-5.  View the help contents of the service's command line interface.
+6.  View the help contents of the service's command line interface.
     ```
     $ ./meta --help
     ```
@@ -66,23 +70,23 @@ https://metasource.gridhead.net/
     ```
     INF Expected either 'database' or 'dispense' subcommand
     ```
-6.  Ensure that you have at least 10GiB of storage for RPM repositories metadata.
+7.  Ensure that you have at least 10GiB of storage for RPM repositories metadata.
     ```
     $ df -h
     ```
-7.  Download the databases to a temporary directory of your choice.
+8.  Download the databases to a temporary directory of your choice.
     ```
     $ ./meta -location /var/tmp/metadata database
     ```
-8.  Schedule the database fetching task in a periodically running cronjob.
+9.  Schedule the database fetching task in a periodically running cronjob.
     ```
     $ cron
     ```
-9.  Start the service backend after the database download has finished.
+10.  Start the service backend after the database download has finished.
     ```
     $ ./meta -location /var/tmp/metadata dispense
     ```
-10. Access the service endpoints using the `curl` command or an internet browser.
+11. Access the service endpoints using the `curl` command or an internet browser.
     ```
     $ curl -i http://localhost:8080/
     ```
@@ -94,7 +98,7 @@ https://metasource.gridhead.net/
     Transfer-Encoding: chunked
     ...
     ```
-11. Press `Ctrl+C` keyboard combination to shut down the service backend.
+12. Press `Ctrl+C` keyboard combination to shut down the service backend.
     ```
     2025/04/08 06:35:32 "GET http://192.168.0.100/ HTTP/1.1" from 192.168.0.210:48164 - 200 6775B in 115.115µs
     2025/04/08 06:35:35 "GET http://192.168.0.100/branches HTTP/1.1" from 192.168.0.210:48164 - 200 183B in 318.308µs
@@ -104,7 +108,7 @@ https://metasource.gridhead.net/
     2025/04/08 06:35:47 "GET http://192.168.0.100/rawhide/changelog/systemd-networkd HTTP/1.1" from 192.168.0.210:48164 - 200 1924B in 877.515µs
     ^C
     ```
-12. Consider contributing to the project with methods that you see feasible.
+13. Consider contributing to the project with methods that you see feasible.
 
 ### Containerized
 
