@@ -17,7 +17,7 @@ var filedict = map[string]home.FileUnit{
 		Type: "primary",
 		Path: "",
 		Hash: home.Checksum{
-			Data: "b9be195a3fc6b1ab4a99dd9b5491bc79647e7f782e4d46e300c40745979f3fc8",
+			Data: "d69ef00db0cdfa189c4accae4ea0d2e4fc193b9a12f4d3db9d06ff9729d99808",
 			Type: "sha256",
 		},
 	},
@@ -27,7 +27,7 @@ var filedict = map[string]home.FileUnit{
 		Type: "filelists",
 		Path: "",
 		Hash: home.Checksum{
-			Data: "acb3db555160098f92ca38cf93410ec77a61ddc9bdcfc2b37cda6afc1840b4fd",
+			Data: "3fc9351f8ed4f47662a2da87959120f4162b22c4c677638c77158ca49c475480",
 			Type: "sha256",
 		},
 	},
@@ -37,7 +37,7 @@ var filedict = map[string]home.FileUnit{
 		Type: "other",
 		Path: "",
 		Hash: home.Checksum{
-			Data: "4a3f9b96ea88dee252069259491b3f59f18850b75ad8302c17987b586dbf0520",
+			Data: "7a689d6ea74f2fe4271b872e097b4f00a896e3c05438b649f9bfaa4214240b94",
 			Type: "sha256",
 		},
 	},
