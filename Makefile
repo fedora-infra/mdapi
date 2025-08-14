@@ -1,7 +1,7 @@
 .PHONY: make
 make:
 	@echo "Building binaries..."
-	@go build -o meta main.go
+	@go build -x -o meta main.go
 
 .PHONY: lint
 lint:
