@@ -17,8 +17,8 @@ func TestReadPrmy_Failure_AbsentDB(t *testing.T) {
 	_, _, expt := lookup.ReadPrmy(&vers, &name)
 	if expt == nil {
 		t.Errorf("Received nothing, Expected error")
-	} else if expt.Error() != "database file does not exist" {
-		t.Errorf("Received '%s', Expected 'database file does not exist'", expt.Error())
+	} else if expt.Error() != "database files are absent" {
+		t.Errorf("Received '%s', Expected 'database files are absent'", expt.Error())
 	}
 }
 
@@ -73,7 +73,7 @@ func TestReadPrmy_Failure_FaultyName(t *testing.T) {
 	_, _, expt := lookup.ReadPrmy(&vers, &name)
 	if expt == nil {
 		t.Errorf("Received nothing, Expected error")
-	} else if expt.Error() != "no result found" {
-		t.Errorf("Received '%s', Expected 'no result found'", expt.Error())
+	} else if expt.Error() != "result absent" {
+		t.Errorf("Received '%s', Expected 'result absent'", expt.Error())
 	}
 }
