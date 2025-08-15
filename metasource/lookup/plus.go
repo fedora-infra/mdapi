@@ -5,20 +5,20 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 )
 
-var ReadExtn = func(vers *string, pack *home.PackUnit, repo *string) (home.ExtnUnit, error) {
+var ReadExtn = func(vers *string, pack *models.PackUnit, repo *string) (models.ExtnUnit, error) {
 	var base *sql.DB
 	var rows *sql.Rows
 	var stmt *sql.Stmt
 	var expt error
 	var item, path, sqlq string
-	var dpit home.DepsUnit
+	var dpit models.DepsUnit
 	var list []string
-	var rslt home.ExtnUnit
-	var dpls []home.DepsUnit
+	var rslt models.ExtnUnit
+	var dpls []models.DepsUnit
 
 	list = []string{
 		"supplements",
@@ -49,7 +49,7 @@ var ReadExtn = func(vers *string, pack *home.PackUnit, repo *string) (home.ExtnU
 	defer base.Close()
 
 	for _, item = range list {
-		dpls = []home.DepsUnit{}
+		dpls = []models.DepsUnit{}
 
 		sqlq = fmt.Sprintf(config.OBTAIN_PACKAGE_INFO, item)
 

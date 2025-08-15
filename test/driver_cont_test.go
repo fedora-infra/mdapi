@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"path/filepath"
 	"testing"
 )
@@ -14,7 +14,7 @@ func TestGenerateSignal_Failure_FaultyFile(t *testing.T) {
 
 	cast := 0
 	for _, iter := range []string{"filelists", "other", "primary"} {
-		unit := home.FileUnit{
+		unit := models.FileUnit{
 			Name: fmt.Sprintf("metasource-rawhide-%s.sqlite", iter),
 			Path: filepath.Join(config.DBFOLDER, fmt.Sprintf("metasource-rawhide-%s.sqlite", iter)),
 			Keep: false,
@@ -38,7 +38,7 @@ func TestGenerateSignal_Failure_FaultyDriver(t *testing.T) {
 
 	cast := 0
 	for _, iter := range []string{"filelists", "other", "primary"} {
-		unit := home.FileUnit{
+		unit := models.FileUnit{
 			Name: fmt.Sprintf("metasource-rawhide-%s.sqlite", iter),
 			Path: filepath.Join(config.DBFOLDER, fmt.Sprintf("metasource-rawhide-%s.sqlite", iter)),
 			Keep: false,

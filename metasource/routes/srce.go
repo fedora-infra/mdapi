@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/dict"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"net/http"
 )
 
 func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 	var name, vers, repo string
-	var rslt dict.UnitPrimary
-	var pack home.PackUnit
-	var data home.ExtnUnit
+	var rslt models.UnitPrimary
+	var pack models.PackUnit
+	var data models.ExtnUnit
 	var coop []string
 	var expt error
 
@@ -48,7 +47,7 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rslt = dict.UnitPrimary{
+	rslt = models.UnitPrimary{
 		Repo:        repo,
 		Arch:        pack.Arch.String,
 		Epoch:       pack.Epoch.String,
@@ -64,9 +63,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Repo = "release"
 	}
 
-	rslt.Supplements = []dict.UnitBase{}
+	rslt.Supplements = []models.UnitBase{}
 	for _, item := range data.Supplements {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -76,9 +75,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Supplements = append(rslt.Supplements, utbs)
 	}
 
-	rslt.Recommends = []dict.UnitBase{}
+	rslt.Recommends = []models.UnitBase{}
 	for _, item := range data.Recommends {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -88,9 +87,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Recommends = append(rslt.Recommends, utbs)
 	}
 
-	rslt.Conflicts = []dict.UnitBase{}
+	rslt.Conflicts = []models.UnitBase{}
 	for _, item := range data.Conflicts {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -100,9 +99,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Conflicts = append(rslt.Conflicts, utbs)
 	}
 
-	rslt.Obsoletes = []dict.UnitBase{}
+	rslt.Obsoletes = []models.UnitBase{}
 	for _, item := range data.Obsoletes {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -112,9 +111,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Obsoletes = append(rslt.Obsoletes, utbs)
 	}
 
-	rslt.Provides = []dict.UnitBase{}
+	rslt.Provides = []models.UnitBase{}
 	for _, item := range data.Provides {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -124,9 +123,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Provides = append(rslt.Provides, utbs)
 	}
 
-	rslt.Requires = []dict.UnitBase{}
+	rslt.Requires = []models.UnitBase{}
 	for _, item := range data.Requires {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -136,9 +135,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Requires = append(rslt.Requires, utbs)
 	}
 
-	rslt.Enhances = []dict.UnitBase{}
+	rslt.Enhances = []models.UnitBase{}
 	for _, item := range data.Enhances {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,
@@ -148,9 +147,9 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 		rslt.Enhances = append(rslt.Enhances, utbs)
 	}
 
-	rslt.Suggests = []dict.UnitBase{}
+	rslt.Suggests = []models.UnitBase{}
 	for _, item := range data.Suggests {
-		utbs := dict.UnitBase{
+		utbs := models.UnitBase{
 			Version: item.Version.String,
 			Epoch:   item.Epoch.String,
 			Release: item.Release.String,

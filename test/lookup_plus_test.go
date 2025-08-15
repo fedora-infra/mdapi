@@ -7,13 +7,13 @@ import (
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"strings"
 	"testing"
 )
 
 var vers_lookup_extn string = "rawhide"
-var pack_lookup_extn home.PackUnit = home.PackUnit{
+var pack_lookup_extn models.PackUnit = models.PackUnit{
 	Key:     1,
 	Id:      sql.NullString{Valid: true, String: "28d3c752b8f7f78aae51fb4afee36d5bfdee295df85b3fdacb4bc0357f614784"},
 	Name:    sql.NullString{Valid: true, String: "systemd"},
@@ -86,7 +86,7 @@ func TestReadExtn_Failure_FaultyCoop(t *testing.T) {
 	Path_Init(t, "")
 
 	original := lookup.ReadCoop
-	lookup.ReadCoop = func(*string, *home.PackUnit, *string) ([]string, error) {
+	lookup.ReadCoop = func(*string, *models.PackUnit, *string) ([]string, error) {
 		return []string{}, errors.New("ReadCoop failed")
 	}
 	defer func() { lookup.ReadCoop = original }()

@@ -5,11 +5,11 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 )
 
-var ReadCoop = func(vers *string, pack *home.PackUnit, repo *string) ([]string, error) {
+var ReadCoop = func(vers *string, pack *models.PackUnit, repo *string) ([]string, error) {
 	var base *sql.DB
 	var rows *sql.Rows
 	var stmt *sql.Stmt

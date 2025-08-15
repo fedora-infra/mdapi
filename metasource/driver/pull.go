@@ -6,7 +6,7 @@ import (
 	"io"
 	"log/slog"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -14,9 +14,9 @@ import (
 	"time"
 )
 
-var DownloadRepositories func(unit *home.FileUnit, vers *string, stab int64, cast *int, loca *string) error
+var DownloadRepositories func(unit *models.FileUnit, vers *string, stab int64, cast *int, loca *string) error
 
-func DownloadRepositoriesMill(unit *home.FileUnit, vers *string, stab int64, cast *int, loca *string) error {
+func DownloadRepositoriesMill(unit *models.FileUnit, vers *string, stab int64, cast *int, loca *string) error {
 	if stab >= config.ATTEMPTS {
 		unit.Keep = false
 		return fmt.Errorf("most attempts failed")

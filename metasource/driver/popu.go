@@ -5,16 +5,16 @@ import (
 	"fmt"
 	"log/slog"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"regexp"
 	"strings"
 )
 
-var PopulateRepositories = func() ([]home.LinkUnit, error) {
-	var dict []home.LinkUnit
+var PopulateRepositories = func() ([]models.LinkUnit, error) {
+	var dict []models.LinkUnit
 	var expt error
 	var list []string
-	var unit home.LinkUnit
+	var unit models.LinkUnit
 
 	list, expt = ListBranches("frozen")
 	if expt != nil {
@@ -37,11 +37,11 @@ var PopulateRepositories = func() ([]home.LinkUnit, error) {
 		}
 
 		urlx = fmt.Sprintf("%s/pub/fedora/linux/development/%s/Everything/x86_64/os/repodata/", config.DLSERVER, vers)
-		unit = home.LinkUnit{Name: item, Link: urlx}
+		unit = models.LinkUnit{Name: item, Link: urlx}
 		dict = append(dict, unit)
 		slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Acquired repository location for %s/%s branch at %s", item, item, vers, urlx))
 		urlx = strings.Replace(urlx, "/x86_64/os/", "/source/tree/", -1)
-		unit = home.LinkUnit{Name: fmt.Sprintf("src_%s", item), Link: urlx}
+		unit = models.LinkUnit{Name: fmt.Sprintf("src_%s", item), Link: urlx}
 		dict = append(dict, unit)
 		slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Acquired repository location for src_%s/%s branch at %s", item, item, vers, urlx))
 	}
@@ -78,17 +78,17 @@ var PopulateRepositories = func() ([]home.LinkUnit, error) {
 		for indx, urli := range linkbook {
 			name = fmt.Sprintf(idenbook[indx], item)
 			urlx = fmt.Sprintf(urli, config.DLSERVER, vers)
-			unit = home.LinkUnit{Name: name, Link: urlx}
+			unit = models.LinkUnit{Name: name, Link: urlx}
 			dict = append(dict, unit)
 			slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Acquired repository location for %s/%s branch at %s", name, name, vers, urlx))
 			urlx = strings.Replace(urlx, "/x86_64/os/", "/source/tree/", -1)
-			unit = home.LinkUnit{Name: fmt.Sprintf("src_%s", name), Link: urlx}
+			unit = models.LinkUnit{Name: fmt.Sprintf("src_%s", name), Link: urlx}
 			dict = append(dict, unit)
 			slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Acquired repository location for src_%s/%s branch at %s", name, name, vers, urlx))
 		}
 	}
 
-	unit = home.LinkUnit{Name: "koji", Link: fmt.Sprintf("%s/rawhide/latest/x86_64/repodata/", config.KOJIREPO)}
+	unit = models.LinkUnit{Name: "koji", Link: fmt.Sprintf("%s/rawhide/latest/x86_64/repodata/", config.KOJIREPO)}
 	dict = append(dict, unit)
 	slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Acquired repository location for %s/%s branch at %s", unit.Name, unit.Name, "rawhide", unit.Link))
 

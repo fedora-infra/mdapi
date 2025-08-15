@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/dict"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"net/http"
 )
 
 func RetrieveFileList(w http.ResponseWriter, r *http.Request) {
 	var name, vers, repo string
-	var rslt dict.UnitFileList
-	var data home.FilelistRslt
-	var pack home.PackUnit
+	var rslt models.UnitFileList
+	var data models.FilelistRslt
+	var pack models.PackUnit
 	var expt error
 
 	name = chi.URLParam(r, "name")
@@ -41,14 +40,14 @@ func RetrieveFileList(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rslt = dict.UnitFileList{}
+	rslt = models.UnitFileList{}
 	rslt.Repo = repo
 	if rslt.Repo == "" {
 		rslt.Repo = "release"
 	}
 
 	for _, item := range data.List {
-		var unit dict.File
+		var unit models.File
 		unit.FileTypes = item.Type.String
 		unit.DirName = item.Directory.String
 		unit.FileNames = item.Name.String

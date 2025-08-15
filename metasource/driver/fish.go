@@ -8,14 +8,14 @@ import (
 	"github.com/ulikunitz/xz"
 	"io"
 	"log/slog"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 	"path/filepath"
 	"strings"
 	"sync"
 )
 
-func WithdrawArchives(unit *home.FileUnit, vers *string, wait *sync.WaitGroup, cast *int, loca *string) {
+func WithdrawArchives(unit *models.FileUnit, vers *string, wait *sync.WaitGroup, cast *int, loca *string) {
 	defer wait.Done()
 
 	var inpt, otpt *os.File

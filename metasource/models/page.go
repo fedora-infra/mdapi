@@ -1,4 +1,4 @@
-package page
+package models
 
 type Card struct {
 	Iden string

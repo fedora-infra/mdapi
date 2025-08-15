@@ -4,10 +4,10 @@ import (
 	"database/sql"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 )
 
-func GenerateSignal(unit *home.FileUnit, cast *int) error {
+func GenerateSignal(unit *models.FileUnit, cast *int) error {
 	var base *sql.DB
 	var expt error
 
