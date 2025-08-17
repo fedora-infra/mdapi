@@ -10,7 +10,7 @@ COPY . .
 
 ENV CGO_ENABLED=1 GOOS=linux
 
-RUN go mod download && go build -o meta
+RUN make
 
 FROM registry.fedoraproject.org/fedora-minimal:42 as runtime
 

@@ -13,7 +13,9 @@
     <a class="navbar-brand d-flex align-items-center flex-grow-1" href="#">
       <img src="/assets/fedora.svg" id="logo" class="logo" width="30" height="30">
     </a>
-    <span>{{ .Name }} {{ .Vers }}</span>
+    <span>
+      <a href="https://github.com/fedora-infra/mdapi/commits/{{ .Hash }}" target="_blank" class="text-decoration-none text-body">{{ .Name }} {{ .Vers }}</a>
+    </span>
   </div>
 </nav>
   <div class="container">

@@ -124,3 +124,5 @@ var PROTOCOL string = "https"
 var SERVNAME string = "MetaSource"
 
 var VERSDATA string = "v4.0.0"
+
+var COMMITHASH string = "0123456789abcdef" // To be replaced by latest commit hash

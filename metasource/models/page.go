@@ -24,6 +24,7 @@ type Page struct {
 	Vers string
 	Host string
 	Conn string
+	Hash string
 	Dict map[string]Vary
 	Park []Card
 }

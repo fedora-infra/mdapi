@@ -1,7 +1,8 @@
 .PHONY: make
 make:
 	@echo "Building binaries..."
-	@go build -x -o meta main.go
+	@COMMIT_HASH=$$(git rev-parse HEAD); \
+	go build -x -ldflags "-X metasource/metasource/config.COMMITHASH=$$COMMIT_HASH" -o meta main.go
 
 .PHONY: lint
 lint:
@@ -14,7 +15,7 @@ lint:
 	@$$(go env GOPATH)/bin/staticcheck ./...
 	@echo "Securing codebase..."
 	@go install github.com/securego/gosec/v2/cmd/gosec@latest
-	@$$(go env GOPATH)/bin/gosec -exclude-generated ./...
+	@$$(go env GOPATH)/bin/gosec -quiet -exclude-generated ./...
 
 .PHONY: test
 test:
