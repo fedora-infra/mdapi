@@ -1,0 +1,408 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<otherdata xmlns="http://linux.duke.edu/metadata/other" packages="27">
+<package pkgid="28d3c752b8f7f78aae51fb4afee36d5bfdee295df85b3fdacb4bc0357f614784" name="systemd" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="4c79f1b47e88ccffa0152fe5d14b7ea50985b9f00ca0a58af1b8f16730289ebd" name="systemd" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="a1fccd6e28f4bbeec18413fd2745eee333fd87570add11799d48999206627b4f" name="systemd-boot-unsigned" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="0b3b966e055d8b782da7a956b68852c9f4c6d419769398142e377af80ed2d1bf" name="systemd-container" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="49646910e9609c9c0f2cddd3bc456e1784ab68be1c6cd1c8a783f3ab7d47c9e5" name="systemd-container" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="fc282592b9eac0d51aa24fd4ac9ac78f577b80c9ec655f18e5607b6109e51045" name="systemd-devel" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="aa3edb0b9d28beb6d62c42e60eea530e7a7a5a1cbb679b65bdfd23361d96b911" name="systemd-devel" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="4315d70145631e1903bf24f1ade3e099dcff82f6b2b9c65f29311d1f942a25ac" name="systemd-journal-remote" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="1e0dee757a405a6d4bd3dc8d67e830c7dc278bbacfe97a515d3c71d3f37e4c41" name="systemd-libs" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="6affa1e2106951f2c8f2dfa1f709d483523eb74d08a6918ec5de661ccc810251" name="systemd-libs" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="e78e37d968e0870d08535d12aef92997979572ccf927045bf51db07dc23ce0e5" name="systemd-networkd" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="1c9178bf097eb606c165ddec750762470466fa773252fc4c5b41f11c165d47cb" name="systemd-networkd-defaults" arch="noarch">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="303a51d552e766ad48aeddbe41a34614f7c54995a3a7ab955f051b7b8dbf96df" name="systemd-oomd-defaults" arch="noarch">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="ecd20e14c2558da5a11781987c609396a15126dd3de732fd54623c91237cd05d" name="systemd-pam" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="b28677c1dba775c86117befd7ccca94dc38a79ca836480845ade84660f1349b7" name="systemd-pam" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="baeaa5ac2fc24e709fbe3eec193ccc243c59335e44daa03d896da1a41853aff9" name="systemd-resolved" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="04d4b99040cd3f33e9a6320deb53d3f4a94412dfd670d7ba2a01f8a374d23b90" name="systemd-rpm-macros" arch="noarch">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="64380ae4e2dac5c39b703c3e496e5475cb254c26a8bf133058c30ceaaace7390" name="systemd-shared" arch="i686">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="f38180ac3467442d2ecbbb58e45e648318c3bf78de8e5134a5bd7e21dd922dea" name="systemd-shared" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="1261303a23e84d27156639163eca9d7e29a703e3cf31c8daa5ae8a283d550b46" name="systemd-standalone-repart" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="1606bce96d1281478d0dd878083b38a0a2d034f2eaa532e4e2c29f3db764a1fd" name="systemd-standalone-shutdown" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="8890af1d8da0a8d2adbc55782275a8b4f8913246bb758f84c3e556826b56a7d3" name="systemd-standalone-sysusers" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="f79a3f454eba5282c75c12c22cc37519ee053c65cd75a711bf67e5725786e906" name="systemd-standalone-tmpfiles" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="d143c322d67d6589d877265789479b3ea59a75ea55b555ecb9b6251ed1c0a138" name="systemd-sysusers" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="8bbfc73f05e0c206f6df440537c60ad0294c62e61f284d9b0fb76003eff72fd2" name="systemd-tests" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="88ac85a7b4d7f8ecf5a7750d6c9a5fd26b9c9fd5561ba42f89bf3570f78f3d82" name="systemd-udev" arch="x86_64">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+<package pkgid="9fede8d2693a7490ffbfcc7284866f3baafb1d68f0e47c5c5fac1748dbb77df6" name="systemd-ukify" arch="noarch">
+  <version epoch="0" ver="257.5" rel="6.fc42"/>
+  <changelog author="Yaakov Selkowitz &lt;yselkowi@redhat.com&gt; - 257.4-7" date="1744286400">- Limit sdubby dependency to Fedora</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-8" date="1744286401">- Fix paths for /usr/sbin/nologin and related progs</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.4-9" date="1744286402">- Add more services to %post for udev and networkd</changelog>
+  <changelog author="Daan De Meyer &lt;daan.j.demeyer@gmail.com&gt; - 257.4-10" date="1744286403">- Relax dependencies from noarch packages on archful packages for OBS
+  builds</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-1" date="1744286404">- Version 257.5
+- A lot of small fixes in various components</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-2" date="1744286405">- Backport CI fix</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-3" date="1746705600">- Backport adb/fastboot udev rules (BZ#2356537)</changelog>
+  <changelog author="LuK1337 &lt;priv.luk@gmail.com&gt; - 257.5-4" date="1746705601">- Revert "Disable freezing of user sessions"</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-5" date="1746705602">- Move mount.ddi symlinks to -container subpackage</changelog>
+  <changelog author="Zbigniew J&#x119;drzejewski-Szmek &lt;zbyszek@in.waw.pl&gt; - 257.5-6" date="1746705603">- Restore /usr/lib/rpm/sysusers.generate-pre.sh (rhbz#2363673)</changelog>
+</package>
+</otherdata>

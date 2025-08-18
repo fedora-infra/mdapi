@@ -1,141 +1,153 @@
-# mdapi
+# metasource
 
-A simple and fast API for serving the metadata from the RPM repositories
+```
+                                .
+                              .o8
+ooo. .oo.  .oo.    .ooooo.  .o888oo  .oooo.    .oooo.o  .ooooo.  oooo  oooo  oooo d8b  .ooooo.   .ooooo.
+`888P"Y88bP"Y88b  d88' `88b   888   `P  )88b  d88(  "8 d88' `88b `888  `888  `888""8P d88' `"Y8 d88' `88b
+ 888   888   888  888ooo888   888    .oP"888  `"Y88b.  888   888  888   888   888     888       888ooo888
+ 888   888   888  888    .o   888 . d8(  888  o.  )88b 888   888  888   888   888     888   .o8 888    .o
+o888o o888o o888o `Y8bod8P'   "888" `Y888""8o 8""888P' `Y8bod8P'  `V88V"V8P' d888b    `Y8bod8P' `Y8bod8P'
 
-## Installation
+Performant source for RPM repositories metadata                                              MDAPI v4.x.x
+```
 
-### For development
+MetaSource is a performant source for RPM repositories metadata which has an
+access to the metadata of the different Fedora Linux package repositories and
+will serve you the most recent information available. It will parse through
+the "updates-testing" repository before moving onto the likes of "updates" and
+"releases" repository if no information is found in the previous repository.
 
-1. Install [Python 3](https://www.python.org/), [Virtualenv](https://virtualenv.pypa.io/en/latest/) and [Poetry](https://python-poetry.org/) on your Fedora Linux installation.
-   ```
-   $ sudo dnf install python3 python3-virtualenv poetry
-   ```
-2. Clone the repository to your local storage and make it your present working directory.
-   ```
-   $ git clone git@github.com:fedora-infra/mdapi.git
-   $ cd mdapi
-   ```
-3. Set up and activate a virtual environment within the directory of the cloned repository.
-   ```
-   $ virtualenv venv
-   $ source venv/bin/activate
-   ```
-4. Check the validity of the project configuration and install the project dependencies from the lockfile.
-   ```
-   $ (venv) poetry check
-   $ (venv) poetry install
-   ```
+Utilize the fast lookup interface to acquaint yourself with the API endpoints
+and expected outputs. Press `ENTER` after typing the name to execute a lookup
+in a new window. If you query for a non-existent branch - it will return an
+**HTTP 400** error. If you query for a non-existent package - it will return
+an **HTTP 404** error. Please report persistent **HTTP 500** errors to the
+[Fedora Infrastructure](https://pagure.io/fedora-infrastructure/issues) team.
 
-### For container image
+## Deployment
 
-1. Install [Podman](https://podman.io/) on your Fedora Linux installation.
-   ```
-   $ sudo dnf install podman
-   ```
-2. Ensure that
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The project configuration is modified according to needs in `myconfig.py` file, following the instructions provided in the **[configuration setup](#setting-up-the-configuration)** section.
-3. Execute the following command to build the container image.
-   ```
-   $ (venv) podman build -t "mdapi:$(poetry version -s)" .
-   ```
+https://metasource.gridhead.net/
 
-## Usage
+## Development
 
-### In development
+### Natively
 
-#### Viewing the help message and version
+1.  Ensure the most recent version of `go`, `createrepo_c-devel` and `git` installed.
+    ```
+    $ sudo dnf install go createrepo_c-devel git pre-commit --setopt=install_weak_deps=False
+    ```
+2.  Clone the repository contents to your local projects directory.
+    ```
+    $ git clone https://github.com/gridhead/metasource.git
+    ```
+3.  Make the cloned repository your present working directory.
+    ```
+    $ cd metasource
+    ```
+4.  Install the git hook scripts
+    ```
+    $ pre-commit install
+    ```
+5.  Build the executable binary using the following command.
+    ```
+    $ go build -o meta main.go
+    ```
+6.  View the help contents of the service's command line interface.
+    ```
+    $ ./meta --help
+    ```
+    ```
+    Usage of ./side:
+      -location string
+            Set the database location (default "/var/tmp/metasource")
+      -loglevel string
+            Set the application loglevel (default "info")
+    ```
+    ```
+    $ ./meta
+    ```
+    ```
+    INF Expected either 'database' or 'dispense' subcommand
+    ```
+7.  Ensure that you have at least 10GiB of storage for RPM repositories metadata.
+    ```
+    $ df -h
+    ```
+8.  Download the databases to a temporary directory of your choice.
+    ```
+    $ ./meta -location /var/tmp/metadata database
+    ```
+9.  Schedule the database fetching task in a periodically running cronjob.
+    ```
+    $ cron
+    ```
+10.  Start the service backend after the database download has finished.
+    ```
+    $ ./meta -location /var/tmp/metadata dispense
+    ```
+11. Access the service endpoints using the `curl` command or an internet browser.
+    ```
+    $ curl -i http://localhost:8080/
+    ```
+    ```
+    HTTP/1.1 200 OK
+    Content-Type: text/html
+    Vary: Origin
+    Date: Tue, 08 Apr 2025 06:29:18 GMT
+    Transfer-Encoding: chunked
+    ...
+    ```
+12. Press `Ctrl+C` keyboard combination to shut down the service backend.
+    ```
+    2025/04/08 06:35:32 "GET http://192.168.0.100/ HTTP/1.1" from 192.168.0.210:48164 - 200 6775B in 115.115µs
+    2025/04/08 06:35:35 "GET http://192.168.0.100/branches HTTP/1.1" from 192.168.0.210:48164 - 200 183B in 318.308µs
+    2025/04/08 06:35:39 "GET http://192.168.0.100/rawhide/pkg/kernel-devel HTTP/1.1" from 192.168.0.210:48164 - 200 2392B in 3.45733ms
+    2025/04/08 06:35:42 "GET http://192.168.0.100/rawhide/srcpkg/python-natsort HTTP/1.1" from 192.168.0.210:48164 - 404 15B in 34.494555ms
+    2025/04/08 06:35:45 "GET http://192.168.0.100/rawhide/files/kernel-core HTTP/1.1" from 192.168.0.210:48164 - 200 1038B in 1.038465ms
+    2025/04/08 06:35:47 "GET http://192.168.0.100/rawhide/changelog/systemd-networkd HTTP/1.1" from 192.168.0.210:48164 - 200 1924B in 877.515µs
+    ^C
+    ```
+13. Consider contributing to the project with methods that you see feasible.
 
-1. Ensure that
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-2. Execute the following command to view the help message.
-   ```
-   $ (venv) mdapi --help
-   ```
-   Output
-   ```
-   Usage: mdapi [OPTIONS] COMMAND [ARGS]...
-   
-     A simple API for serving the metadata from the RPM repositories
-   
-   Options:
-     -c, --conffile PATH  Read configuration from the specified Python file
-     --version            Show the version and exit.
-     --help               Show this message and exit.
-   
-   Commands:
-     database  Fetch SQLite databases from all active Fedora Linux and EPEL...
-     serveapp  Start the API server for querying repository metadata
-   ```
-3. Execute the following command to view the project version.
-   ```
-   $ (venv) mdapi --version
-   ```
-   Output
-   ```
-   mdapi, version 3.0.0
-   ```
+### Containerized
 
-#### Testing the project
-
-1. Ensure that
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The storage partition on which [test database directory](https://github.com/fedora-infra/mdapi/blob/develop/tests/__init__.py#L33) is located has at least 1.5 GiB of free space.
-2. Execute the following command to run the code quality checks and testcases.
-   ```
-   $ (venv) tox
-   ```
-
-#### Setting up the configuration
-
-1. Ensure that
-   1. The project directory is the present working directory.
-2. Make a copy of the default configuration on your local storage.
-   ```
-   $ cp mdapi/confdata/standard.py mdapi/confdata/myconfig.py
-   ```
-3. Make changes to the copied configuration file to suit the requirements.
-   ```
-   $ nano confdata/myconfig.py
-   ```
-
-#### Fetching the databases
-
-1. Ensure that
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The storage partition on which [database directory](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29) is located has at least 6 GiB of free space.
-2. Execute the following command to start fetching the database, while referencing to the modified configuration file.
-   ```
-   $ (venv) mdapi --conffile myconfig.py database
-   ```
-3. Note that the first run of the database fetching command will take a long time, depending on the internet connection.
-
-#### Serving the application
-
-1. Ensure that
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-2. Execute the following command to start serving the application, while referencing to the modified configuration file.
-   ```
-   $ (venv) mdapi --conffile myconfig.py serveapp
-   ```
-3. When done with serving the application, press `Ctrl` + `C` to raise a `KeyboardInterrupt` and exit out of the program.
-
-### In container or pod
-
-#### Serving the application
-
-1. Ensure that 
-   1. The project directory is the present working directory.
-   2. The virtual environment with the project is activated, following the instructions provided in the **[development installation](#for-development)** section.
-   3. The container image is built and available locally.
-   4. The databases are downloaded to the [database directory](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29), following the instructions provided in the **[database fetching](#fetching-the-databases)** section.
-2. Execute the following command to start the serving the application.
-   ```
-   $ (venv) podman run -v /var/tmp:/var/tmp -p 8080:8080 -ti mdapi:$(poetry version -s)
-   ```
-   This command assumes that the database directory is `/var/tmp` (which is the [default](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L29)) and the service port is `8080` (which is the [default](https://github.com/fedora-infra/mdapi/blob/develop/mdapi/confdata/standard.py#L87)).
+1.  Ensure the most recent version of [`podman`](https://podman.io/docs/installation) is installed.
+    ```
+    $ sudo dnf install podman --setopt=install_weak_deps=False
+    ```
+2.  Clone the repository contents to your local projects directory.
+    ```
+    $ git clone https://github.com/gridhead/metasource.git
+    ```
+3.  Make the cloned repository your present working directory.
+    ```
+    $ cd metasource
+    ```
+4.  Build the image.
+    ```
+    $ podman build --security-opt label=disable --tag t0xic0der/metasource:latest .
+    ```
+5.  Populate the database.
+    ```
+    $ podman run \
+        --rm \
+        --volume="metasource_db:/db" \
+        --name="metasource" \
+        --detach metasource:latest \
+        -loglevel info \
+        -location /db \
+        database
+    ```
+6.  Execute the container.
+    ```
+    $ podman run \
+        --rm \
+        --publish="8080:8080" \
+        --volume="metasource_db:/db" \
+        --name="metasource" \
+        --detach metasource:latest \
+        -loglevel info \
+        -location /db \
+        dispense
+    ```

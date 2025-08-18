@@ -7,14 +7,16 @@
     ":maintainLockFilesWeekly",
     ":separateMultipleMajorReleases",
     ":automergeMinor",
-    ":gitSignOff"
+    ":gitSignOff",
+    ":enableVulnerabilityAlertsWithLabel(security)"
   ],
   "lockFileMaintenance": {
     "enabled": true,
+    "automerge": true,
     "extends": [
       "group:allNonMajor"
     ],
-    "commitMessageAction": "Automated dependency updates"
+    "commitMessageAction": "Automated dependency updates for Expo"
   },
   "automergeStrategy": "rebase",
   "rangeStrategy": "widen",
@@ -22,13 +24,28 @@
   "labels": ["dependencies"],
   "packageRules": [
     {
-      "matchLanguages": ["python"],
-      "addLabels": ["python"]
+      "matchLanguages": ["go"],
+      "addLabels": ["go"]
     },
     {
-      "matchDepTypes": ["devDependencies"],
-      "automerge": true,
-      "groupName": "dev dependencies"
+      "matchLanguages": ["go"],
+      "matchPackageNames": [
+        "golang.org/x/crypto",
+        "golang.org/x/net"
+      ],
+      "automerge": true
+    },
+    {
+      "extends": [
+        "packages:linters"
+      ],
+      "matchPackageNames": [
+        "golangci-lint",
+        "revive",
+        "staticcheck",
+        "gosec"
+      ],
+      "automerge": true
     }
   ]
 }
