@@ -5,19 +5,19 @@ import (
 	"fmt"
 	"log/slog"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"metasource/metasource/reader"
 	"strings"
 	"sync"
 )
 
-var HandleRepositories = func(unit *home.LinkUnit) error {
+var HandleRepositories = func(unit *models.LinkUnit) error {
 	var path, loca string
 	var prmyinpt, fileinpt, othrinpt string
 	var prmyname, filename, othrname string
 	var prmypath, filepath, othrpath string
 	var expt error
-	var list []home.FileUnit
+	var list []models.FileUnit
 	var castupDownload, entireDownload int
 	var castupWithdraw, entireWithdraw int
 	var castupChecksum, entireChecksum int

@@ -1,4 +1,4 @@
-package home
+package models
 
 import "database/sql"
 
@@ -7,17 +7,17 @@ type LinkUnit struct {
 	Link string
 }
 
+type Checksum struct {
+	Data string
+	Type string
+}
+
 type FileUnit struct {
 	Name string
 	Path string
 	Type string
 	Hash Checksum
 	Keep bool
-}
-
-type Checksum struct {
-	Data string
-	Type string
 }
 
 type PackUnit struct {

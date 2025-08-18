@@ -6,20 +6,20 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 	"regexp"
 )
 
-var ReadSrce = func(vers *string, name *string) (home.PackUnit, string, error) {
+var ReadSrce = func(vers *string, name *string) (models.PackUnit, string, error) {
 	var base *sql.DB
 	var rows *sql.Rows
 	var stmt *sql.Stmt
 	var expt error
 	var item, path, sqlq, escp, ptrn string
 	var exst bool
-	var pkls []home.PackUnit
-	var rslt, pkit home.PackUnit
+	var pkls []models.PackUnit
+	var rslt, pkit models.PackUnit
 	var list []string
 	var rgxp *regexp.Regexp
 
@@ -56,7 +56,7 @@ var ReadSrce = func(vers *string, name *string) (home.PackUnit, string, error) {
 		defer rows.Close()
 
 		for rows.Next() {
-			var pack home.PackUnit
+			var pack models.PackUnit
 			expt = rows.Scan(&pack.Key, &pack.Id, &pack.Name, &pack.Source, &pack.Epoch, &pack.Version, &pack.Release, &pack.Arch, &pack.Summary, &pack.Desc, &pack.Link)
 			if expt != nil {
 				return rslt, item, expt

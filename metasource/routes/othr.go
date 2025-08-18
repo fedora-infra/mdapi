@@ -5,16 +5,15 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/dict"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"net/http"
 )
 
 func RetrieveOthr(w http.ResponseWriter, r *http.Request) {
 	var name, vers, repo string
-	var rslt dict.UnitOther
-	var data home.OthrRslt
-	var pack home.PackUnit
+	var rslt models.UnitOther
+	var data models.OthrRslt
+	var pack models.PackUnit
 	var expt error
 
 	name = chi.URLParam(r, "name")
@@ -41,14 +40,14 @@ func RetrieveOthr(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rslt = dict.UnitOther{}
+	rslt = models.UnitOther{}
 	rslt.Repo = repo
 	if rslt.Repo == "" {
 		rslt.Repo = "release"
 	}
 
 	for _, item := range data.List {
-		unit := dict.Changelog{Author: item.Author.String, Changelog: item.Text.String, Date: uint64(item.Date)}
+		unit := models.Changelog{Author: item.Author.String, Changelog: item.Text.String, Date: uint64(item.Date)}
 		rslt.Changelogs = append(rslt.Changelogs, unit)
 	}
 

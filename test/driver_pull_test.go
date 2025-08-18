@@ -3,14 +3,14 @@ package test
 import (
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"testing"
 )
 
 func TestDownload_Success(t *testing.T) {
 	Path_Init_Vacant(t)
 
-	unit := home.LinkUnit{
+	unit := models.LinkUnit{
 		Name: "rawhide",
 		Link: "https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/",
 	}
@@ -39,7 +39,7 @@ func TestDownload_Success(t *testing.T) {
 func TestDownload_FailureStabOverflow(t *testing.T) {
 	Path_Init_Vacant(t)
 
-	unit := home.LinkUnit{
+	unit := models.LinkUnit{
 		Name: "rawhide",
 		Link: "https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/",
 	}
@@ -66,7 +66,7 @@ func TestDownload_FailureStabOverflow(t *testing.T) {
 func TestDownload_FailureMistakenPath(t *testing.T) {
 	Path_Init_Vacant(t)
 
-	unit := home.LinkUnit{
+	unit := models.LinkUnit{
 		Name: "rawhide",
 		Link: "https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/",
 	}
@@ -100,37 +100,37 @@ func TestDownload_FailureMistakenLink_Prep(t *testing.T) {
 
 	var expt error
 
-	unit := home.LinkUnit{
+	unit := models.LinkUnit{
 		Name: "rawhide",
 		Link: "https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/",
 	}
 
-	list := []home.FileUnit{
-		home.FileUnit{
+	list := []models.FileUnit{
+		models.FileUnit{
 			Name: "c26498749f2ea9d456cf64f7ab1ce276e241d327fa8377002c38eeace1470d97-primary.xml.zst",
 			Path: "flaw//\x7f,link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/c26498749f2ea9d456cf64f7ab1ce276e241d327fa8377002c38eeace1470d97-primary.xml.zst",
 			Type: "primary",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "0f8fe582dc9e2bf301db59dcb9310f92019e2004f271be13be21543e3350b6b8",
 				Type: "sha256",
 			},
 			Keep: true,
 		},
-		home.FileUnit{
+		models.FileUnit{
 			Name: "37b1ecdb03a7f077d547eb3decdda898e205b94b431730c713cc768b89a58413-filelists.xml.zst",
 			Path: "flaw//\x7f,link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/37b1ecdb03a7f077d547eb3decdda898e205b94b431730c713cc768b89a58413-filelists.xml.zst",
 			Type: "filelists",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "8134c2d80f175bb95a3f50c592f6201bdadca7cf830ae672aa935530e6c65a4d",
 				Type: "sha256",
 			},
 			Keep: true,
 		},
-		home.FileUnit{
+		models.FileUnit{
 			Name: "fd7cf8e2dec5ae494374323e136a478f3cc706cfbf9a7b54afc13dbbaa2935c0-other.xml.zst",
 			Path: "flaw//\x7f,link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/fd7cf8e2dec5ae494374323e136a478f3cc706cfbf9a7b54afc13dbbaa2935c0-other.xml.zst",
 			Type: "other",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "16e4194cc8c1818113fb4e6e3d2af154fa7ee06384ec7fbaa1ce5a92ce7ef01d",
 				Type: "sha256",
 			},
@@ -159,37 +159,37 @@ func TestDownload_FailureMistakenLink_Oper(t *testing.T) {
 
 	var expt error
 
-	unit := home.LinkUnit{
+	unit := models.LinkUnit{
 		Name: "rawhide",
 		Link: "https://dl.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/",
 	}
 
-	list := []home.FileUnit{
-		home.FileUnit{
+	list := []models.FileUnit{
+		models.FileUnit{
 			Name: "c26498749f2ea9d456cf64f7ab1ce276e241d327fa8377002c38eeace1470d97-primary.xml.zst",
 			Path: "flaw://mistaken.link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/c26498749f2ea9d456cf64f7ab1ce276e241d327fa8377002c38eeace1470d97-primary.xml.zst",
 			Type: "primary",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "0f8fe582dc9e2bf301db59dcb9310f92019e2004f271be13be21543e3350b6b8",
 				Type: "sha256",
 			},
 			Keep: true,
 		},
-		home.FileUnit{
+		models.FileUnit{
 			Name: "37b1ecdb03a7f077d547eb3decdda898e205b94b431730c713cc768b89a58413-filelists.xml.zst",
 			Path: "flaw://mistaken.link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/37b1ecdb03a7f077d547eb3decdda898e205b94b431730c713cc768b89a58413-filelists.xml.zst",
 			Type: "filelists",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "8134c2d80f175bb95a3f50c592f6201bdadca7cf830ae672aa935530e6c65a4d",
 				Type: "sha256",
 			},
 			Keep: true,
 		},
-		home.FileUnit{
+		models.FileUnit{
 			Name: "fd7cf8e2dec5ae494374323e136a478f3cc706cfbf9a7b54afc13dbbaa2935c0-other.xml.zst",
 			Path: "flaw://mistaken.link/pub/fedora/linux/development/rawhide/Everything/x86_64/os/repodata/fd7cf8e2dec5ae494374323e136a478f3cc706cfbf9a7b54afc13dbbaa2935c0-other.xml.zst",
 			Type: "other",
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Data: "16e4194cc8c1818113fb4e6e3d2af154fa7ee06384ec7fbaa1ce5a92ce7ef01d",
 				Type: "sha256",
 			},

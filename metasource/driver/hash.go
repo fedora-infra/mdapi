@@ -7,12 +7,12 @@ import (
 	"hash"
 	"io"
 	"log/slog"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 	"sync"
 )
 
-func VerifyChecksum(unit *home.FileUnit, vers *string, wait *sync.WaitGroup, cast *int) {
+func VerifyChecksum(unit *models.FileUnit, vers *string, wait *sync.WaitGroup, cast *int) {
 	defer wait.Done()
 
 	var file *os.File

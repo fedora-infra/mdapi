@@ -4,8 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/dict"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"metasource/metasource/option"
 	"net/http"
 	"net/http/httptest"
@@ -25,7 +24,7 @@ func TestFile_Init_Success(t *testing.T) {
 		t.Errorf("Received %s, Expected %s", record.Header().Get("content-type"), "application/json")
 	}
 
-	rslt := dict.UnitFileList{}
+	rslt := models.UnitFileList{}
 	expt := json.Unmarshal(record.Body.Bytes(), &rslt)
 	if expt != nil {
 		t.Errorf("Unable to unmarshal JSON")
@@ -48,7 +47,7 @@ func TestFile_Init_Success_Updates(t *testing.T) {
 		t.Errorf("Received %s, Expected %s", record.Header().Get("content-type"), "application/json")
 	}
 
-	rslt := dict.UnitOther{}
+	rslt := models.UnitOther{}
 	expt := json.Unmarshal(record.Body.Bytes(), &rslt)
 	if expt != nil {
 		t.Errorf("Unable to unmarshal JSON")
@@ -80,8 +79,8 @@ func TestFile_Init_Failure_ReadPrmy_Misc_C400(t *testing.T) {
 	Path_UnInit(t, "/var/tmp")
 
 	original := lookup.ReadPrmy
-	lookup.ReadPrmy = func(vers *string, name *string) (home.PackUnit, string, error) {
-		return home.PackUnit{}, "", errors.New("ReadPrmy failed")
+	lookup.ReadPrmy = func(vers *string, name *string) (models.PackUnit, string, error) {
+		return models.PackUnit{}, "", errors.New("ReadPrmy failed")
 	}
 	defer func() { lookup.ReadPrmy = original }()
 
@@ -103,8 +102,8 @@ func TestFile_Init_Failure_ReadPrmy_Lost_C404(t *testing.T) {
 	Path_UnInit(t, "/var/tmp")
 
 	original := lookup.ReadPrmy
-	lookup.ReadPrmy = func(vers *string, name *string) (home.PackUnit, string, error) {
-		return home.PackUnit{}, "", errors.New("no result found")
+	lookup.ReadPrmy = func(vers *string, name *string) (models.PackUnit, string, error) {
+		return models.PackUnit{}, "", errors.New("no result found")
 	}
 	defer func() { lookup.ReadPrmy = original }()
 
@@ -126,8 +125,8 @@ func TestFile_Init_Failure_ReadFile_Misc_C400(t *testing.T) {
 	Path_Init(t, "")
 
 	original := lookup.ReadFile
-	lookup.ReadFile = func(vers *string, pack *home.PackUnit, repo *string) (home.FilelistRslt, error) {
-		return home.FilelistRslt{}, errors.New("ReadFile failed")
+	lookup.ReadFile = func(vers *string, pack *models.PackUnit, repo *string) (models.FilelistRslt, error) {
+		return models.FilelistRslt{}, errors.New("ReadFile failed")
 	}
 	defer func() { lookup.ReadFile = original }()
 

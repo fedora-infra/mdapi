@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"metasource/metasource/config"
-	"metasource/metasource/models/rels"
+	"metasource/metasource/models"
 	"net/http"
 	"net/url"
 	"time"
@@ -21,7 +21,7 @@ func ListBranches(status string) ([]string, error) {
 	var list []string
 	var care []string
 	var body []byte
-	var rels rels.Releases
+	var rels models.Releases
 
 	care = []string{"FEDORA", "FEDORA-EPEL", "FEDORA-EPEL-NEXT"}
 

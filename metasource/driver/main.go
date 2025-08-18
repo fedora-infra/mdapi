@@ -4,13 +4,13 @@ import (
 	"context"
 	"fmt"
 	"log/slog"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 )
 
 func Database() error {
 	var expt error
-	var list []home.LinkUnit
-	var item home.LinkUnit
+	var list []models.LinkUnit
+	var item models.LinkUnit
 
 	list, expt = PopulateRepositories()
 	if expt != nil {

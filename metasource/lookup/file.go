@@ -5,19 +5,19 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 )
 
-var ReadFile = func(vers *string, pack *home.PackUnit, repo *string) (home.FilelistRslt, error) {
+var ReadFile = func(vers *string, pack *models.PackUnit, repo *string) (models.FilelistRslt, error) {
 	var base *sql.DB
 	var rows *sql.Rows
 	var stmt *sql.Stmt
 	var expt error
 	var path, sqlq string
-	var flit home.FilelistUnit
+	var flit models.FilelistUnit
 
-	rslt := home.FilelistRslt{List: []home.FilelistUnit{}}
+	rslt := models.FilelistRslt{List: []models.FilelistUnit{}}
 
 	switch *repo {
 	case "updates-testing", "updates", "testing":

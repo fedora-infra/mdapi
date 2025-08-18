@@ -3,14 +3,14 @@ package test
 import (
 	"errors"
 	"metasource/metasource/driver"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"metasource/metasource/option"
 	"testing"
 )
 
 func TestDatabase_Failure_HandleRepositories(t *testing.T) {
 	original := driver.HandleRepositories
-	driver.HandleRepositories = func(unit *home.LinkUnit) error {
+	driver.HandleRepositories = func(unit *models.LinkUnit) error {
 		return errors.New("HandleRepositories failed")
 	}
 	defer func() { driver.HandleRepositories = original }()
@@ -23,8 +23,8 @@ func TestDatabase_Failure_HandleRepositories(t *testing.T) {
 
 func TestDatabase_Failure_PopulateRepositories(t *testing.T) {
 	original := driver.PopulateRepositories
-	driver.PopulateRepositories = func() ([]home.LinkUnit, error) {
-		return []home.LinkUnit{}, errors.New("PopulateRepositories failed")
+	driver.PopulateRepositories = func() ([]models.LinkUnit, error) {
+		return []models.LinkUnit{}, errors.New("PopulateRepositories failed")
 	}
 	defer func() { driver.PopulateRepositories = original }()
 

@@ -1,12 +1,4 @@
-package rels
-
-type Releases struct {
-	Page  int    `json:"page"`
-	Pages int    `json:"pages"`
-	Total int    `json:"total"`
-	Rows  int    `json:"rows_per_page"`
-	List  []Unit `json:"releases"`
-}
+package models
 
 type Unit struct {
 	Name                    string `json:"name"`
@@ -35,4 +27,12 @@ type Unit struct {
 	MinKarmaCritPath        int    `json:"critpath_min_karma"`
 	MinKarmaStandard        int    `json:"min_karma"`
 	SettingStatus           string `json:"setting_status"`
+}
+
+type Releases struct {
+	Page  int    `json:"page"`
+	Pages int    `json:"pages"`
+	Total int    `json:"total"`
+	Rows  int    `json:"rows_per_page"`
+	List  []Unit `json:"releases"`
 }

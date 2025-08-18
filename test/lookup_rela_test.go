@@ -6,13 +6,13 @@ import (
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"strings"
 	"testing"
 )
 
 var vers_lookup_rela string = "rawhide"
-var pack_lookup_rela home.PackUnit = home.PackUnit{
+var pack_lookup_rela models.PackUnit = models.PackUnit{
 	Key:     1,
 	Id:      sql.NullString{Valid: true, String: "28d3c752b8f7f78aae51fb4afee36d5bfdee295df85b3fdacb4bc0357f614784"},
 	Name:    sql.NullString{Valid: true, String: "systemd"},

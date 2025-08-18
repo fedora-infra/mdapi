@@ -6,17 +6,17 @@ import (
 	"fmt"
 	_ "github.com/mattn/go-sqlite3"
 	"metasource/metasource/config"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"os"
 )
 
-var ReadPrmy = func(vers *string, name *string) (home.PackUnit, string, error) {
+var ReadPrmy = func(vers *string, name *string) (models.PackUnit, string, error) {
 	var base *sql.DB
 	var unit *sql.Row
 	var expt error
 	var item, path string
 	var exst bool
-	var rslt home.PackUnit
+	var rslt models.PackUnit
 
 	list := []string{"updates-testing", "updates", "testing", ""}
 

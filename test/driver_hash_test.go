@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"path/filepath"
 	"sync"
 	"testing"
@@ -18,7 +18,7 @@ func TestVerifyChecksum_Failure_AbsentFile(t *testing.T) {
 
 	cast := 0
 	for _, iter := range []string{"filelists", "other", "primary"} {
-		unit := home.FileUnit{
+		unit := models.FileUnit{
 			Name: fmt.Sprintf("metasource-rawhide-%s.sqlite", iter),
 			Path: filepath.Join(config.DBFOLDER, "zeroexistent", fmt.Sprintf("metasource-rawhide-%s.sqlite", iter)),
 			Keep: false,
@@ -42,12 +42,12 @@ func TestVerifyChecksum_Failure_MistakenHashType(t *testing.T) {
 
 	cast := 0
 	for _, iter := range []string{"filelists", "other", "primary"} {
-		unit := home.FileUnit{
+		unit := models.FileUnit{
 			Name: fmt.Sprintf("metasource-rawhide-%s.sqlite", iter),
 			Path: filepath.Join(config.DBFOLDER, fmt.Sprintf("metasource-rawhide-%s.sqlite", iter)),
 			Keep: false,
 			Type: iter,
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Type: "mistaken-hash-type",
 				Data: "",
 			},
@@ -70,12 +70,12 @@ func TestVerifyChecksum_Failure_MistakenHashData(t *testing.T) {
 
 	cast := 0
 	for _, iter := range []string{"filelists", "other", "primary"} {
-		unit := home.FileUnit{
+		unit := models.FileUnit{
 			Name: fmt.Sprintf("metasource-rawhide-%s.sqlite", iter),
 			Path: filepath.Join(config.DBFOLDER, fmt.Sprintf("metasource-rawhide-%s.sqlite", iter)),
 			Keep: false,
 			Type: iter,
-			Hash: home.Checksum{
+			Hash: models.Checksum{
 				Type: "sha256",
 				Data: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
 			},

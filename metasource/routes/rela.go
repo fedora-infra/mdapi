@@ -5,19 +5,18 @@ import (
 	"fmt"
 	"github.com/go-chi/chi/v5"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/dict"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"net/http"
 )
 
 func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 	var name, vers, repo, rela string
-	var rslt []dict.UnitPrimary
-	var pkit dict.UnitPrimary
-	var pack, item home.PackUnit
-	var data []home.PackUnit
-	var extn home.ExtnUnit
-	var dpit home.DepsUnit
+	var rslt []models.UnitPrimary
+	var pkit models.UnitPrimary
+	var pack, item models.PackUnit
+	var data []models.PackUnit
+	var extn models.ExtnUnit
+	var dpit models.DepsUnit
 	var coop []string
 	var expt error
 
@@ -53,7 +52,7 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	rslt = []dict.UnitPrimary{}
+	rslt = []models.UnitPrimary{}
 
 	for _, item = range data {
 		extn, expt = lookup.ReadExtn(&vers, &item, &repo)
@@ -68,7 +67,7 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		pkit = dict.UnitPrimary{
+		pkit = models.UnitPrimary{
 			Repo:        repo,
 			Arch:        item.Arch.String,
 			Epoch:       item.Epoch.String,
@@ -84,9 +83,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Repo = "release"
 		}
 
-		pkit.Supplements = []dict.UnitBase{}
+		pkit.Supplements = []models.UnitBase{}
 		for _, dpit = range extn.Supplements {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -96,9 +95,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Supplements = append(pkit.Supplements, utbs)
 		}
 
-		pkit.Recommends = []dict.UnitBase{}
+		pkit.Recommends = []models.UnitBase{}
 		for _, dpit = range extn.Recommends {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -108,9 +107,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Recommends = append(pkit.Recommends, utbs)
 		}
 
-		pkit.Conflicts = []dict.UnitBase{}
+		pkit.Conflicts = []models.UnitBase{}
 		for _, dpit = range extn.Conflicts {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -120,9 +119,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Conflicts = append(pkit.Conflicts, utbs)
 		}
 
-		pkit.Obsoletes = []dict.UnitBase{}
+		pkit.Obsoletes = []models.UnitBase{}
 		for _, dpit = range extn.Obsoletes {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -132,9 +131,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Obsoletes = append(pkit.Obsoletes, utbs)
 		}
 
-		pkit.Provides = []dict.UnitBase{}
+		pkit.Provides = []models.UnitBase{}
 		for _, dpit = range extn.Provides {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -144,9 +143,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Provides = append(pkit.Provides, utbs)
 		}
 
-		pkit.Requires = []dict.UnitBase{}
+		pkit.Requires = []models.UnitBase{}
 		for _, dpit = range extn.Requires {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -156,9 +155,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Requires = append(pkit.Requires, utbs)
 		}
 
-		pkit.Enhances = []dict.UnitBase{}
+		pkit.Enhances = []models.UnitBase{}
 		for _, dpit = range extn.Enhances {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,
@@ -168,9 +167,9 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 			pkit.Enhances = append(pkit.Enhances, utbs)
 		}
 
-		pkit.Suggests = []dict.UnitBase{}
+		pkit.Suggests = []models.UnitBase{}
 		for _, dpit = range extn.Suggests {
-			utbs := dict.UnitBase{
+			utbs := models.UnitBase{
 				Version: dpit.Version.String,
 				Epoch:   dpit.Epoch.String,
 				Release: dpit.Release.String,

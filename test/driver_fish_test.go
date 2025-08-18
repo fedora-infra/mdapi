@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"metasource/metasource/config"
 	"metasource/metasource/driver"
-	"metasource/metasource/models/home"
+	"metasource/metasource/models"
 	"sync"
 	"testing"
 )
@@ -13,7 +13,7 @@ func TestWithdrawArchives_Failure_AbsentSrce(t *testing.T) {
 	wait := sync.WaitGroup{}
 	brch, loca := "rawhide", "absent-folder"
 	castup, entire := 0, 3
-	tempdict := map[string]home.FileUnit{}
+	tempdict := map[string]models.FileUnit{}
 	for iter, unit := range filedict {
 		tempdict[iter] = unit
 	}

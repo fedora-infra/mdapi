@@ -4,17 +4,16 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io"
-	"metasource/metasource/models/home"
-	"metasource/metasource/models/sxml"
+	"metasource/metasource/models"
 	"net/http"
 	"strings"
 	"time"
 )
 
-var ReadMetadata = func(unit *home.LinkUnit) ([]home.FileUnit, error) {
+var ReadMetadata = func(unit *models.LinkUnit) ([]models.FileUnit, error) {
 	mdlink := fmt.Sprintf("%s/repomd.xml", unit.Link)
-	result := []home.FileUnit{}
-	repomd := sxml.RepoMD{}
+	result := []models.FileUnit{}
+	repomd := models.RepoMD{}
 
 	rqst, expt := http.NewRequest("GET", mdlink, nil)
 	if expt != nil {
@@ -54,8 +53,8 @@ var ReadMetadata = func(unit *home.LinkUnit) ([]home.FileUnit, error) {
 
 		name := strings.Replace(item.Location.Href, "repodata/", "", -1)
 		path := fmt.Sprintf("%s/%s", unit.Link, name)
-		hash := home.Checksum{Data: item.ChecksumOpen.Data, Type: item.ChecksumOpen.Type}
-		file := home.FileUnit{Name: name, Path: path, Type: item.Type, Hash: hash, Keep: true}
+		hash := models.Checksum{Data: item.ChecksumOpen.Data, Type: item.ChecksumOpen.Type}
+		file := models.FileUnit{Name: name, Path: path, Type: item.Type, Hash: hash, Keep: true}
 		result = append(result, file)
 	}
 

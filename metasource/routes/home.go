@@ -7,7 +7,7 @@ import (
 	"html/template"
 	"metasource/metasource/config"
 	"metasource/metasource/lookup"
-	"metasource/metasource/models/page"
+	"metasource/metasource/models"
 	"net/http"
 	"os"
 	"strings"
@@ -16,9 +16,9 @@ import (
 //go:embed shapes/home.html
 var HomeHTML []byte
 
-var LastModified = func(list []string) map[string]page.Vary {
+var LastModified = func(list []string) map[string]models.Vary {
 	var info_primary, info_filelists, info_changelog os.FileInfo
-	datelist := map[string]page.Vary{}
+	datelist := map[string]models.Vary{}
 
 	for _, brch := range list {
 		for _, repo := range []string{"updates-testing", "updates", "testing", ""} {
@@ -51,16 +51,16 @@ var LastModified = func(list []string) map[string]page.Vary {
 			}
 		}
 		if info_primary != nil && info_filelists != nil && info_changelog != nil {
-			datelist[brch] = page.Vary{
-				Primary: page.Date{
+			datelist[brch] = models.Vary{
+				Primary: models.Date{
 					When: info_primary.ModTime().Format("2006-01-02 15:04:05 MST"),
 					Past: humanize.Time(info_primary.ModTime()),
 				},
-				Changelog: page.Date{
+				Changelog: models.Date{
 					When: info_changelog.ModTime().Format("2006-01-02 15:04:05 MST"),
 					Past: humanize.Time(info_changelog.ModTime()),
 				},
-				Filelists: page.Date{
+				Filelists: models.Date{
 					When: info_filelists.ModTime().Format("2006-01-02 15:04:05 MST"),
 					Past: humanize.Time(info_filelists.ModTime()),
 				},
@@ -86,7 +86,7 @@ func RetrieveHome(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	park := []page.Card{
+	park := []models.Card{
 		{
 			Iden: "package",
 			Head: "Package",
@@ -161,7 +161,7 @@ func RetrieveHome(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	data := page.Page{
+	data := models.Page{
 		Name: config.SERVNAME,
 		Vers: config.VERSDATA,
 		Host: config.HOSTNAME,
