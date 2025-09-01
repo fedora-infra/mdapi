@@ -163,9 +163,10 @@ func RetrieveHome(w http.ResponseWriter, r *http.Request) {
 
 	data := models.Page{
 		Name: config.SERVNAME,
-		Vers: config.VERSDATA,
+		Vers: config.VERSDATA + "-" + config.COMMITHASH[0:8],
 		Host: config.HOSTNAME,
 		Conn: config.PROTOCOL,
+		Hash: config.COMMITHASH,
 		Dict: LastModified(list),
 		Park: park,
 	}
