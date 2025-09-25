@@ -13,7 +13,7 @@ jobs:
       - name: Checkout the codebase current state
         uses: actions/checkout@v5
       - name: Establish the containerized Golang development environment
-        uses: actions/setup-go@v5
+        uses: actions/setup-go@v6
         with:
           go-version: "1.25.1"
       - name: Install the system dependencies
