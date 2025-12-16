@@ -34,6 +34,10 @@ func ListBranches(status string) ([]string, error) {
 		return list, expt
 	}
 
+	// Set User-Agent to bypass anti-bot protection (Anubis)
+	// Thanks @ryanlerch for his Forgejo solution, https://forge.fedoraproject.org/forge/forge/issues/264#issuecomment-147788
+	rqst.Header.Set("Accept", "application/json")
+
 	oper = &http.Client{Timeout: time.Second * 60}
 	resp, expt = oper.Do(rqst)
 	if expt != nil || resp.StatusCode != 200 {
