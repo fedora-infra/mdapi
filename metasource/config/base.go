@@ -103,7 +103,7 @@ var QURYDICT = map[string]string{
 
 // SQLite3 queries for various endpoints
 
-var OBTAIN_PACKAGE string = "SELECT pkgKey, pkgId, name, rpm_sourcerpm, epoch, version, release, arch, summary, description, url FROM packages WHERE name = ? ORDER BY epoch DESC, version DESC, release DESC"
+var OBTAIN_PACKAGE string = "SELECT pkgKey, pkgId, name, rpm_sourcerpm, epoch, version, release, arch, summary, description, url, size_package, size_installed FROM packages WHERE name = ? ORDER BY epoch DESC, version DESC, release DESC"
 
 var OBTAIN_PACKAGE_INFO string = "SELECT rowid, pkgKey, name, epoch, version, release, flags FROM %s WHERE pkgKey = ?"
 
