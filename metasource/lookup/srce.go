@@ -57,7 +57,21 @@ var ReadSrce = func(vers *string, name *string) (models.PackUnit, string, error)
 
 		for rows.Next() {
 			var pack models.PackUnit
-			expt = rows.Scan(&pack.Key, &pack.Id, &pack.Name, &pack.Source, &pack.Epoch, &pack.Version, &pack.Release, &pack.Arch, &pack.Summary, &pack.Desc, &pack.Link)
+			expt = rows.Scan(
+				&pack.Key,
+				&pack.Id,
+				&pack.Name,
+				&pack.Source,
+				&pack.Epoch,
+				&pack.Version,
+				&pack.Release,
+				&pack.Arch,
+				&pack.Summary,
+				&pack.Desc,
+				&pack.Link,
+				&pack.SizePackage,
+				&pack.SizeInstalled,
+			)
 			if expt != nil {
 				return rslt, item, expt
 			}

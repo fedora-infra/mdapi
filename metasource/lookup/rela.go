@@ -20,9 +20,17 @@ var ReadRelation = func(vers *string, pack *models.PackUnit, repo *string, relat
 
 	switch *repo {
 	case "updates-testing", "updates", "testing":
-		path = fmt.Sprintf("%s/%s", config.DBFOLDER, fmt.Sprintf("metasource-%s-%s-primary.sqlite", *vers, *repo))
+		path = fmt.Sprintf(
+			"%s/%s",
+			config.DBFOLDER,
+			fmt.Sprintf("metasource-%s-%s-primary.sqlite", *vers, *repo),
+		)
 	default:
-		path = fmt.Sprintf("%s/%s", config.DBFOLDER, fmt.Sprintf("metasource-%s-primary.sqlite", *vers))
+		path = fmt.Sprintf(
+			"%s/%s",
+			config.DBFOLDER,
+			fmt.Sprintf("metasource-%s-primary.sqlite", *vers),
+		)
 	}
 	_, expt = os.Stat(path)
 	if os.IsNotExist(expt) {
@@ -49,7 +57,21 @@ var ReadRelation = func(vers *string, pack *models.PackUnit, repo *string, relat
 	rslt = []models.PackUnit{}
 
 	for rows.Next() {
-		expt = rows.Scan(&pkit.Key, &pkit.Id, &pkit.Name, &pkit.Source, &pkit.Epoch, &pkit.Version, &pkit.Release, &pkit.Arch, &pkit.Summary, &pkit.Desc, &pkit.Link)
+		expt = rows.Scan(
+			&pkit.Key,
+			&pkit.Id,
+			&pkit.Name,
+			&pkit.Source,
+			&pkit.Epoch,
+			&pkit.Version,
+			&pkit.Release,
+			&pkit.Arch,
+			&pkit.Summary,
+			&pkit.Desc,
+			&pkit.Link,
+			&pkit.SizePackage,
+			&pkit.SizeInstalled,
+		)
 		if expt != nil {
 			return rslt, expt
 		}
