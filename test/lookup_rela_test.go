@@ -77,7 +77,7 @@ func TestReadRela_Failure_FaultyPlea(t *testing.T) {
 	_, expt := lookup.ReadRelation(&vers_lookup_rela, &pack_lookup_rela, &repo_lookup_rela, &rela_lookup_rela)
 	if expt == nil {
 		t.Errorf("Received nothing, Expected error")
-	} else if expt.Error() != "sql: expected 2 destination arguments in Scan, not 11" {
-		t.Errorf("Received '%s', Expected 'sql: expected 2 destination arguments in Scan, not 11'", expt.Error())
+	} else if expt.Error() != "sql: expected 2 destination arguments in Scan, not 13" {
+		t.Errorf("Received '%s', Expected 'sql: expected 2 destination arguments in Scan, not 13'", expt.Error())
 	}
 }

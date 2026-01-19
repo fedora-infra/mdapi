@@ -20,17 +20,9 @@ var ReadRelation = func(vers *string, pack *models.PackUnit, repo *string, relat
 
 	switch *repo {
 	case "updates-testing", "updates", "testing":
-		path = fmt.Sprintf(
-			"%s/%s",
-			config.DBFOLDER,
-			fmt.Sprintf("metasource-%s-%s-primary.sqlite", *vers, *repo),
-		)
+		path = fmt.Sprintf("%s/%s", config.DBFOLDER, fmt.Sprintf("metasource-%s-%s-primary.sqlite", *vers, *repo))
 	default:
-		path = fmt.Sprintf(
-			"%s/%s",
-			config.DBFOLDER,
-			fmt.Sprintf("metasource-%s-primary.sqlite", *vers),
-		)
+		path = fmt.Sprintf("%s/%s", config.DBFOLDER, fmt.Sprintf("metasource-%s-primary.sqlite", *vers))
 	}
 	_, expt = os.Stat(path)
 	if os.IsNotExist(expt) {
