@@ -49,7 +49,21 @@ var ReadRelation = func(vers *string, pack *models.PackUnit, repo *string, relat
 	rslt = []models.PackUnit{}
 
 	for rows.Next() {
-		expt = rows.Scan(&pkit.Key, &pkit.Id, &pkit.Name, &pkit.Source, &pkit.Epoch, &pkit.Version, &pkit.Release, &pkit.Arch, &pkit.Summary, &pkit.Desc, &pkit.Link)
+		expt = rows.Scan(
+			&pkit.Key,
+			&pkit.Id,
+			&pkit.Name,
+			&pkit.Source,
+			&pkit.Epoch,
+			&pkit.Version,
+			&pkit.Release,
+			&pkit.Arch,
+			&pkit.Summary,
+			&pkit.Desc,
+			&pkit.Link,
+			&pkit.SizePackage,
+			&pkit.SizeInstalled,
+		)
 		if expt != nil {
 			return rslt, expt
 		}

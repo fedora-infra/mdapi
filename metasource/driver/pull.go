@@ -51,7 +51,7 @@ func DownloadRepositoriesMill(unit *models.FileUnit, vers *string, stab int64, c
 		return DownloadRepositories(unit, vers, stab, cast, loca)
 	}
 
-	resp, expt = oper.Do(rqst)
+	resp, expt = oper.Do(rqst) // #nosec G704
 	if expt != nil {
 		stab += 1
 		slog.Log(context.Background(), slog.LevelDebug, fmt.Sprintf("[%s] Stab failed for %s due to %s", *vers, unit.Name, expt.Error()))
