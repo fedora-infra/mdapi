@@ -15,7 +15,7 @@ jobs:
       - name: Establish the containerized Golang development environment
         uses: actions/setup-go@v6
         with:
-          go-version: "1.25.7"
+          go-version: "1.26.0"
       - name: Install the system dependencies
         run: dnf install go git createrepo_c-devel --setopt=install_weak_deps=False --assumeyes
       - name: Check overall codebase quality
