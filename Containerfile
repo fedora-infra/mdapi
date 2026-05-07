@@ -1,4 +1,4 @@
-FROM registry.fedoraproject.org/fedora-minimal:43 AS builder
+FROM registry.fedoraproject.org/fedora-minimal:44 AS builder
 
 # Builder image
 
@@ -12,7 +12,7 @@ ENV CGO_ENABLED=1 GOOS=linux
 
 RUN make
 
-FROM registry.fedoraproject.org/fedora-minimal:43 as runtime
+FROM registry.fedoraproject.org/fedora-minimal:44 as runtime
 
 # Runtime image
 
