@@ -26,7 +26,7 @@ func CopyGeneration(srce string, dest string) error {
 	if expt != nil {
 		return expt
 	}
-	expt = os.WriteFile(dest, srcedata, 0600)
+	expt = os.WriteFile(dest, srcedata, 0600) // #nosec G703 -- path is verified and cleaned
 	if expt != nil {
 		return expt
 	}
