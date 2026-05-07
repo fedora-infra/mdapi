@@ -68,16 +68,18 @@ func RetrieveRelation(w http.ResponseWriter, r *http.Request) {
 		}
 
 		pkit = models.UnitPrimary{
-			Repo:        repo,
-			Arch:        item.Arch.String,
-			Epoch:       item.Epoch.String,
-			Version:     item.Version.String,
-			Release:     item.Release.String,
-			Summary:     item.Summary.String,
-			Description: item.Desc.String,
-			Basename:    item.Name.String,
-			URL:         item.Link.String,
-			CoPackages:  coop,
+			Repo:          repo,
+			Arch:          item.Arch.String,
+			Epoch:         item.Epoch.String,
+			Version:       item.Version.String,
+			Release:       item.Release.String,
+			Summary:       item.Summary.String,
+			Description:   item.Desc.String,
+			Basename:      item.Name.String,
+			URL:           item.Link.String,
+			CoPackages:    coop,
+			SizePackage:   item.SizePackage.String,
+			SizeInstalled: item.SizeInstalled.String,
 		}
 		if pkit.Repo == "" {
 			pkit.Repo = "release"

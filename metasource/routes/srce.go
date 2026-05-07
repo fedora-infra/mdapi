@@ -48,16 +48,18 @@ func RetrieveSrce(w http.ResponseWriter, r *http.Request) {
 	}
 
 	rslt = models.UnitPrimary{
-		Repo:        repo,
-		Arch:        pack.Arch.String,
-		Epoch:       pack.Epoch.String,
-		Version:     pack.Version.String,
-		Release:     pack.Release.String,
-		Summary:     pack.Summary.String,
-		Description: pack.Desc.String,
-		Basename:    pack.Name.String,
-		URL:         pack.Link.String,
-		CoPackages:  coop,
+		Repo:          repo,
+		Arch:          pack.Arch.String,
+		Epoch:         pack.Epoch.String,
+		Version:       pack.Version.String,
+		Release:       pack.Release.String,
+		Summary:       pack.Summary.String,
+		Description:   pack.Desc.String,
+		Basename:      pack.Name.String,
+		URL:           pack.Link.String,
+		CoPackages:    coop,
+		SizePackage:   pack.SizePackage.String,
+		SizeInstalled: pack.SizeInstalled.String,
 	}
 	if rslt.Repo == "" {
 		rslt.Repo = "release"

@@ -21,17 +21,19 @@ type FileUnit struct {
 }
 
 type PackUnit struct {
-	Key     int
-	Id      sql.NullString
-	Name    sql.NullString
-	Source  sql.NullString
-	Epoch   sql.NullString
-	Version sql.NullString
-	Release sql.NullString
-	Arch    sql.NullString
-	Summary sql.NullString
-	Desc    sql.NullString
-	Link    sql.NullString
+	Key           int
+	Id            sql.NullString
+	Name          sql.NullString
+	Source        sql.NullString
+	Epoch         sql.NullString
+	Version       sql.NullString
+	Release       sql.NullString
+	Arch          sql.NullString
+	Summary       sql.NullString
+	Desc          sql.NullString
+	Link          sql.NullString
+	SizeInstalled sql.NullString
+	SizePackage   sql.NullString
 }
 
 type DepsUnit struct {

@@ -61,8 +61,8 @@ func TestReadPrmy_Failure_FaultyPlea(t *testing.T) {
 	_, _, expt := lookup.ReadPrmy(&vers, &name)
 	if expt == nil {
 		t.Errorf("Received nothing, Expected error")
-	} else if expt.Error() != "sql: expected 2 destination arguments in Scan, not 11" {
-		t.Errorf("Received '%s', Expected 'sql: expected 2 destination arguments in Scan, not 11'", expt.Error())
+	} else if expt.Error() != "sql: expected 2 destination arguments in Scan, not 13" {
+		t.Errorf("Received '%s', Expected 'sql: expected 2 destination arguments in Scan, not 13'", expt.Error())
 	}
 }
 

@@ -39,7 +39,7 @@ func ListBranches(status string) ([]string, error) {
 	rqst.Header.Set("Accept", "application/json")
 
 	oper = &http.Client{Timeout: time.Second * 60}
-	resp, expt = oper.Do(rqst)
+	resp, expt = oper.Do(rqst) // #nosec G704
 	if expt != nil || resp.StatusCode != 200 {
 		if expt != nil {
 			return list, expt

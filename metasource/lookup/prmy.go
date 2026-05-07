@@ -40,7 +40,21 @@ var ReadPrmy = func(vers *string, name *string) (models.PackUnit, string, error)
 		defer base.Close()
 
 		unit = base.QueryRow(config.OBTAIN_PACKAGE, name)
-		expt = unit.Scan(&rslt.Key, &rslt.Id, &rslt.Name, &rslt.Source, &rslt.Epoch, &rslt.Version, &rslt.Release, &rslt.Arch, &rslt.Summary, &rslt.Desc, &rslt.Link)
+		expt = unit.Scan(
+			&rslt.Key,
+			&rslt.Id,
+			&rslt.Name,
+			&rslt.Source,
+			&rslt.Epoch,
+			&rslt.Version,
+			&rslt.Release,
+			&rslt.Arch,
+			&rslt.Summary,
+			&rslt.Desc,
+			&rslt.Link,
+			&rslt.SizePackage,
+			&rslt.SizeInstalled,
+		)
 
 		if errors.Is(expt, sql.ErrNoRows) {
 			continue
