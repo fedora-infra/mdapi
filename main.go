@@ -28,7 +28,7 @@ func main() {
 	protocol = dispense.String("protocol", config.PROTOCOL, "Network protocol for the application server")
 	servname = dispense.String("servname", config.SERVNAME, "Network identity for the application server")
 	port = dispense.String("port", "8080", "Network port for the application server")
-	config.SetLogger(lglvtext)
+	config.MakeLogger(lglvtext)
 
 	if flag.NArg() < 1 {
 		slog.Log(context.Background(), slog.LevelError, "Invalid subcommand - Expected either 'database' or 'dispense' subcommand")
