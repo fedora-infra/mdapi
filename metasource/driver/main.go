@@ -17,6 +17,11 @@ func Database() error {
 		return expt
 	}
 
+	expt = KillObsoleteBranches(list)
+	if expt != nil {
+		slog.Log(context.Background(), slog.LevelWarn, fmt.Sprintf("Purging obsolete branches failed due to %s", expt.Error()))
+	}
+
 	for _, item = range list {
 		expt = HandleRepositories(&item)
 		if expt != nil {

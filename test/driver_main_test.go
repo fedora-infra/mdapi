@@ -21,6 +21,25 @@ func TestDatabase_Failure_HandleRepositories(t *testing.T) {
 	}
 }
 
+func TestDatabase_Failure_KillObsoleteBranches(t *testing.T) {
+	originalHandle := driver.HandleRepositories
+	driver.HandleRepositories = func(unit *models.LinkUnit) error {
+		return errors.New("HandleRepositories failed")
+	}
+	defer func() { driver.HandleRepositories = originalHandle }()
+
+	originalPurge := driver.KillObsoleteBranches
+	driver.KillObsoleteBranches = func(active []models.LinkUnit) error {
+		return errors.New("KillObsoleteBranches failed")
+	}
+	defer func() { driver.KillObsoleteBranches = originalPurge }()
+
+	expt := option.Database()
+	if expt != nil {
+		t.Errorf("Received '%s', Expected nothing", expt.Error())
+	}
+}
+
 func TestDatabase_Failure_PopulateRepositories(t *testing.T) {
 	original := driver.PopulateRepositories
 	driver.PopulateRepositories = func() ([]models.LinkUnit, error) {
