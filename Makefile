@@ -26,7 +26,7 @@ test:
 	@echo "Generating detailed coverage report..."
 	@go tool cover -html coverage.out -o index.html
 	@echo "Checking coverage threshold limit..."
-	@go tool cover -func=coverage.out | awk '/total:/ { if ($$3+0 < 94.2) { print "Coverage " $$3 " fails threshold 94.2%"; exit 1 } else { print "Coverage " $$3 " meets threshold 94.2%"; exit 0 } }'
+	@go tool cover -func=coverage.out | awk '/total:/ { if ($$3+0 < 94.3) { print "Coverage " $$3 " fails threshold 94.3%"; exit 1 } else { print "Coverage " $$3 " meets threshold 94.3%"; exit 0 } }'
 
 .PHONY: wipe
 wipe:

@@ -1,12 +1,13 @@
 package config
 
 import (
-	"github.com/lmittmann/tint"
 	"log/slog"
 	"os"
+
+	"github.com/lmittmann/tint"
 )
 
-func SetLogger(lglvtext *string) {
+func MakeLogger(lglvtext *string) {
 	var lglvoptn slog.Level
 
 	switch *lglvtext {

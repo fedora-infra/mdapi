@@ -5,8 +5,8 @@ import (
 	"testing"
 )
 
-func TestSetLogger(t *testing.T) {
+func TestMakeLogger(t *testing.T) {
 	for _, iter := range []string{"info", "warn", "debug", "note"} {
-		config.SetLogger(&iter)
+		config.MakeLogger(&iter)
 	}
 }
